@@ -2,14 +2,24 @@ Label {
     -fx-text-fill: #fff;
 }
 
+.description-scroll {
+    -fx-hbar-policy: never;
+    -fx-background-color: transparent;
+}
+
+.description-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.description-wrapper {
+    -fx-background-color: #464646;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+}
+
 .description {
     -fx-text-fill: white;
-    -fx-background-color: #464646;
     -fx-text-alignment: center;
-    -fx-alignment: center;
-    -fx-max-width: 400px;
-    -fx-wrap-text: true;
-    -fx-padding: 20 0 0 0;
 }
 
 .head {
@@ -23,10 +33,12 @@ Label {
 
 .time {
     -fx-font-size: 16px;
+    -fx-padding: 0 0 10 0;
 }
 
 .action-buttons {
-    -fx-padding: 50 0 0 0;
+    -fx-padding: 10 0 0 0;
     -fx-alignment: center;
+    -fx-fill-height: true;
     -fx-hgap: 20px;
 }

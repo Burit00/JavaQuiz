@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.*?>
-<?import java.net.URL?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.quizclient.controller.SolveQuizController"
-            prefHeight="400.0" prefWidth="600.0"
->
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.SolveQuizController">
   <top>
     <HBox styleClass="header">
       <Label>JAVA QUIZ</Label>
@@ -16,21 +12,37 @@
   </top>
   <center>
     <VBox>
-      <BorderPane styleClass="main" fx:id="main"/>
+      <BorderPane VBox.vgrow="ALWAYS">
+        <center>
+          <VBox styleClass="head">
+            <Label fx:id="titleLabel" styleClass="title" text="title" />
+            <Label fx:id="timeLabel" styleClass="time" text="czas" />
+            <BorderPane VBox.vgrow="ALWAYS">
+              <center>
+                <ScrollPane fitToWidth="true" styleClass="description-scroll">
+                  <VBox styleClass="description-wrapper">
+                    <Label fx:id="descriptionLabel" styleClass="description" text="opis" />
+                  </VBox>
+                </ScrollPane>
+              </center>
+            </BorderPane>
+          </VBox>
+        </center>
+      </BorderPane>
       <FlowPane styleClass="action-buttons">
-        <Button fx:id="exitButton" text="Opuść test"/>
-        <Button fx:id="startButton" text="Rozpocznij test"/>
+        <Button onAction="#onExitQuiz" text="Opuść test" />
+        <Button onAction="#onStartQuiz" text="Rozpocznij test" />
       </FlowPane>
-
     </VBox>
   </center>
   <bottom>
     <HBox styleClass="footer">
-      <Label styleClass="powered-by">Powered by: </Label><Label styleClass="author">Paweł Moraczyński</Label>
+      <Label styleClass="powered-by">Powered by</Label>
+      <Label styleClass="author">Paweł Morawczyński</Label>
     </HBox>
   </bottom>
   <stylesheets>
-    <URL value="@styles/solve-quiz-view.css"/>
-    <URL value="@styles/global.css"/>
+    <URL value="@styles/solve-quiz-view.css" />
+    <URL value="@styles/global.css" />
   </stylesheets>
 </BorderPane>

@@ -4,7 +4,6 @@ import com.quizclient.QuizClientApplication;
 import com.quizclient.api.QuizHttpClient;
 import com.quizclient.model.query.QuizQuery;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -25,27 +24,28 @@ public class SelectQuizController {
         for (QuizQuery quiz : quizzes) {
             Button quizButton = new Button(quiz.getName());
             quizButton.getStyleClass().add("quiz");
-            quizButton.setOnAction(event -> {
-                FXMLLoader fxmlLoader = new FXMLLoader(QuizClientApplication.class.getResource("solve-quiz-view.fxml"));
-                Scene scene = ((Node) event.getSource()).getScene();
-                scene.getStylesheets().add(QuizClientApplication.class.getResource("styles/global.css").toExternalForm());
-                Stage stage = (Stage) scene.getWindow();
-                Parent root;
-
-                try {
-                    root = fxmlLoader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-                SolveQuizController controller = fxmlLoader.getController();
-                controller.setParameter(quiz.getId());
-                stage.setScene(new Scene(root));
-                stage.show();
-            });
+            quizButton.setOnAction(event -> openQuiz(event, quiz));
 
             quizzesContainer.getChildren().add(quizButton);
         }
+    }
+
+    private void openQuiz(ActionEvent event, QuizQuery quiz) {
+        FXMLLoader fxmlLoader = new FXMLLoader(QuizClientApplication.class.getResource("solve-quiz-view.fxml"));
+        Scene scene = ((Node) event.getSource()).getScene();
+        Stage stage = (Stage) scene.getWindow();
+        Parent root;
+
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        SolveQuizController controller = fxmlLoader.getController();
+        controller.setParameter(quiz.getId());
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     @FXML

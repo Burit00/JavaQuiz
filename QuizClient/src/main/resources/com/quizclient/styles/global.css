@@ -16,7 +16,7 @@ BorderPane {
 
 .footer {
     -fx-alignment: center;
-    -fx-padding: 0 0 10 0;
+    -fx-padding: 10 0;
 }
 
 .powered-by {
