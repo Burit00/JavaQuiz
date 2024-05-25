@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import java.net.URL?>
+<?import javafx.scene.layout.FlowPane?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.quizclient.controller.SelectQuizController"
+            prefHeight="400"
+            prefWidth="600"
+>
+  <top>
+    <HBox styleClass="header">
+      <Label>JAVA QUIZ</Label>
+    </HBox>
+  </top>
+  <center>
+    <FlowPane styleClass="quizzes" fx:id="quizzesContainer"/>
+  </center>
+  <bottom>
+    <HBox styleClass="footer">
+      <Label styleClass="powered-by">Powered by: </Label><Label styleClass="author">Paweł Moraczyński</Label>
+    </HBox>
+  </bottom>
+  <stylesheets>
+    <URL value="@styles/select-quiz-view.css"/>
+    <URL value="@styles/global.css"/>
+  </stylesheets>
+</BorderPane>

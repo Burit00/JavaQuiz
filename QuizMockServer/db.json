@@ -1,0 +1,79 @@
+{
+  "quizzes": [
+    {
+      "id": "1",
+      "name": "Podstawy JAVA",
+      "time": 30,
+      "description": "Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)Przed tobą test z różnymi wariantami pytań.\nZa każde pytanie otrzymać można po jednym punkcie.\nPowodzenia :)"
+    },
+    {
+      "id": "2",
+      "name": "JAVAFX",
+      "time": 30,
+      "description": "XDD2"
+    }
+  ],
+  "questions": [
+    {
+      "id": "1",
+      "quizId": "1",
+      "name": "Kiedy powstał język JAVA?",
+      "questionType": "2",
+      "correctAnswers": ["2"]
+    },
+    {
+      "id": "2",
+      "quizId": "1",
+      "name": "Który framework służy do tworzenia interfesju użytkownika?",
+      "questionType": "1"
+    },
+    {
+      "id": "2",
+      "quizId": "1",
+      "name": "Jaka klasa służy do stworzenia przycisku?",
+      "questionType": "3"
+    }
+  ],
+  "answers": [
+    {
+      "id": "1",
+      "questionId": "1",
+      "text": "1989"
+    },
+    {
+      "id": "2",
+      "questionId": "1",
+      "text": "1995"
+    },
+    {
+      "id": "3",
+      "questionId": "1",
+      "text": "1992"
+    },
+    {
+      "id": "4",
+      "questionId": "1",
+      "text": "2003"
+    },
+    {
+      "id": "5",
+      "questionId": "2",
+      "text": "Swing"
+    },
+    {
+      "id": "6",
+      "questionId": "2",
+      "text": "AWT"
+    },
+    {
+      "id": "7",
+      "questionId": "2",
+      "text": "Spring"
+    },
+    {
+      "id": "8",
+      "questionId": "2",
+      "text": "JavaFX"
+    }
+  ]
+}

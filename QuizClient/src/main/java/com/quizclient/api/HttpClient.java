@@ -1,0 +1,26 @@
+package com.quizclient.api;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class HttpClient {
+    private static String BASE_URL;
+
+    public HttpClient(String basedUrl) {
+        this.BASE_URL = basedUrl;
+    }
+
+    public String get(String url) throws IOException, InterruptedException {
+        HttpRequest httpRequest = HttpRequest
+                .newBuilder(URI.create(BASE_URL + url))
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        java.net.http.HttpClient httpClient = java.net.http.HttpClient.newHttpClient();
+        HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+        return response.body();
+    }
+}

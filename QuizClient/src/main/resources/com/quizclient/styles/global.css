@@ -1,0 +1,48 @@
+.header {
+    -fx-background-color: #02b7b3;
+    -fx-alignment: center;
+    -fx-padding: 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.header > Label {
+    -fx-text-fill: #464646;
+}
+
+BorderPane {
+    -fx-background-color: #464646;
+}
+
+.footer {
+    -fx-alignment: center;
+    -fx-padding: 0 0 10 0;
+}
+
+.powered-by {
+    -fx-font-size: 12px;
+    -fx-text-fill: #8d8d8d;
+    -fx-padding: 0 5 0 0;
+}
+
+.author {
+    -fx-font-size: 14px;
+    -fx-text-fill: #02b7b3;
+}
+
+Button {
+    -fx-text-fill: #464646;
+    -fx-end-margin: 20px;
+    -fx-background-color: #02b7b3;
+
+    -fx-padding: 10 20;
+    -fx-fill-width: 100;
+
+    -fx-background-radius: 10;
+    -fx-background-insets: 0;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-border-radius: 10;
+    -fx-border-width: 2px;
+    -fx-cursor: hand;
+}
