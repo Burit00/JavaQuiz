@@ -1,10 +1,8 @@
-package com.quizclient.model;
+package com.quizclient.model.enums;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serial;
-
-public enum QuestionType {
+public enum QuestionTypeEnum {
     @SerializedName("1")
     CHECKBOX,
     @SerializedName("2")

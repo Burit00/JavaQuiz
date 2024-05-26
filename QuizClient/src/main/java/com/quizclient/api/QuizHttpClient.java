@@ -1,6 +1,7 @@
 package com.quizclient.api;
 
 import com.google.gson.reflect.TypeToken;
+import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -33,8 +34,23 @@ public class QuizHttpClient {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        QuizQuery quiz = new Gson().fromJson(response, new TypeToken<QuizQuery>() {}.getType());
+        QuizQuery quiz = new Gson().fromJson(response, QuizQuery.class);
 
         return quiz;
+    }
+
+    public static List<QuestionQuery> getQuestions(String quizId) {
+        String response;
+
+        try {
+            response = httpClient.get("/questions?_embed=answers&quizId=" + quizId);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        List<QuestionQuery> questions = new Gson().fromJson(response, new TypeToken<List<QuestionQuery>>(){}.getType());
+
+        return questions;
     }
 }

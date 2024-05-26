@@ -31,7 +31,7 @@ public class SelectQuizController {
     }
 
     private void openQuiz(ActionEvent event, QuizQuery quiz) {
-        FXMLLoader fxmlLoader = new FXMLLoader(QuizClientApplication.class.getResource("solve-quiz-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(QuizClientApplication.class.getResource("quiz-details-view.fxml"));
         Scene scene = ((Node) event.getSource()).getScene();
         Stage stage = (Stage) scene.getWindow();
         Parent root;
@@ -42,7 +42,7 @@ public class SelectQuizController {
             throw new RuntimeException(e);
         }
 
-        SolveQuizController controller = fxmlLoader.getController();
+        QuizDetailsController controller = fxmlLoader.getController();
         controller.setParameter(quiz.getId());
         stage.setScene(new Scene(root));
         stage.show();

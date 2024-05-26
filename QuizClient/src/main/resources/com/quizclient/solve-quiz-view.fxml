@@ -11,30 +11,33 @@
     </HBox>
   </top>
   <center>
-    <VBox>
-      <BorderPane VBox.vgrow="ALWAYS">
-        <center>
-          <VBox styleClass="head">
-            <Label fx:id="titleLabel" styleClass="title" text="title" />
-            <Label fx:id="timeLabel" styleClass="time" text="czas" />
-            <BorderPane VBox.vgrow="ALWAYS">
-              <center>
-                <ScrollPane fitToWidth="true" styleClass="description-scroll">
-                  <VBox styleClass="description-wrapper">
-                    <Label fx:id="descriptionLabel" styleClass="description" text="opis" />
-                  </VBox>
-                </ScrollPane>
-              </center>
-            </BorderPane>
-          </VBox>
-        </center>
-      </BorderPane>
-      <FlowPane styleClass="action-buttons">
-        <Button onAction="#onExitQuiz" text="Opuść test" />
-        <Button onAction="#onStartQuiz" text="Rozpocznij test" />
-      </FlowPane>
-    </VBox>
+    <BorderPane>
+      <top>
+        <AnchorPane>
+          <HBox alignment="CENTER" styleClass="top" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
+            <Label fx:id="titleLabel" layoutX="370.0" styleClass="title" text="tytul" />
+          </HBox>
+          <Label fx:id="timeLabel" layoutX="759.0" layoutY="5.0" styleClass="time" text="123" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+        </AnchorPane>
+      </top>
+      <center>
+        <BorderPane styleClass="content">
+          <top>
+            <Label styleClass="question" fx:id="questionLabel" text="pytanie"/>
+          </top>
+          <left>
+            <VBox  styleClass="answers-list" fx:id="answersBox"/>
+          </left>
+        </BorderPane>
+      </center>
+    </BorderPane>
   </center>
+  <bottom>
+    <HBox styleClass="footer">
+      <Label styleClass="powered-by">Powered by</Label>
+      <Label styleClass="author">Paweł Morawczyński</Label>
+    </HBox>
+  </bottom>
   <bottom>
     <HBox styleClass="footer">
       <Label styleClass="powered-by">Powered by</Label>
