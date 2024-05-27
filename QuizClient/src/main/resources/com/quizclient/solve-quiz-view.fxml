@@ -17,7 +17,7 @@
           <HBox alignment="CENTER" styleClass="top" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
             <Label fx:id="titleLabel" layoutX="370.0" styleClass="title" text="tytul" />
           </HBox>
-          <Label fx:id="timeLabel" layoutX="759.0" layoutY="5.0" styleClass="time" text="123" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+          <Label fx:id="timeLabel"  styleClass="time" text="123" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
         </AnchorPane>
       </top>
       <center>
@@ -26,8 +26,18 @@
             <Label styleClass="question" fx:id="questionLabel" text="pytanie"/>
           </top>
           <left>
-            <VBox  styleClass="answers-list" fx:id="answersBox"/>
+            <VBox styleClass="answer-box" fx:id="answersBox"/>
           </left>
+          <bottom>
+            <AnchorPane>
+              <FlowPane AnchorPane.leftAnchor="10" styleClass="action-buttons">
+                <Button text="Poprzednie pytanie" disable="true" fx:id="previousQuestionButton" onAction="#onPreviousQuestion"/>
+                <Button text="Następne pytanie" fx:id="nextQuestionButton" onAction="#onNextQuestion"/>
+              </FlowPane>
+              <Button AnchorPane.rightAnchor="10" text="Zakończ quiz" onAction="#onStopQuiz"/>
+            </AnchorPane>
+
+          </bottom>
         </BorderPane>
       </center>
     </BorderPane>

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class QuizHttpClient {
+    private static final Gson gson = new Gson();
     private static final HttpClient httpClient = new HttpClient("http://localhost:3000");
 
     public static List<QuizQuery> getQuizzes() {
@@ -15,41 +16,39 @@ public class QuizHttpClient {
 
         try {
             response = httpClient.get("/quizzes");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        List<QuizQuery> quizzes = new Gson().fromJson(response, new TypeToken<List<QuizQuery>>(){}.getType());
+
+        List<QuizQuery> quizzes = gson.fromJson(response, new TypeToken<List<QuizQuery>>(){}.getType());
 
         return quizzes;
     }
 
     public static QuizQuery getQuiz(String quizId) {
         String response;
+
         try {
             response = httpClient.get("/quizzes/" + quizId);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        QuizQuery quiz = new Gson().fromJson(response, QuizQuery.class);
+
+        QuizQuery quiz = gson.fromJson(response, QuizQuery.class);
 
         return quiz;
     }
 
-    public static List<QuestionQuery> getQuestions(String quizId) {
+    public static List<QuestionQuery> getQuestionsWithAnswers(String quizId) {
         String response;
 
         try {
             response = httpClient.get("/questions?_embed=answers&quizId=" + quizId);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        List<QuestionQuery> questions = new Gson().fromJson(response, new TypeToken<List<QuestionQuery>>(){}.getType());
+
+        List<QuestionQuery> questions = gson.fromJson(response, new TypeToken<List<QuestionQuery>>(){}.getType());
 
         return questions;
     }
