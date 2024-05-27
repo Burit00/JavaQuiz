@@ -1,4 +1,4 @@
-package com.quizclient.api;
+package com.quizclient.utils;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,7 +9,7 @@ public class HttpClient {
     private static String BASE_URL;
 
     public HttpClient(String basedUrl) {
-        this.BASE_URL = basedUrl;
+        BASE_URL = basedUrl;
     }
 
     public String get(String url) throws IOException, InterruptedException {

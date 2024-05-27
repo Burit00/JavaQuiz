@@ -4,6 +4,8 @@ import com.google.gson.reflect.TypeToken;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
 import com.google.gson.Gson;
+import com.quizclient.utils.HttpClient;
+
 import java.io.IOException;
 import java.util.List;
 

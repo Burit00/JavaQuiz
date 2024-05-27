@@ -34,7 +34,7 @@
                 <Button text="Poprzednie pytanie" disable="true" fx:id="previousQuestionButton" onAction="#onPreviousQuestion"/>
                 <Button text="Następne pytanie" fx:id="nextQuestionButton" onAction="#onNextQuestion"/>
               </FlowPane>
-              <Button AnchorPane.rightAnchor="10" text="Zakończ quiz" onAction="#onStopQuiz"/>
+              <Button AnchorPane.rightAnchor="10" text="Zakończ quiz" onAction="#onConfirmQuiz"/>
             </AnchorPane>
 
           </bottom>
@@ -42,12 +42,6 @@
       </center>
     </BorderPane>
   </center>
-  <bottom>
-    <HBox styleClass="footer">
-      <Label styleClass="powered-by">Powered by</Label>
-      <Label styleClass="author">Paweł Morawczyński</Label>
-    </HBox>
-  </bottom>
   <bottom>
     <HBox styleClass="footer">
       <Label styleClass="powered-by">Powered by</Label>

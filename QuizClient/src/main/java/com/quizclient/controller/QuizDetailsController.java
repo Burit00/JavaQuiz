@@ -3,6 +3,7 @@ package com.quizclient.controller;
 import com.quizclient.QuizClientApplication;
 import com.quizclient.api.QuizHttpClient;
 import com.quizclient.model.query.QuizQuery;
+import com.quizclient.utils.SceneLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,20 +50,12 @@ public class QuizDetailsController {
 
     @FXML
     private void onStartQuiz(ActionEvent event) {
-        FXMLLoader fxmlLoader = new FXMLLoader(QuizClientApplication.class.getResource("solve-quiz-view.fxml"));
         Scene scene = ((Node) event.getSource()).getScene();
         Stage stage = (Stage) scene.getWindow();
-        Parent root;
+        FXMLLoader fxmlLoader = SceneLoader.loadScene("solve-quiz-view.fxml", stage);
 
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         SolveQuizController controller = fxmlLoader.getController();
-        controller.setParameter(this.quiz);
-        stage.setScene(new Scene(root));
-        stage.show();
+        controller.setParameter(this.quiz, stage);
     }
 
     @FXML

@@ -25,13 +25,15 @@
       "id": "2",
       "quizId": "1",
       "name": "Który framework służy do tworzenia interfesju użytkownika?",
-      "questionType": "1"
+      "questionType": "1",
+      "correctAnswers": ["5", "6", "8"]
     },
     {
       "id": "2",
       "quizId": "1",
       "name": "Jaka klasa służy do stworzenia przycisku?",
-      "questionType": "3"
+      "questionType": "3",
+      "correctAnswers": ["Button"]
     }
   ],
   "answers": [
