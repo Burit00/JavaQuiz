@@ -10,7 +10,7 @@
     -fx-text-fill: #464646;
 }
 
-BorderPane {
+BorderPane, DialogPane {
     -fx-background-color: #464646;
 }
 
@@ -45,4 +45,8 @@ Button {
     -fx-border-radius: 10;
     -fx-border-width: 2px;
     -fx-cursor: hand;
+}
+
+DialogPane Label {
+    -fx-text-fill: #fff;
 }

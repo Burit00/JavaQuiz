@@ -6,6 +6,7 @@ import com.quizclient.model.query.AnswerQuery;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
 import com.quizclient.utils.SceneLoader;
+import dialog.ConfirmQuizDialog;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SolveQuizController {
     private Stage stage;
@@ -28,6 +30,9 @@ public class SolveQuizController {
     private int timeLeft;
 
     private ToggleGroup radioGroup;
+
+    @FXML
+    private DialogPane dialog;
 
     @FXML
     private Button nextQuestionButton;
@@ -184,6 +189,11 @@ public class SolveQuizController {
     @FXML
     private void onConfirmQuiz() {
         saveAnswer();
+        ConfirmQuizDialog dialog = new ConfirmQuizDialog();
+        Optional<Boolean> result = dialog.showAndWait();
+
+        if(result.isPresent() && !result.get()) return;
+
         FXMLLoader fxmlLoader = SceneLoader.loadScene("quiz-score-view.fxml", stage);
         QuizScoreController controller = fxmlLoader.getController();
 

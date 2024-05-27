@@ -16,7 +16,7 @@ import java.util.List;
 
 public class QuizScoreController {
     @FXML
-    private  Label userScorePercentageLabel;
+    private Label userScorePercentageLabel;
     @FXML
     private Label userScorePointsLabel;
     private int userQuizScore;

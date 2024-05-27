@@ -17,24 +17,24 @@
           <HBox alignment="CENTER" styleClass="top" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
             <Label fx:id="titleLabel" layoutX="370.0" styleClass="title" text="tytul" />
           </HBox>
-          <Label fx:id="timeLabel"  styleClass="time" text="123" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+          <Label fx:id="timeLabel" styleClass="time" text="123" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
         </AnchorPane>
       </top>
       <center>
         <BorderPane styleClass="content">
           <top>
-            <Label styleClass="question" fx:id="questionLabel" text="pytanie"/>
+            <Label fx:id="questionLabel" styleClass="question" text="pytanie" />
           </top>
           <left>
-            <VBox styleClass="answer-box" fx:id="answersBox"/>
+            <VBox fx:id="answersBox" styleClass="answer-box" />
           </left>
           <bottom>
             <AnchorPane>
-              <FlowPane AnchorPane.leftAnchor="10" styleClass="action-buttons">
-                <Button text="Poprzednie pytanie" disable="true" fx:id="previousQuestionButton" onAction="#onPreviousQuestion"/>
-                <Button text="Następne pytanie" fx:id="nextQuestionButton" onAction="#onNextQuestion"/>
+              <FlowPane styleClass="action-buttons" AnchorPane.leftAnchor="10">
+                <Button fx:id="previousQuestionButton" disable="true" onAction="#onPreviousQuestion" text="Poprzednie pytanie" />
+                <Button fx:id="nextQuestionButton" onAction="#onNextQuestion" text="Następne pytanie" />
               </FlowPane>
-              <Button AnchorPane.rightAnchor="10" text="Zakończ quiz" onAction="#onConfirmQuiz"/>
+              <Button onAction="#onConfirmQuiz" text="Zakończ quiz" AnchorPane.rightAnchor="10" />
             </AnchorPane>
 
           </bottom>
