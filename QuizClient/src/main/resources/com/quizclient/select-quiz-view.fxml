@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import java.net.URL?>
-<?import javafx.scene.layout.FlowPane?>
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.quizclient.controller.SelectQuizController"
-            prefHeight="600.0" prefWidth="800.0"
->
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.SelectQuizController">
   <top>
     <HBox styleClass="header">
       <Label>JAVA QUIZ</Label>
     </HBox>
   </top>
-  <center>
-    <FlowPane styleClass="quizzes" fx:id="quizzesContainer"/>
-  </center>
   <bottom>
     <HBox styleClass="footer">
       <Label styleClass="powered-by">Powered by </Label><Label styleClass="author">Paweł Morawczyński</Label>
     </HBox>
   </bottom>
   <stylesheets>
-    <URL value="@styles/select-quiz-view.css"/>
-    <URL value="@styles/global.css"/>
+    <URL value="@styles/select-quiz-view.css" />
+    <URL value="@styles/global.css" />
   </stylesheets>
+   <center>
+    <BorderPane styleClass="main">
+      <top>
+        <Label styleClass="choose-quiz" text="Wybierz Quiz:" />
+      </top>
+      <center>
+        <FlowPane fx:id="quizzesContainer" styleClass="quizzes"/>
+      </center>
+    </BorderPane>
+   </center>
 </BorderPane>

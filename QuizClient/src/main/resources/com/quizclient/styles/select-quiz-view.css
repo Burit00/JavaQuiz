@@ -1,5 +1,17 @@
+.main {
+    -fx-padding: 10 20;
+    -fx-vgap: 10;
+    -fx-fit-to-width: true;
+}
+
 .quizzes {
-    -fx-padding: 20;
     -fx-hgap: 10;
     -fx-vgap: 10;
+    -fx-fit-to-width: true;
+}
+
+.choose-quiz {
+    -fx-text-fill: #fff;
+    -fx-font-size: 25px;
+    -fx-padding: 0 0 10 0;
 }
