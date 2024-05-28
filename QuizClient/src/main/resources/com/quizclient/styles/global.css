@@ -47,6 +47,11 @@ Button {
     -fx-cursor: hand;
 }
 
+Button:focused {
+    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, #02b7b3, #1e9494);
+    -fx-text-fill: #dadada;
+}
+
 DialogPane Label {
     -fx-text-fill: #fff;
 }
