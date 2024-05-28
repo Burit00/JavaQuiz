@@ -9,23 +9,15 @@ import com.quizclient.utils.SceneLoader;
 import dialog.ConfirmQuizDialog;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.*;
 
 public class SolveQuizController {
-    private Stage stage;
     private QuizQuery quiz;
     private List<QuestionQuery> questions;
     private final List<List<String>> userQuizAnswers = new ArrayList<>();
@@ -62,7 +54,7 @@ public class SolveQuizController {
         timer = new Timeline();
         timer = new Timeline(
                 new KeyFrame(Duration.seconds(1),
-                        event -> {
+                        _ -> {
                             setTimerLabel();
                             if (timeLeft == 0) {
                                 timer.stop();
@@ -154,8 +146,7 @@ public class SolveQuizController {
             textField.setText(savedAnswers.getFirst());
     }
 
-    public void setParameter(QuizQuery quiz, Stage stage) {
-        this.stage = stage;
+    public void setParameter(QuizQuery quiz) {
         this.quiz = quiz;
         int secondsInMinute = 60;
         timeLeft = quiz.getTime() * secondsInMinute;
@@ -222,14 +213,9 @@ public class SolveQuizController {
     }
 
     private void showScore() {
-        FXMLLoader fxmlLoader = SceneLoader.loadScene("quiz-score-view.fxml", stage);
-        QuizScoreController controller = fxmlLoader.getController();
-
         List<List<String>> correctQuizAnswers = questions.stream()
-                .map(question -> question.getCorrectAnswers())
-                .toList();
-
-        controller.setParameter(correctQuizAnswers, userQuizAnswers);
+                .map(question -> question.getCorrectAnswers()).toList();
+        SceneLoader.loadQuizScoreScene(correctQuizAnswers,  userQuizAnswers);
     }
 
     private void saveAnswer() {

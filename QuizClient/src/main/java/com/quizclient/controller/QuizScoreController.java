@@ -2,11 +2,7 @@ package com.quizclient.controller;
 
 
 import com.quizclient.utils.SceneLoader;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.control.Label;
 
 import java.util.List;
@@ -30,14 +26,14 @@ public class QuizScoreController {
         int score = 0;
 
         for (int questionIndex = 0; questionIndex < correctQuizAnswers.size(); questionIndex++) {
-            if(correctQuizAnswers.get(questionIndex).size() != correctQuizAnswers.get(questionIndex).size()) continue;
-
             List<String> userQuestionAnswers = userQuizAnswers.get(questionIndex);
             List<String> correctQuestionAnswers = correctQuizAnswers.get(questionIndex);
 
+            if(correctQuestionAnswers.size() != userQuestionAnswers.size()) continue;
+
             boolean isAnswerCorrect = true;
-            for(String userAnswer: userQuestionAnswers) {
-                if(!correctQuestionAnswers.contains(userAnswer)) {
+            for(String correctAnswer: correctQuestionAnswers) {
+                if(!userQuestionAnswers.contains(correctAnswer)) {
                     isAnswerCorrect = false;
                     break;
                 }
@@ -59,10 +55,8 @@ public class QuizScoreController {
     }
 
     @FXML
-    private void onExitQuiz(ActionEvent event) {
-        Scene scene = ((Node) event.getSource()).getScene();
-        Stage stage = (Stage) scene.getWindow();
-        SceneLoader.loadScene("select-quiz-view.fxml", stage);
+    private void onExitQuiz() {
+        SceneLoader.loadSelectQuizScene();
     }
 
 }

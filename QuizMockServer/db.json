@@ -8,9 +8,15 @@
     },
     {
       "id": "2",
-      "name": "JAVAFX",
+      "name": "Pusty Quiz",
       "time": 30,
       "description": "XDD2"
+    },
+    {
+      "id": "3",
+      "name": "Krótki Quiz",
+      "time": 1,
+      "description": "Ten test jest naprawdę krótki, lepiej się pospiesz!"
     }
   ],
   "questions": [
@@ -29,11 +35,25 @@
       "correctAnswers": ["5", "6", "8"]
     },
     {
-      "id": "2",
+      "id": "3",
       "quizId": "1",
       "name": "Jaka klasa służy do stworzenia przycisku?",
       "questionType": "3",
       "correctAnswers": ["Button"]
+    },
+    {
+      "id": "4",
+      "quizId": "3",
+      "name": "W wyniku kompilacji kodu źródłowego Java otrzymano między innymi pliki Class$1.class, Class$2.class. Dlaczego w nazwach plików klasowych po znaku $ są liczby 1 i 2:",
+      "questionType": "1",
+      "correctAnswers": ["10"]
+    },
+    {
+      "id": "5",
+      "quizId": "3",
+      "name": "W języku Java w klasie serwletów javax.servlet.http.HttpServlet za obsługę żądań typu GET odpowiada metoda:",
+      "questionType": "1",
+      "correctAnswers": ["14"]
     }
   ],
   "answers": [
@@ -76,6 +96,46 @@
       "id": "8",
       "questionId": "2",
       "text": "JavaFX"
+    },
+    {
+      "id": "9",
+      "questionId": "4",
+      "text": "Ponieważ klasa zawierała dwie klasy wewnętrzne o nazwach 1 i 2"
+    },
+    {
+      "id": "10",
+      "questionId": "4",
+      "text": "Ponieważ klasa zawierała dwie anonimowe klasy wewnętrzne"
+    },
+    {
+      "id": "11",
+      "questionId": "4",
+      "text": "Ponieważ klasa zawierała dwie nazwane klasy abstrakcyjne"
+    },
+    {
+      "id": "12",
+      "questionId": "4",
+      "text": "Ponieważ klasa zawierała dwie nazwane klasy adaptacyjne"
+    },
+    {
+      "id": "13",
+      "questionId": "5",
+      "text": "processRequest()"
+    },
+    {
+      "id": "14",
+      "questionId": "5",
+      "text": "doGet()"
+    },
+    {
+      "id": "15",
+      "questionId": "5",
+      "text": "doPost()"
+    },
+    {
+      "id": "16",
+      "questionId": "5",
+      "text": "Język Java nie obsługuje żądań typu GET"
     }
   ]
 }

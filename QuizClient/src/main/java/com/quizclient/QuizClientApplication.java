@@ -1,20 +1,15 @@
 package com.quizclient;
 
+import com.quizclient.utils.SceneLoader;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class QuizClientApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("select-quiz-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+    public void start(Stage stage) {
         stage.setTitle("Java Quiz!");
-        stage.setScene(scene);
-        stage.show();
+        SceneLoader.setStage(stage);
+        SceneLoader.loadSelectQuizScene();
     }
 
     public static void main(String[] args) {
