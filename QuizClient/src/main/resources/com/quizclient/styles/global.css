@@ -38,11 +38,11 @@ Button {
     -fx-padding: 10 20;
     -fx-fill-width: 100;
 
-    -fx-background-radius: 10;
+    -fx-background-radius: 5;
     -fx-background-insets: 0;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
-    -fx-border-radius: 10;
+    -fx-border-radius: 5;
     -fx-border-width: 2px;
     -fx-cursor: hand;
 }

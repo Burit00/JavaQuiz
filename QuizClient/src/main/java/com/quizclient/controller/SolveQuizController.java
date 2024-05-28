@@ -6,7 +6,7 @@ import com.quizclient.model.query.AnswerQuery;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
 import com.quizclient.utils.SceneLoader;
-import dialog.ConfirmQuizDialog;
+import com.quizclient.dialog.ConfirmQuizDialog;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -24,6 +24,7 @@ public class SolveQuizController {
     private QuestionQuery currentQuestion;
     private int timeLeft;
     private Timeline timer;
+    private ConfirmQuizDialog dialog;
 
     private ToggleGroup radioGroup;
 
@@ -58,6 +59,10 @@ public class SolveQuizController {
                             setTimerLabel();
                             if (timeLeft == 0) {
                                 timer.stop();
+
+                                if(dialog != null && dialog.isShowing())
+                                    dialog.close();
+
                                 showScore();
                             }
                         }));
@@ -76,7 +81,7 @@ public class SolveQuizController {
         String secondsString = String.format("%02d", seconds);
         String minutesString = String.format("%02d", minutes);
 
-        timeLabel.setText("Czas: " + minutesString + ":" + secondsString);
+        timeLabel.setText(minutesString + ":" + secondsString);
     }
 
     private void buildQuestion() {
@@ -203,7 +208,7 @@ public class SolveQuizController {
     @FXML
     private void onConfirmQuiz() {
         saveAnswer();
-        ConfirmQuizDialog dialog = new ConfirmQuizDialog();
+        dialog = new ConfirmQuizDialog();
         Optional<Boolean> result = dialog.showAndWait();
 
         if (result.isPresent() && result.get()) {

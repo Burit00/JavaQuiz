@@ -10,6 +10,16 @@
       <Label>JAVA QUIZ</Label>
     </HBox>
   </top>
+  <center>
+    <BorderPane styleClass="main">
+      <top>
+        <Label styleClass="choose-quiz" text="Wybierz Quiz:" />
+      </top>
+      <center>
+        <FlowPane fx:id="quizzesContainer" styleClass="quizzes"/>
+      </center>
+    </BorderPane>
+  </center>
   <bottom>
     <HBox styleClass="footer">
       <Label styleClass="powered-by">Powered by </Label><Label styleClass="author">Paweł Morawczyński</Label>
@@ -19,14 +29,4 @@
     <URL value="@styles/select-quiz-view.css" />
     <URL value="@styles/global.css" />
   </stylesheets>
-   <center>
-    <BorderPane styleClass="main">
-      <top>
-        <Label styleClass="choose-quiz" text="Wybierz Quiz:" />
-      </top>
-      <center>
-        <FlowPane fx:id="quizzesContainer" styleClass="quizzes"/>
-      </center>
-    </BorderPane>
-   </center>
 </BorderPane>

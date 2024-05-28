@@ -1,8 +1,8 @@
-package dialog;
+package com.quizclient.dialog;
 
 import com.quizclient.QuizClientApplication;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import com.quizclient.model.enums.AwesomeIconEnum;
+import com.quizclient.ui.Icon;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -22,25 +22,22 @@ public class ConfirmQuizDialog extends Dialog<Boolean> {
         getDialogPane().getStylesheets().add(QuizClientApplication.class.getResource("styles/global.css").toExternalForm());
         Label resultLabel = new Label("Czy chcesz zakończyć quiz?");
 
-        getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
 
         Button yesButton = (Button)getDialogPane().lookupButton(ButtonType.OK);
         yesButton.setText("Zakończ");
-        yesButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setResult(true);
-            }
-        });
+        Icon applyIcon = new Icon();
+        applyIcon.setValue(AwesomeIconEnum.CHECK);
+        yesButton.setGraphic(applyIcon);
+        yesButton.setOnAction(_ -> setResult(true));
 
         Button cancelButton = (Button)getDialogPane().lookupButton(ButtonType.CANCEL);
+
+        Icon cancelIcon = new Icon();
+        cancelIcon.setValue(AwesomeIconEnum.BAN);
+        cancelButton.setGraphic(cancelIcon);
         cancelButton.setText("Anuluj");
-        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setResult(false);
-            }
-        });
+        cancelButton.setOnAction(_ -> setResult(false));
 
         getDialogPane().getScene().getWindow()
                 .setOnCloseRequest(_ -> setResult(false));

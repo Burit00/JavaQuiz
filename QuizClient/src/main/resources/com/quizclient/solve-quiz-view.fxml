@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.SolveQuizController">
+<?import com.quizclient.ui.Icon?>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.SolveQuizController">
   <top>
     <HBox styleClass="header">
       <Label>JAVA QUIZ</Label>
@@ -14,29 +16,44 @@
     <BorderPane>
       <top>
         <AnchorPane>
-          <HBox alignment="CENTER" styleClass="top" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
-            <Label fx:id="titleLabel" layoutX="370.0" styleClass="title" text="tytul" />
+          <HBox alignment="CENTER" styleClass="top" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
+            <Label fx:id="titleLabel" layoutX="370.0" styleClass="title" text="tytul"/>
           </HBox>
-          <Label fx:id="timeLabel" styleClass="time" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+          <HBox alignment="CENTER" styleClass="time" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+            <Icon value="CLOCK_ALT"/>
+            <Label fx:id="timeLabel"/>
+          </HBox>
         </AnchorPane>
       </top>
       <center>
         <BorderPane styleClass="content">
           <top>
-            <Label fx:id="questionLabel" styleClass="question" text="pytanie" />
+            <Label fx:id="questionLabel" styleClass="question" text="pytanie"/>
           </top>
           <left>
-            <VBox fx:id="answersBox" styleClass="answer-box" />
+            <VBox fx:id="answersBox" styleClass="answer-box"/>
           </left>
           <bottom>
             <AnchorPane>
               <FlowPane styleClass="action-buttons" AnchorPane.leftAnchor="10">
-                <Button fx:id="previousQuestionButton" disable="true" onAction="#onPreviousQuestion" text="Poprzednie pytanie" />
-                <Button fx:id="nextQuestionButton" onAction="#onNextQuestion" text="Następne pytanie" />
+                <Button fx:id="previousQuestionButton" onAction="#onPreviousQuestion"
+                        text="Poprzednie pytanie">
+                  <graphic>
+                    <Icon value="ARROW_LEFT"/>
+                  </graphic></Button>
+                <Button fx:id="nextQuestionButton" onAction="#onNextQuestion" text="Następne pytanie">
+                  <graphic>
+                    <Icon value="ARROW_RIGHT"/>
+                  </graphic>
+                </Button>
               </FlowPane>
-              <Button onAction="#onConfirmQuiz" text="Zakończ quiz" AnchorPane.rightAnchor="10" />
+              <Button onAction="#onConfirmQuiz" text="Zakończ test" AnchorPane.rightAnchor="10">
+                <graphic>
+                  <Icon value="FAST_FORWARD"/>
+                </graphic>
+              </Button>
             </AnchorPane>
-
           </bottom>
         </BorderPane>
       </center>
@@ -49,7 +66,7 @@
     </HBox>
   </bottom>
   <stylesheets>
-    <URL value="@styles/solve-quiz-view.css" />
-    <URL value="@styles/global.css" />
+    <URL value="@styles/solve-quiz-view.css"/>
+    <URL value="@styles/global.css"/>
   </stylesheets>
 </BorderPane>

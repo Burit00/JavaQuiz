@@ -10,7 +10,7 @@
       "id": "2",
       "name": "Pusty Quiz",
       "time": 30,
-      "description": "XDD2"
+      "description": "Ten test nie zawiera pytań,\nsłuży wyłącznie jako zapychacz miejsca"
     },
     {
       "id": "3",
@@ -30,7 +30,7 @@
     {
       "id": "2",
       "quizId": "1",
-      "name": "Który framework służy do tworzenia interfesju użytkownika?",
+      "name": "Która biblioteka służy do tworzenia interfesju użytkownika?",
       "questionType": "1",
       "correctAnswers": ["5", "6", "8"]
     },

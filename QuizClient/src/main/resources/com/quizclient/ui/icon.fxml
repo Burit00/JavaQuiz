@@ -1,0 +1,6 @@
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root type="VBox" xmlns:fx="http://javafx.com/fxml">
+    <Label fx:id="label" style="-fx-font-family: FontAwesome; -fx-font-size: 1em; -fx-text-fill: inherit"/>
+</fx:root>

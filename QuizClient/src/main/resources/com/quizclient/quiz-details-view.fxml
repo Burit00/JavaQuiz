@@ -4,6 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import com.quizclient.ui.Icon?>
+
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.QuizDetailsController">
   <top>
@@ -31,8 +33,16 @@
         </center>
       </BorderPane>
       <FlowPane styleClass="action-buttons">
-        <Button onAction="#onExitQuiz" text="Opuść test"/>
-        <Button onAction="#onStartQuiz" text="Rozpocznij test"/>
+        <Button onAction="#onExitQuiz" text="Opuść test">
+          <graphic>
+            <Icon value="HOME"/>
+          </graphic>
+        </Button>
+        <Button onAction="#onStartQuiz" text="Rozpocznij test">
+          <graphic>
+            <Icon  value="PLAY"/>
+          </graphic>
+        </Button>
       </FlowPane>
     </VBox>
   </center>

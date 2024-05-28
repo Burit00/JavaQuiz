@@ -17,4 +17,6 @@ module com.quizclient {
     exports com.quizclient.model.enums;
     exports com.quizclient.utils;
     opens com.quizclient.utils;
+    exports com.quizclient.ui;
+    opens com.quizclient.ui;
 }

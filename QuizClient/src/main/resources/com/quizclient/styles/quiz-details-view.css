@@ -18,8 +18,10 @@ Label {
 }
 
 .description {
+    -fx-font-size: 16px;
     -fx-text-fill: white;
     -fx-text-alignment: center;
+    -fx-wrap-text: true;
 }
 
 .head {
@@ -32,8 +34,11 @@ Label {
 }
 
 .time {
-    -fx-font-size: 16px;
-    -fx-padding: 0 0 10 0;
+    -fx-font-size: 18px;
+    -fx-padding: 0 5em 10;
+    -fx-border-color: #02b7b3;
+    -fx-border-width: 2px;
+    -fx-border-style: hidden none solid none;
 }
 
 .action-buttons {
@@ -41,4 +46,5 @@ Label {
     -fx-alignment: center;
     -fx-fill-height: true;
     -fx-hgap: 20px;
+    -fx-vgap: 20px;
 }
