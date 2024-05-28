@@ -7,6 +7,10 @@ import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
 import com.quizclient.utils.SceneLoader;
 import dialog.ConfirmQuizDialog;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,10 +20,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class SolveQuizController {
     private Stage stage;
@@ -28,11 +31,9 @@ public class SolveQuizController {
     private final List<List<String>> userQuizAnswers = new ArrayList<>();
     private QuestionQuery currentQuestion;
     private int timeLeft;
+    private Timeline timer;
 
     private ToggleGroup radioGroup;
-
-    @FXML
-    private DialogPane dialog;
 
     @FXML
     private Button nextQuestionButton;
@@ -57,26 +58,48 @@ public class SolveQuizController {
 
     private void buildUI() {
         titleLabel.setText(quiz.getName());
-        timeLabel.setText(quiz.getTime() + "min");
+        setTimerLabel();
+        timer = new Timeline();
+        timer = new Timeline(
+                new KeyFrame(Duration.seconds(1),
+                        event -> {
+                            setTimerLabel();
+                            if (timeLeft == 0) {
+                                timer.stop();
+                                showScore();
+                            }
+                        }));
+        timer.setCycleCount(Timeline.INDEFINITE);
+        timer.play();
 
+        buildQuestion();
+    }
+
+    private void setTimerLabel() {
+        --timeLeft;
+        int secondsInMinute = 60;
+        int minutes = timeLeft / secondsInMinute;
+        int seconds = timeLeft % secondsInMinute;
+
+        String secondsString = String.format("%02d", seconds);
+        String minutesString = String.format("%02d", minutes);
+
+        timeLabel.setText("Czas: " + minutesString + ":" + secondsString);
+    }
+
+    private void buildQuestion() {
         int numberOfQuestion = (questions.indexOf(currentQuestion) + 1);
 
-        if (numberOfQuestion == 0) {
-            setDisablePreviousQuestionButton();
-            setDisableNextQuestionButton();
-
-            return;
+        if (numberOfQuestion != 0) {
+            questionLabel.setText(numberOfQuestion + ". " + currentQuestion.getName());
+            answersBox.getChildren().clear();
+            QuestionTypeEnum questionType = currentQuestion.getQuestionType();
+            switch (questionType) {
+                case CHECKBOX -> buildCheckboxAnswers();
+                case RADIO -> buildRadioAnswers();
+                case INPUT -> buildInputAnswers();
+            }
         }
-
-        questionLabel.setText(numberOfQuestion + ". " + currentQuestion.getName());
-        answersBox.getChildren().clear();
-        QuestionTypeEnum questionType = currentQuestion.getQuestionType();
-        switch (questionType) {
-            case CHECKBOX -> buildCheckboxAnswers();
-            case RADIO -> buildRadioAnswers();
-            case INPUT -> buildInputAnswers();
-        }
-
 
         setDisablePreviousQuestionButton();
         setDisableNextQuestionButton();
@@ -134,8 +157,8 @@ public class SolveQuizController {
     public void setParameter(QuizQuery quiz, Stage stage) {
         this.stage = stage;
         this.quiz = quiz;
-        int secondsInMinutes = 60;
-        timeLeft = quiz.getTime() * secondsInMinutes;
+        int secondsInMinute = 60;
+        timeLeft = quiz.getTime() * secondsInMinute;
         this.loadAnswers();
         this.buildUI();
     }
@@ -159,7 +182,7 @@ public class SolveQuizController {
             int currentQuestionIndex = questions.indexOf(currentQuestion);
             int previousQuestionIndex = currentQuestionIndex - 1;
             currentQuestion = questions.get(previousQuestionIndex);
-            buildUI();
+            buildQuestion();
         }
     }
 
@@ -170,7 +193,7 @@ public class SolveQuizController {
             int currentQuestionIndex = questions.indexOf(currentQuestion);
             int nextQuestionIndex = currentQuestionIndex + 1;
             currentQuestion = questions.get(nextQuestionIndex);
-            buildUI();
+            buildQuestion();
         }
     }
 
@@ -192,8 +215,13 @@ public class SolveQuizController {
         ConfirmQuizDialog dialog = new ConfirmQuizDialog();
         Optional<Boolean> result = dialog.showAndWait();
 
-        if(result.isPresent() && !result.get()) return;
+        if (result.isPresent() && result.get()) {
+            timer.stop();
+            showScore();
+        }
+    }
 
+    private void showScore() {
         FXMLLoader fxmlLoader = SceneLoader.loadScene("quiz-score-view.fxml", stage);
         QuizScoreController controller = fxmlLoader.getController();
 
@@ -205,6 +233,8 @@ public class SolveQuizController {
     }
 
     private void saveAnswer() {
+        if(currentQuestion == null) return;
+
         QuestionTypeEnum questionType = currentQuestion.getQuestionType();
         switch (questionType) {
             case CHECKBOX -> saveCheckboxAnswers();

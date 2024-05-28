@@ -17,7 +17,7 @@
           <HBox alignment="CENTER" styleClass="top" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
             <Label fx:id="titleLabel" layoutX="370.0" styleClass="title" text="tytul" />
           </HBox>
-          <Label fx:id="timeLabel" styleClass="time" text="123" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+          <Label fx:id="timeLabel" styleClass="time" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
         </AnchorPane>
       </top>
       <center>

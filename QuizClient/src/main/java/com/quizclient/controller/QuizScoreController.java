@@ -1,17 +1,14 @@
 package com.quizclient.controller;
 
 
-import com.quizclient.QuizClientApplication;
+import com.quizclient.utils.SceneLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 
-import java.io.IOException;
 import java.util.List;
 
 public class QuizScoreController {
@@ -38,8 +35,15 @@ public class QuizScoreController {
             List<String> userQuestionAnswers = userQuizAnswers.get(questionIndex);
             List<String> correctQuestionAnswers = correctQuizAnswers.get(questionIndex);
 
-            if(userQuestionAnswers.containsAll(correctQuestionAnswers))
-                ++score;
+            boolean isAnswerCorrect = true;
+            for(String userAnswer: userQuestionAnswers) {
+                if(!correctQuestionAnswers.contains(userAnswer)) {
+                    isAnswerCorrect = false;
+                    break;
+                }
+            }
+
+            if(isAnswerCorrect) ++score;
         }
 
         return score;
@@ -47,27 +51,18 @@ public class QuizScoreController {
 
     private void buildUI() {
         String userQuizScorePointsText = userQuizScore + "/" + maxQuizScore;
-        userScorePointsLabel.setText("Twój wynik to: " + userQuizScorePointsText + " punktów");
-        Double userQuizScorePercentage = (userQuizScore / (double) maxQuizScore) * 100;
+        userScorePointsLabel.setText("Zdobyte punkty: " + userQuizScorePointsText);
+        double maxQuizScoreBiggerThanZero = maxQuizScore > 0 ? maxQuizScore : 1.0;
+        double userQuizScorePercentage = (userQuizScore / maxQuizScoreBiggerThanZero) * 100;
         String userQuizScorePercentageText = String.format("%.2f", userQuizScorePercentage) + "%";
         userScorePercentageLabel.setText("Wynik procentowy: " + userQuizScorePercentageText);
     }
 
     @FXML
     private void onExitQuiz(ActionEvent event) {
-        FXMLLoader fxmlLoader = new FXMLLoader(QuizClientApplication.class.getResource("select-quiz-view.fxml"));
         Scene scene = ((Node) event.getSource()).getScene();
         Stage stage = (Stage) scene.getWindow();
-        Parent root;
-
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        stage.setScene(new Scene(root));
-        stage.show();
+        SceneLoader.loadScene("select-quiz-view.fxml", stage);
     }
 
 }
