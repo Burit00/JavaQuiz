@@ -1,7 +1,7 @@
 package com.quizclient.dialog;
 
 import com.quizclient.QuizClientApplication;
-import com.quizclient.model.enums.AwesomeIconEnum;
+import com.quizclient.enums.AwesomeIconEnum;
 import com.quizclient.ui.Icon;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;

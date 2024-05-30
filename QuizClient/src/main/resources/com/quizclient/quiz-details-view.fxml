@@ -40,7 +40,7 @@
         </Button>
         <Button onAction="#onStartQuiz" text="Rozpocznij test">
           <graphic>
-            <Icon  value="PLAY"/>
+            <Icon value="PLAY"/>
           </graphic>
         </Button>
       </FlowPane>

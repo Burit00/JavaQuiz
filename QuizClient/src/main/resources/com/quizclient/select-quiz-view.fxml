@@ -4,7 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.SelectQuizController">
+<?import com.quizclient.ui.Icon?>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.SelectQuizController">
   <top>
     <HBox styleClass="header">
       <Label>JAVA QUIZ</Label>
@@ -18,6 +20,16 @@
       <center>
         <FlowPane fx:id="quizzesContainer" styleClass="quizzes"/>
       </center>
+      <bottom>
+        <AnchorPane>
+          <Button AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
+                  text="Stwórz Quiz" onAction="#onCreateQuiz">
+            <graphic>
+              <Icon value="PLUS"/>
+            </graphic>
+          </Button>
+        </AnchorPane>
+      </bottom>
     </BorderPane>
   </center>
   <bottom>

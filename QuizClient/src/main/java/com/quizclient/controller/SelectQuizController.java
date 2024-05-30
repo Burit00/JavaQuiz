@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectQuizController {
@@ -14,7 +15,12 @@ public class SelectQuizController {
 
     private void loadQuizzes() {
         quizzesContainer.getChildren().clear();
-        quizzes = QuizHttpClient.getQuizzes();
+        try{
+            quizzes = QuizHttpClient.getQuizzes();
+        }catch(Exception e){
+            quizzes = new ArrayList<>();
+        }
+
     }
 
     private void buildUI() {
@@ -39,4 +45,9 @@ public class SelectQuizController {
 
     @FXML
     private FlowPane quizzesContainer;
+
+    @FXML
+    private void onCreateQuiz() {
+        SceneLoader.loadCreateQuizScene();
+    }
 }

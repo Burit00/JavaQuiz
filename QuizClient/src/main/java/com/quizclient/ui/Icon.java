@@ -14,7 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import com.quizclient.model.enums.AwesomeIconEnum;
+import com.quizclient.enums.AwesomeIconEnum;
 
 public class Icon extends VBox{
 	public final static String DEFAULT_ICON_SIZE = "16.0";
@@ -36,6 +36,11 @@ public class Icon extends VBox{
 			return sizeProperty;
 		}
 	});
+
+	public Icon(AwesomeIconEnum icon) {
+		this();
+		setValue(icon);
+	}
 
 	public Icon() {
 		final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("icon.fxml"));

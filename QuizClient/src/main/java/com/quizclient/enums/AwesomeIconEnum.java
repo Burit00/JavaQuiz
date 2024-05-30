@@ -1,4 +1,4 @@
-package com.quizclient.model.enums;
+package com.quizclient.enums;
 
 public enum AwesomeIconEnum {
 

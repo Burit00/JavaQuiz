@@ -70,6 +70,11 @@ public class SceneLoader {
         showScene(loader.root);
     }
 
+    public static void loadCreateQuizScene() {
+        Loader loader = loadScene("create-quiz-view.fxml");
+        showScene(loader.root);
+    }
+
     private static URL getResource(String fileName) {
         return QuizClientApplication.class.getResource(fileName);
     }

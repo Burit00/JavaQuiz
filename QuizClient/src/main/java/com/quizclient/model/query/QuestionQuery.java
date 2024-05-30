@@ -1,6 +1,6 @@
 package com.quizclient.model.query;
 
-import com.quizclient.model.enums.QuestionTypeEnum;
+import com.quizclient.enums.QuestionTypeEnum;
 
 import java.util.List;
 

@@ -31,6 +31,7 @@ BorderPane, DialogPane {
 }
 
 Button {
+    -fx-graphic-text-gap: 10px;
     -fx-text-fill: #464646;
     -fx-end-margin: 20px;
     -fx-background-color: #02b7b3;
@@ -44,12 +45,15 @@ Button {
     -fx-font-size: 14px;
     -fx-border-radius: 5;
     -fx-border-width: 2px;
+    -fx-border-color: transparent;
     -fx-cursor: hand;
 }
 
 Button:focused {
-    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, #02b7b3, #1e9494);
-    -fx-text-fill: #dadada;
+    -fx-border-color: #93efec;
+    -fx-border-width: 2px;
+    /*-fx-background-color: radial-gradient(center 50% 50%, radius 400%, #02b7b3 10%, rgba(8, 0, 243, 0.37) 20%);*/
+    /*-fx-text-fill: #000000;*/
 }
 
 DialogPane Label {

@@ -1,0 +1,76 @@
+.main {
+    -fx-padding: 10;
+}
+
+.quiz-title {
+    -fx-pref-width: 300px;
+}
+
+.title {
+    -fx-text-fill: #FFF;
+    -fx-font-size: 20px;
+    -fx-padding: 0 0 5px;
+}
+
+.title-input {
+    -fx-font-size: 16px;
+}
+
+.questions {
+    -fx-padding: 10px 0;
+}
+
+.scroll {
+    -fx-fit-to-width: true;
+    -fx-background-color: transparent;
+    -fx-padding: 0 5 0;
+}
+
+.scroll .viewport {
+    -fx-fit-to-width: true;
+    -fx-fill-height: true;
+    -fx-background-color: transparent;
+}
+
+.question-list {
+    -fx-spacing: 10;
+    -fx-fit-to-width: true;
+    -fx-orientation: vertical;
+    -fx-alignment: center;
+}
+
+.question-list .question-row {
+    -fx-fit-to-width: true;
+    -fx-alignment: center;
+    -fx-padding: 5 10;
+    -fx-background-color: #02b7b3;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.question-row Label {
+    -fx-font-size: 15px;
+    -fx-wrap-text: true;
+}
+
+.question-row .action-buttons {
+    -fx-min-width: 190px;
+}
+
+.action-buttons .button {
+    -fx-alignment: center;
+    -fx-graphic-text-gap: 10px;
+    -fx-text-fill: white;
+    -fx-padding: 5 15;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-background-color: #464646;
+}
+
+.action-buttons .edit-button:focused {
+    -fx-text-fill: #6cd998;
+}
+
+.action-buttons .remove-button:focused {
+    -fx-text-fill: #d96c6c;
+}

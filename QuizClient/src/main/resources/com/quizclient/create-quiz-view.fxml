@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.quizclient.ui.Icon?>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.CreateQuizController">
+  <top>
+    <HBox styleClass="header">
+      <Label>JAVA QUIZ</Label>
+    </HBox>
+  </top>
+  <center>
+    <BorderPane styleClass="main">
+      <top>
+        <VBox styleClass="quiz-title">
+          <Label styleClass="title" text="Ustaw nazwę Quizu:"/>
+          <TextField fx:id="quizNameTextField" styleClass="title-input" promptText="Nazwa quizu"/>
+        </VBox>
+      </top>
+      <center>
+        <VBox VBox.vgrow="ALWAYS" styleClass="questions">
+          <ScrollPane VBox.vgrow="ALWAYS" styleClass="scroll" >
+            <VBox fx:id="questionListBox" styleClass="question-list"/>
+          </ScrollPane>
+        </VBox>
+      </center>
+      <bottom>
+        <HBox>
+          <Button onAction="#onCancel" text="Anuluj">
+            <graphic>
+              <Icon value="ARROW_LEFT"/>
+            </graphic>
+          </Button>
+          <HBox HBox.hgrow="ALWAYS" alignment="CENTER">
+            <Button onAction="#onAddQuestion" text="Dodaj pytanie" >
+              <graphic>
+                <Icon value="PLUS"/>
+              </graphic>
+            </Button>
+          </HBox>
+          <Button fx:id="saveQuizButton" onAction="#onAddQuiz" text="Zapisz Quiz" disable="true">
+            <graphic>
+              <Icon value="CHECK"/>
+            </graphic>
+          </Button>
+        </HBox>
+      </bottom>
+    </BorderPane>
+
+  </center>
+  <bottom>
+    <HBox styleClass="footer">
+      <Label styleClass="powered-by">Powered by</Label>
+      <Label styleClass="author">Paweł Morawczyński</Label>
+    </HBox>
+  </bottom>
+  <stylesheets>
+    <URL value="@styles/create-quiz-view.css"/>
+    <URL value="@styles/global.css"/>
+  </stylesheets>
+
+</BorderPane>

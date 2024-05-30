@@ -1,7 +1,7 @@
 package com.quizclient.controller;
 
 import com.quizclient.api.QuizHttpClient;
-import com.quizclient.model.enums.QuestionTypeEnum;
+import com.quizclient.enums.QuestionTypeEnum;
 import com.quizclient.model.query.AnswerQuery;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
@@ -219,7 +219,7 @@ public class SolveQuizController {
 
     private void showScore() {
         List<List<String>> correctQuizAnswers = questions.stream()
-                .map(question -> question.getCorrectAnswers()).toList();
+                .map(QuestionQuery::getCorrectAnswers).toList();
         SceneLoader.loadQuizScoreScene(correctQuizAnswers,  userQuizAnswers);
     }
 
