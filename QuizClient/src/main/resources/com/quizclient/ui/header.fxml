@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+
+<fx:root type="HBox" styleClass="header" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
+    <Label>JAVA QUIZ</Label>
+</fx:root>
