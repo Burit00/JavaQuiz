@@ -3,6 +3,6 @@
 <?import javafx.scene.layout.HBox?>
 
 <fx:root type="HBox" styleClass="header" xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml">
+            xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/global.css">
     <Label>JAVA QUIZ</Label>
 </fx:root>

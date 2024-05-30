@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
+<?import com.quizclient.ui.Footer?>
+<?import com.quizclient.ui.Header?>
+<?import com.quizclient.ui.Icon?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import com.quizclient.ui.Icon?>
-
+<?import java.net.URL?>
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.QuizDetailsController">
   <top>
-    <HBox styleClass="header">
-      <Label>JAVA QUIZ</Label>
-    </HBox>
+    <Header/>
   </top>
   <center>
     <VBox>
@@ -47,10 +45,7 @@
     </VBox>
   </center>
   <bottom>
-    <HBox styleClass="footer">
-      <Label styleClass="powered-by">Powered by</Label>
-      <Label styleClass="author">Paweł Morawczyński</Label>
-    </HBox>
+    <Footer/>
   </bottom>
   <stylesheets>
     <URL value="@styles/quiz-details-view.css"/>

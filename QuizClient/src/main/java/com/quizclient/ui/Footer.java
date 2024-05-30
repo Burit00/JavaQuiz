@@ -5,11 +5,9 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 
-
-public class Header extends HBox {
-
-    public Header() {
-        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("header.fxml"));
+public class Footer extends HBox {
+    public Footer() {
+        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("footer.fxml"));
 
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);

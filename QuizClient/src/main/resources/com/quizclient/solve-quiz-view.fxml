@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.quizclient.ui.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-
-<?import com.quizclient.ui.Icon?>
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.SolveQuizController">
   <top>
-    <HBox styleClass="header">
-      <Label>JAVA QUIZ</Label>
-    </HBox>
+    <Header/>
   </top>
   <center>
     <BorderPane>
@@ -60,10 +57,7 @@
     </BorderPane>
   </center>
   <bottom>
-    <HBox styleClass="footer">
-      <Label styleClass="powered-by">Powered by</Label>
-      <Label styleClass="author">Paweł Morawczyński</Label>
-    </HBox>
+    <Footer/>
   </bottom>
   <stylesheets>
     <URL value="@styles/solve-quiz-view.css"/>

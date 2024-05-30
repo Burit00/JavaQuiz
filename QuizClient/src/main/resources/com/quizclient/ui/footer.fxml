@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Label?>
+<fx:root type="HBox" xmlns:fx="http://javafx.com/fxml" styleClass="footer"
+         stylesheets="@../styles/global.css">
+  <Label styleClass="powered-by">Powered by </Label>
+  <Label styleClass="author">Paweł Morawczyński</Label>
+</fx:root>

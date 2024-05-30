@@ -51,8 +51,8 @@ public class SolveQuizController {
 
     private void buildUI() {
         titleLabel.setText(quiz.getName());
+
         setTimerLabel();
-        timer = new Timeline();
         timer = new Timeline(
                 new KeyFrame(Duration.seconds(1),
                         _ -> {
