@@ -6,8 +6,6 @@ import com.quizclient.enums.QuestionTypeEnum;
 import com.quizclient.model.command.AnswerCommand;
 import com.quizclient.model.command.QuestionCommand;
 import com.quizclient.ui.Icon;
-import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -25,10 +23,11 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
 
     private TextField questionNameTextField;
     private String answerNameFromInput;
+    private Button confirmButton;
+
     private final ToggleGroup questionTypeGroup = new ToggleGroup();
     private final ToggleGroup answersGroup = new ToggleGroup();
-    private VBox answerListBox = new VBox();
-    private Button confirmButton;
+    private final VBox answerListBox = new VBox();
 
 
     public AddEditQuestionDialog() {
@@ -42,64 +41,66 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
     }
 
     private void buildUI() {
-        getDialogPane().setMinHeight(500);
-        getDialogPane().setMinWidth(500);
+        getDialogPane().setPrefSize(500, 500);
+        getDialogPane().getStylesheets().addAll(
+                QuizClientApplication.class.getResource("styles/global.css").toExternalForm(),
+                QuizClientApplication.class.getResource("dialog/add-edit-question-dialog.css").toExternalForm()
+        );
 
+        buildConfirmButton();
+
+        VBox topBox = new VBox(
+                buildQuestionNameBox(),
+                buildQuestionTypeBox()
+        );
+
+        VBox centerBox = new VBox(
+                new Label("Odpowiedzi:"),
+                buildAnswerListScrollBox()
+        );
+        centerBox.getStyleClass().add("scroll-wrapper");
+
+        BorderPane contentPane = new BorderPane();
+        contentPane.setTop(topBox);
+        contentPane.setCenter(centerBox);
+        contentPane.setBottom(buildAnswerInputBox());
+
+        getDialogPane().setContent(contentPane);
+    }
+
+    private void buildConfirmButton() {
         getDialogPane().getButtonTypes().add(ButtonType.APPLY);
         confirmButton = (Button) getDialogPane().lookupButton(ButtonType.APPLY);
         confirmButton.setText("Zapisz");
         confirmButton.setGraphic(new Icon(AwesomeIconEnum.CHECK));
         confirmButton.setMinWidth(Double.MAX_VALUE);
         confirmButton.setOnAction(_ -> confirmDialog());
+    }
 
-        answerListBox = new VBox();
+    private ScrollPane buildAnswerListScrollBox() {
         answerListBox.getStyleClass().add("answer-list");
-
-        BorderPane borderPane = new BorderPane();
-        VBox questionNameBox = buildQuestionName();
-        VBox questionTypeBox = buildQuestionTypeRadio();
-        HBox answerInputBox = buildAnswerInputBox();
-
-        VBox topBox = new VBox(
-                questionNameBox,
-                questionTypeBox
-        );
-
         buildAnswerListBox();
+
         ScrollPane answersScrollPane = new ScrollPane();
         answersScrollPane.setContent(answerListBox);
         answersScrollPane.getStyleClass().add("scroll");
         VBox.setVgrow(answersScrollPane, Priority.ALWAYS);
 
-        VBox centerBox = new VBox(
-                new Label("Odpowiedzi:"),
-                answersScrollPane
-        );
-        centerBox.getStyleClass().add("scroll-wrapper");
-
-        borderPane.setTop(topBox);
-        borderPane.setCenter(centerBox);
-        borderPane.setBottom(answerInputBox);
-
-        getDialogPane().setContent(borderPane);
-
-        getDialogPane().getStylesheets().addAll(
-                QuizClientApplication.class.getResource("styles/global.css").toExternalForm(),
-                QuizClientApplication.class.getResource("dialog/add-edit-question-dialog.css").toExternalForm()
-        );
+        return answersScrollPane;
     }
 
-    private VBox buildQuestionName() {
+    private VBox buildQuestionNameBox() {
         Label questionNameLabel = new Label("Wpisz pytanie: ");
         questionNameTextField = new TextField(question.getName());
         questionNameTextField.setPromptText("Nazwa pytania...");
+        questionNameTextField.setOnKeyTyped(_ -> setDisableConfirmButton());
         VBox questionNameBox = new VBox(questionNameLabel, questionNameTextField);
         questionNameBox.getStyleClass().add("question-name");
 
         return questionNameBox;
     }
 
-    private VBox buildQuestionTypeRadio() {
+    private VBox buildQuestionTypeBox() {
         Label questionTypeLabel = new Label("Wybierz wariant odpowiedzi");
         RadioButton radioQuestionTypeRadioButton = new RadioButton("Pojednczy wybór");
         RadioButton checkboxQuestionTypeRadioButton = new RadioButton("Wielokrotny wybór");
@@ -109,9 +110,9 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
         checkboxQuestionTypeRadioButton.setUserData(QuestionTypeEnum.CHECKBOX);
         inputQuestionTypeRadioButton.setUserData(QuestionTypeEnum.INPUT);
 
-        radioQuestionTypeRadioButton.setOnAction(this::handleQuestionType);
-        checkboxQuestionTypeRadioButton.setOnAction(this::handleQuestionType);
-        inputQuestionTypeRadioButton.setOnAction(this::handleQuestionType);
+        radioQuestionTypeRadioButton.setOnAction(_ -> handleQuestionTypeChanged(QuestionTypeEnum.RADIO));
+        checkboxQuestionTypeRadioButton.setOnAction(_ -> handleQuestionTypeChanged(QuestionTypeEnum.CHECKBOX));
+        inputQuestionTypeRadioButton.setOnAction(_ -> handleQuestionTypeChanged(QuestionTypeEnum.INPUT));
 
         questionTypeGroup.getToggles().addAll(
                 radioQuestionTypeRadioButton,
@@ -138,13 +139,11 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
     }
 
     private void buildAnswerListBox() {
-        confirmButton.setDisable(question.getCorrectAnswers().isEmpty());
+        setDisableConfirmButton();
         answerListBox.getChildren().clear();
 
         if (question.getQuestionType() == QuestionTypeEnum.INPUT) {
-            if (answerNameFromInput == null && !question.getAnswers().isEmpty())
-                buildAnswerRow(question.getAnswers().getFirst());
-            else if (answerNameFromInput != null)
+            if (answerNameFromInput != null && !answerNameFromInput.isBlank())
                 buildAnswerRow(new AnswerCommand(UUID.randomUUID().toString(), question.getId(), answerNameFromInput));
             return;
         }
@@ -155,7 +154,7 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
     }
 
     private void buildAnswerRow(AnswerCommand answer) {
-        confirmButton.setDisable(question.getCorrectAnswers().isEmpty());
+        setDisableConfirmButton();
         Node answerName = getAnswerNode(answer);
         answerName.getStyleClass().add("answer-name");
 
@@ -190,35 +189,39 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
             case RADIO -> {
                 answerName = new RadioButton(answer.getText());
                 answerName.setUserData(answer.getId());
+                ((RadioButton) answerName).setSelected(question.getCorrectAnswers().contains(answer.getId()));
                 answersGroup.getToggles().add((RadioButton) answerName);
+
                 ((RadioButton) answerName).setOnAction(event -> {
                     if (((RadioButton) event.getSource()).isSelected()) {
                         List<String> correctAnswers = question.getCorrectAnswers();
                         correctAnswers.clear();
                         correctAnswers.add(answer.getId());
-                        confirmButton.setDisable(false);
+                        setDisableConfirmButton();
                     }
                 });
             }
             case CHECKBOX -> {
                 answerName = new CheckBox(answer.getText());
                 answerName.setUserData(answer.getId());
+                ((CheckBox) answerName).setSelected(question.getCorrectAnswers().contains(answer.getId()));
                 ((CheckBox) answerName).setOnAction(event -> {
                     if (((CheckBox) event.getSource()).isSelected()) {
                         question.getCorrectAnswers().add(answer.getId());
                     } else {
                         question.getCorrectAnswers().remove(answer.getId());
                     }
-                    confirmButton.setDisable(question.getCorrectAnswers().isEmpty());
+                    setDisableConfirmButton();
                 });
             }
             case INPUT -> {
                 answerName = new Label(answerNameFromInput);
                 question.getCorrectAnswers().clear();
                 question.getCorrectAnswers().add(answerNameFromInput);
-                confirmButton.setDisable(false);
+                setDisableConfirmButton();
             }
         }
+
         return answerName;
     }
 
@@ -246,7 +249,7 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
 
         answerNameTextField.setOnKeyTyped(event -> {
             String newAnswerName = ((TextField) event.getSource()).getText();
-            addAnswerButton.setDisable(newAnswerName == null || newAnswerName.isEmpty());
+            addAnswerButton.setDisable(newAnswerName == null || newAnswerName.isBlank());
         });
 
         HBox answerInputBox = new HBox(
@@ -257,47 +260,38 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
         return answerInputBox;
     }
 
-    private void handleQuestionType(ActionEvent event) {
-        RadioButton questionTypeRadio = (RadioButton) event.getSource();
-        question.setQuestionType((QuestionTypeEnum) questionTypeRadio.getUserData());
-
+    private void handleQuestionTypeChanged(QuestionTypeEnum questionType) {
+        question.setQuestionType(questionType);
         question.getCorrectAnswers().clear();
-        confirmButton.setDisable(true);
 
-
-        if(answerNameFromInput != null && !answerNameFromInput.isBlank())
+        if(question.getQuestionType() == QuestionTypeEnum.INPUT && answerNameFromInput != null)
             question.getCorrectAnswers().add(answerNameFromInput);
 
         if (question.getQuestionType() == QuestionTypeEnum.INPUT && answerNameFromInput == null && !question.getAnswers().isEmpty())
             answerNameFromInput = question.getAnswers().getFirst().getText();
 
+        setDisableConfirmButton();
         buildAnswerListBox();
     }
 
     private void confirmDialog() {
-        QuestionTypeEnum questionType = QuestionTypeEnum.valueOf(questionTypeGroup.getSelectedToggle().getUserData().toString());
-
         question.setName(questionNameTextField.getText());
-        question.setQuestionType(questionType);
 
-        switch (questionType) {
-            case RADIO -> {
-                RadioButton selectedRadioButton = (RadioButton) answersGroup.getSelectedToggle();
-                question.getCorrectAnswers().clear();
-                question.getCorrectAnswers().add(selectedRadioButton.getUserData().toString());
-            }
-            case CHECKBOX -> {
-                FilteredList<Node> selectedCheckBoxes = answerListBox.getChildren().filtered(node -> ((CheckBox) node).isSelected());
-                List<String> correctAnswers = selectedCheckBoxes.stream().map(checkBox -> checkBox.getUserData().toString()).toList();
-                question.setCorrectAnswers(correctAnswers);
-            }
-            case INPUT -> {
-                question.getCorrectAnswers().clear();
-                question.getCorrectAnswers().add(answerNameFromInput);
-                question.getAnswers().clear();
-            }
+        if(question.getQuestionType() == QuestionTypeEnum.INPUT) {
+            question.getAnswers().clear();
+            question.getCorrectAnswers().clear();
+            question.getCorrectAnswers().add(answerNameFromInput);
         }
 
+
         setResult(question);
+    }
+
+    private void setDisableConfirmButton() {
+        confirmButton.setDisable(
+                question.getCorrectAnswers().isEmpty() ||
+                questionNameTextField.getText() == null ||
+                questionNameTextField.getText().isBlank()
+        );
     }
 }

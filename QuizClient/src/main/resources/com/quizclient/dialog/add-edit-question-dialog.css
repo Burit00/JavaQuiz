@@ -53,8 +53,9 @@
 }
 
 .answer-name {
+    -fx-text-alignment: justify;
     -fx-wrap-text: true;
-    -fx-min-width: 350;
+    -fx-max-width: 340;
     -fx-font-size: 15;
 
     -fx-graphic-text-gap: 10px;
