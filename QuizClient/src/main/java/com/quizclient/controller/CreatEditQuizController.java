@@ -1,8 +1,11 @@
 package com.quizclient.controller;
 
+import com.quizclient.api.QuizHttpClient;
 import com.quizclient.dialog.AddEditQuestionDialog;
+import com.quizclient.dialog.SetQuizDetailsDialog;
 import com.quizclient.enums.AwesomeIconEnum;
 import com.quizclient.model.command.QuestionCommand;
+import com.quizclient.model.command.QuizCommand;
 import com.quizclient.ui.Icon;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
@@ -16,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CreateQuizController {
+public class CreatEditQuizController {
+    public QuizCommand quiz = new QuizCommand();
     public List<QuestionCommand> questions = new ArrayList<>();
 
     @FXML
@@ -28,7 +32,24 @@ public class CreateQuizController {
     @FXML
     private TextField quizNameTextField;
 
+    public void setParameter(String quizId){
+        quiz = QuizCommand.mapFromQuizQuery(QuizHttpClient.getQuiz(quizId));
+        List<QuestionCommand> questionsFromApi = QuizHttpClient.getQuestionsWithAnswers(quizId)
+                .stream().map(QuestionCommand::mapFromQuestionQuery).toList();
+
+        questions.addAll(questionsFromApi);
+        quizNameTextField.setText(quiz.getName());
+
+        buildUI();
+    }
+
+    @FXML
+    private void initialize() {
+        buildUI();
+    }
+
     private void buildUI() {
+        setDisableSaveButton();
         buildQuestionList();
     }
 
@@ -73,44 +94,59 @@ public class CreateQuizController {
         return questionRow;
     }
 
-    @FXML
-    private void initialize() {
-        buildUI();
+    private void setDisableSaveButton() {
+        saveQuizButton.setDisable(quiz.getName() == null || quiz.getName().isBlank() || questions.isEmpty());
     }
 
-    public void onEditQuestion(QuestionCommand question) {
+    @FXML
+    private void onEditQuestion(QuestionCommand question) {
         AddEditQuestionDialog dialog = new AddEditQuestionDialog(question);
         Optional<QuestionCommand> questionResult = dialog.showAndWait();
-        if (questionResult.isPresent()) {
+        if (questionResult.isPresent())
             question = questionResult.get();
-        }
+
         buildQuestionList();
     }
 
-    public void onRemoveQuestion(QuestionCommand question) {
+    @FXML
+    private void onRemoveQuestion(QuestionCommand question) {
         questions.remove(question);
         if(questions.isEmpty())
-            saveQuizButton.setDisable(true);
+            setDisableSaveButton();
         buildQuestionList();
     }
 
-    public void onCancel() {
+    @FXML
+    private void onCancel() {
         SceneLoader.loadSelectQuizScene();
     }
 
-    public void onAddQuiz() {
-        SceneLoader.loadSelectQuizScene();
+    @FXML
+    private void onSaveQuiz() {
+        quiz.setQuestions(questions);
 
-        //String quizName = quizNameTextField.getText();
+        if (quiz.getId() == null) QuizHttpClient.postQuiz(quiz);
+        else QuizHttpClient.putQuiz(quiz);
+
+        SceneLoader.loadSelectQuizScene();
     }
 
-    public void onAddQuestion() {
+    @FXML
+    private void onAddQuestion() {
         AddEditQuestionDialog dialog = new AddEditQuestionDialog();
         Optional<QuestionCommand> questionResult = dialog.showAndWait();
         if(questionResult.isPresent()) {
             questions.add(questionResult.get());
             buildQuestionList();
-            saveQuizButton.setDisable(false);
+            setDisableSaveButton();
         }
+    }
+
+    @FXML
+    private void onSetQuizDetails() {
+        SetQuizDetailsDialog dialog = new SetQuizDetailsDialog(quiz);
+        Optional<QuizCommand> quizResult = dialog.showAndWait();
+
+        quizResult.ifPresent(quizCommand -> quiz = quizCommand);
     }
 }

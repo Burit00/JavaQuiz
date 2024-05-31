@@ -18,8 +18,7 @@
             <Label fx:id="titleLabel" layoutX="370.0" styleClass="title" text="tytul"/>
           </HBox>
           <HBox alignment="CENTER" styleClass="time" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
-            <Icon value="CLOCK_ALT"/>
-            <Label fx:id="timeLabel"/>
+            <Label fx:id="timeLabel" graphicTextGap="10"/>
           </HBox>
         </AnchorPane>
       </top>

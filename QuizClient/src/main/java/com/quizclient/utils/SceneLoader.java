@@ -1,6 +1,7 @@
 package com.quizclient.utils;
 
 import com.quizclient.QuizClientApplication;
+import com.quizclient.controller.CreatEditQuizController;
 import com.quizclient.controller.QuizDetailsController;
 import com.quizclient.controller.QuizScoreController;
 import com.quizclient.controller.SolveQuizController;
@@ -71,7 +72,16 @@ public class SceneLoader {
     }
 
     public static void loadCreateQuizScene() {
-        Loader loader = loadScene("create-quiz-view.fxml");
+        Loader loader = loadScene("create-edit-quiz-view.fxml");
+        showScene(loader.root);
+    }
+
+    public static void loadEditQuizScene(String quizId) {
+        Loader loader = loadScene("create-edit-quiz-view.fxml");
+
+        CreatEditQuizController controller = loader.fxmlLoader.getController();
+        controller.setParameter(quizId);
+
         showScene(loader.root);
     }
 

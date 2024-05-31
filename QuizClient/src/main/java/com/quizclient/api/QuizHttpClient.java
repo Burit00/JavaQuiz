@@ -1,6 +1,7 @@
 package com.quizclient.api;
 
 import com.google.gson.reflect.TypeToken;
+import com.quizclient.model.command.QuizCommand;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
 import com.google.gson.Gson;
@@ -22,9 +23,7 @@ public class QuizHttpClient {
             throw new RuntimeException(e);
         }
 
-        List<QuizQuery> quizzes = gson.fromJson(response, new TypeToken<List<QuizQuery>>(){}.getType());
-
-        return quizzes;
+        return gson.fromJson(response, new TypeToken<List<QuizQuery>>() {}.getType());
     }
 
     public static QuizQuery getQuiz(String quizId) {
@@ -36,9 +35,7 @@ public class QuizHttpClient {
             throw new RuntimeException(e);
         }
 
-        QuizQuery quiz = gson.fromJson(response, QuizQuery.class);
-
-        return quiz;
+        return gson.fromJson(response, QuizQuery.class);
     }
 
     public static List<QuestionQuery> getQuestionsWithAnswers(String quizId) {
@@ -50,8 +47,29 @@ public class QuizHttpClient {
             throw new RuntimeException(e);
         }
 
-        List<QuestionQuery> questions = gson.fromJson(response, new TypeToken<List<QuestionQuery>>(){}.getType());
-
+        List<QuestionQuery> questions = gson.fromJson(response, new TypeToken<List<QuestionQuery>>() {
+        }.getType());
+        System.out.println(response);
         return questions;
+    }
+
+    public static void postQuiz(QuizCommand quiz) {
+//        TODO:
+//        String  response;
+//        try {
+//            response = httpClient.post("/quizzes", quiz);
+//        } catch (IOException | InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+
+    public static void putQuiz(QuizCommand quiz) {
+//        TODO:
+//        String  response;
+//        try {
+//            response = httpClient.put("/quizzes/" + quiz.getId(), quiz);
+//        } catch (IOException | InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 }

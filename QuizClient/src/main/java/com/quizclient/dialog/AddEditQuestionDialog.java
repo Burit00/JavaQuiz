@@ -31,12 +31,17 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
 
 
     public AddEditQuestionDialog() {
+        this.setTitle("Dodaj pytanie");
         this.question = new QuestionCommand();
         buildUI();
     }
 
     public AddEditQuestionDialog(QuestionCommand questionCommand) {
+        this.setTitle("Edytuj pytanie");
         this.question = (QuestionCommand) questionCommand.clone();
+        if(question.getQuestionType() == QuestionTypeEnum.INPUT)
+            answerNameFromInput = question.getCorrectAnswers().getFirst();
+
         buildUI();
     }
 

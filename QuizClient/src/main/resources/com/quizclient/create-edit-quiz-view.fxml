@@ -6,7 +6,7 @@
 
 <?import com.quizclient.ui.*?>
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.CreateQuizController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.CreatEditQuizController">
   <top>
     <Header/>
   </top>
@@ -32,14 +32,19 @@
               <Icon value="ARROW_LEFT"/>
             </graphic>
           </Button>
-          <HBox HBox.hgrow="ALWAYS" alignment="CENTER">
+          <HBox HBox.hgrow="ALWAYS" spacing="10" alignment="CENTER">
+            <Button onAction="#onSetQuizDetails" text="Szczegóły Quizu" >
+              <graphic>
+                <Icon value="ALIGN_LEFT"/>
+              </graphic>
+            </Button>
             <Button onAction="#onAddQuestion" text="Dodaj pytanie" >
               <graphic>
                 <Icon value="PLUS"/>
               </graphic>
             </Button>
           </HBox>
-          <Button fx:id="saveQuizButton" onAction="#onAddQuiz" text="Zapisz Quiz" disable="true">
+          <Button fx:id="saveQuizButton" onAction="#onSaveQuiz" text="Zapisz Quiz">
             <graphic>
               <Icon value="CHECK"/>
             </graphic>
@@ -52,7 +57,7 @@
     <Footer/>
   </bottom>
   <stylesheets>
-    <URL value="@styles/create-quiz-view.css"/>
+    <URL value="@styles/create-edit-quiz-view.css"/>
     <URL value="@styles/global.css"/>
   </stylesheets>
 

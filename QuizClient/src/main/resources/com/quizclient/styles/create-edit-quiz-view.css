@@ -54,7 +54,7 @@
 }
 
 .question-row .action-buttons {
-    -fx-min-width: 190px;
+    -fx-min-width: 200px;
 }
 
 .action-buttons .button {

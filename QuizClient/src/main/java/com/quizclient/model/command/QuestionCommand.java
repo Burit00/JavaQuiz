@@ -6,10 +6,9 @@ import com.quizclient.model.query.QuestionQuery;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class QuestionCommand {
-    private String id = UUID.randomUUID().toString();
+    private String id;
 
     public String getId() {
         return id;

@@ -16,7 +16,14 @@
       <BorderPane VBox.vgrow="ALWAYS">
         <center>
           <VBox styleClass="head">
-            <Label fx:id="titleLabel" styleClass="title" text="title"/>
+            <HBox alignment="CENTER" spacing="10">
+              <Label fx:id="titleLabel" styleClass="title" text="title"/>
+              <Button fx:id="editQuizButton" styleClass="edit-button">
+                <graphic>
+                  <Icon value="PENCIL"/>
+                </graphic>
+              </Button>
+            </HBox>
             <Label fx:id="timeLabel" styleClass="time" text="czas"/>
             <BorderPane VBox.vgrow="ALWAYS">
               <center>

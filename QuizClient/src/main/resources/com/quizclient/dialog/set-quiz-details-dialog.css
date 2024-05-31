@@ -1,0 +1,15 @@
+Label {
+    -fx-font-size: 20px;
+}
+
+Slider .track {
+    -fx-background-color: #0f7373;
+}
+
+Slider .thumb {
+    -fx-background-color: #02b7b3;
+}
+
+Slider .axis {
+    -fx-tick-label-fill: white;
+}
