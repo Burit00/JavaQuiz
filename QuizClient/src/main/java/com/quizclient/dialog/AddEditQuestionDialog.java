@@ -68,7 +68,7 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
         BorderPane contentPane = new BorderPane();
         contentPane.setTop(topBox);
         contentPane.setCenter(centerBox);
-        contentPane.setBottom(buildAnswerInputBox());
+        contentPane.setBottom(buildAnswerNameInputBox());
 
         getDialogPane().setContent(contentPane);
     }
@@ -230,7 +230,7 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
         return answerName;
     }
 
-    private HBox buildAnswerInputBox() {
+    private HBox buildAnswerNameInputBox() {
         TextField answerNameTextField = new TextField();
         answerNameTextField.getStyleClass().add("answer-name-input");
         answerNameTextField.setPromptText("Nazwa odpowiedzi...");

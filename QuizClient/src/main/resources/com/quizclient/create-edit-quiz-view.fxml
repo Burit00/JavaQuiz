@@ -15,7 +15,7 @@
       <top>
         <VBox styleClass="quiz-title">
           <Label styleClass="title" text="Ustaw nazwę Quizu:"/>
-          <TextField fx:id="quizNameTextField" styleClass="title-input" promptText="Nazwa quizu"/>
+          <TextField fx:id="quizNameTextField" onKeyTyped="#onQuizNameTyped" styleClass="title-input" promptText="Nazwa quizu"/>
         </VBox>
       </top>
       <center>

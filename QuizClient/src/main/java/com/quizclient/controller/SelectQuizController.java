@@ -14,14 +14,7 @@ public class SelectQuizController {
 
     private void loadQuizzes() {
         quizzesContainer.getChildren().clear();
-        System.out.println(2);
-//        try{
-            quizzes = QuizHttpClient.getQuizzes();
-//        }catch(Exception e){
-//            System.out.println(4);
-//            quizzes = new ArrayList<>();
-//        }
-
+        quizzes = QuizHttpClient.getQuizzes();
     }
 
     private void buildUI() {
@@ -40,7 +33,6 @@ public class SelectQuizController {
 
     @FXML
     private void initialize() {
-        System.out.println(1);
         loadQuizzes();
         buildUI();
     }

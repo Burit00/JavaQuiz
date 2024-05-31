@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -105,6 +106,7 @@ public class CreatEditQuizController {
         if (questionResult.isPresent())
             question = questionResult.get();
 
+        setDisableSaveButton();
         buildQuestionList();
     }
 
@@ -148,5 +150,11 @@ public class CreatEditQuizController {
         Optional<QuizCommand> quizResult = dialog.showAndWait();
 
         quizResult.ifPresent(quizCommand -> quiz = quizCommand);
+    }
+
+    @FXML
+    private  void onQuizNameTyped(KeyEvent event) {
+        quiz.setName(((TextField)event.getSource()).getText());
+        setDisableSaveButton();
     }
 }

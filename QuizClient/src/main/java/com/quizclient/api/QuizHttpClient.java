@@ -47,10 +47,9 @@ public class QuizHttpClient {
             throw new RuntimeException(e);
         }
 
-        List<QuestionQuery> questions = gson.fromJson(response, new TypeToken<List<QuestionQuery>>() {
+        return gson.fromJson(response, new TypeToken<List<QuestionQuery>>() {
         }.getType());
-        System.out.println(response);
-        return questions;
+
     }
 
     public static void postQuiz(QuizCommand quiz) {
