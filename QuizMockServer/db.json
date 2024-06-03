@@ -24,35 +24,35 @@
       "id": "1",
       "quizId": "1",
       "name": "Kiedy powstał język JAVA?",
-      "questionType": "2",
+      "questionType": 0,
       "correctAnswers": ["2"]
     },
     {
       "id": "2",
       "quizId": "1",
       "name": "Która biblioteka służy do tworzenia interfesju użytkownika?",
-      "questionType": "1",
+      "questionType": 1,
       "correctAnswers": ["5", "6", "8"]
     },
     {
       "id": "3",
       "quizId": "1",
       "name": "Jaka klasa służy do stworzenia przycisku?",
-      "questionType": "3",
+      "questionType": 2,
       "correctAnswers": ["Button"]
     },
     {
       "id": "4",
       "quizId": "3",
       "name": "W wyniku kompilacji kodu źródłowego Java otrzymano między innymi pliki Class$1.class, Class$2.class. Dlaczego w nazwach plików klasowych po znaku $ są liczby 1 i 2:",
-      "questionType": "1",
+      "questionType": 1,
       "correctAnswers": ["10"]
     },
     {
       "id": "5",
       "quizId": "3",
       "name": "W języku Java w klasie serwletów javax.servlet.http.HttpServlet za obsługę żądań typu GET odpowiada metoda:",
-      "questionType": "1",
+      "questionType": 1,
       "correctAnswers": ["14"]
     }
   ],
