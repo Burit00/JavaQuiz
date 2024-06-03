@@ -7,4 +7,6 @@ public class AnswerQuery {
     public String getQuestionId() {return questionId;}
     private String text;
     public String getText() {return text;}
+    private String publicId;
+    public String getPublicId() {return publicId;}
 }

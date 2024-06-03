@@ -92,8 +92,7 @@ public class QuestionCommand {
     }
 
     public static QuestionCommand mapFromQuestionQuery(QuestionQuery questionQuery) {
-        List<AnswerCommand> answers = questionQuery.getAnswers().stream().map(answerQuery ->
-                new AnswerCommand(answerQuery.getId(), answerQuery.getQuestionId(), answerQuery.getText())).toList();
+        List<AnswerCommand> answers = questionQuery.getAnswers().stream().map(AnswerCommand::mapFromAnswerQuery).toList();
 
         QuestionCommand questionCommand = new QuestionCommand(
                 questionQuery.getId(),

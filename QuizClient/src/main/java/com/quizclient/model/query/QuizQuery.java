@@ -34,4 +34,9 @@ public class QuizQuery {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public String toString() {
+        return "{name=" + name + ", time = " + time + ", description=" + description + "}";
+    }
 }

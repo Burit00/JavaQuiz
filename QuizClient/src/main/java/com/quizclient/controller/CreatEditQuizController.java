@@ -103,8 +103,8 @@ public class CreatEditQuizController {
     private void onEditQuestion(QuestionCommand question) {
         AddEditQuestionDialog dialog = new AddEditQuestionDialog(question);
         Optional<QuestionCommand> questionResult = dialog.showAndWait();
-        if (questionResult.isPresent())
-            question = questionResult.get();
+        questionResult.ifPresent(questionCommand ->
+                questions.set(questions.indexOf(question), questionCommand));
 
         setDisableSaveButton();
         buildQuestionList();

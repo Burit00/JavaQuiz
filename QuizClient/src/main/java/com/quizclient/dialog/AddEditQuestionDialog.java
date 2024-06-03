@@ -193,28 +193,28 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
         switch (question.getQuestionType()) {
             case RADIO -> {
                 answerName = new RadioButton(answer.getText());
-                answerName.setUserData(answer.getId());
-                ((RadioButton) answerName).setSelected(question.getCorrectAnswers().contains(answer.getId()));
+                answerName.setUserData(answer.getPublicId());
+                ((RadioButton) answerName).setSelected(question.getCorrectAnswers().contains(answer.getPublicId()));
                 answersGroup.getToggles().add((RadioButton) answerName);
 
                 ((RadioButton) answerName).setOnAction(event -> {
                     if (((RadioButton) event.getSource()).isSelected()) {
                         List<String> correctAnswers = question.getCorrectAnswers();
                         correctAnswers.clear();
-                        correctAnswers.add(answer.getId());
+                        correctAnswers.add(answer.getPublicId());
                         setDisableConfirmButton();
                     }
                 });
             }
             case CHECKBOX -> {
                 answerName = new CheckBox(answer.getText());
-                answerName.setUserData(answer.getId());
-                ((CheckBox) answerName).setSelected(question.getCorrectAnswers().contains(answer.getId()));
+                answerName.setUserData(answer.getPublicId());
+                ((CheckBox) answerName).setSelected(question.getCorrectAnswers().contains(answer.getPublicId()));
                 ((CheckBox) answerName).setOnAction(event -> {
                     if (((CheckBox) event.getSource()).isSelected()) {
-                        question.getCorrectAnswers().add(answer.getId());
+                        question.getCorrectAnswers().add(answer.getPublicId());
                     } else {
-                        question.getCorrectAnswers().remove(answer.getId());
+                        question.getCorrectAnswers().remove(answer.getPublicId());
                     }
                     setDisableConfirmButton();
                 });
