@@ -1,12 +1,14 @@
 package com.quizclient.controller;
 
 import com.quizclient.api.QuizHttpClient;
+import com.quizclient.dialog.DeleteQuizDialog;
 import com.quizclient.model.query.QuizQuery;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class QuizDetailsController {
@@ -22,8 +24,15 @@ public class QuizDetailsController {
     private void initialize() {
         editQuizButton.setOnAction(_ -> SceneLoader.loadEditQuizScene(quiz.getId()));
         removeQuizButton.setOnAction(_ -> {
-            QuizHttpClient.deleteQuiz(quiz.getId());
-            SceneLoader.loadSelectQuizScene();
+            DeleteQuizDialog dialog = new DeleteQuizDialog();
+            Optional<Boolean> result = dialog.showAndWait();
+            result.ifPresent(resultValue -> {
+                if (resultValue) {
+                    QuizHttpClient.deleteQuiz(quiz.getId());
+                    SceneLoader.loadSelectQuizScene();
+                }
+            });
+
         });
     }
 
@@ -33,7 +42,7 @@ public class QuizDetailsController {
         titleLabel.setText(quiz.getName());
         descriptionLabel.setText(quiz.getDescription());
         String timeForQuiz = "Czas na rozwiązanie testu: ";
-        if(quiz.getTime() > 0)
+        if (quiz.getTime() > 0)
             timeLabel.setText(timeForQuiz + quiz.getTime() + "min");
         else
             timeLabel.setText(timeForQuiz + "Brak ograniczenia czasowego");

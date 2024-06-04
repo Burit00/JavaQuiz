@@ -19,8 +19,12 @@ public class ConfirmQuizDialog extends Dialog<Boolean> {
     }
 
     private void buildUI() {
-        getDialogPane().getStylesheets().add(QuizClientApplication.class.getResource("styles/global.css").toExternalForm());
+        getDialogPane().getStylesheets().addAll(
+                QuizClientApplication.class.getResource("styles/global.css").toExternalForm(),
+                QuizClientApplication.class.getResource("dialog/dialog-base.css").toExternalForm()
+        );
         Label resultLabel = new Label("Czy chcesz zakończyć quiz?");
+        resultLabel.getStyleClass().add("warning-label");
 
         getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
 
@@ -39,8 +43,7 @@ public class ConfirmQuizDialog extends Dialog<Boolean> {
         cancelButton.setText("Anuluj");
         cancelButton.setOnAction(_ -> setResult(false));
 
-        getDialogPane().getScene().getWindow()
-                .setOnCloseRequest(_ -> setResult(false));
+        setOnCloseRequest(_ -> setResult(false));
 
         HBox buttonsBox = new HBox(cancelButton, yesButton);
         VBox contentBox = new VBox(resultLabel, buttonsBox);
