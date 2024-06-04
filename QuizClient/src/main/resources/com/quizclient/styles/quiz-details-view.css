@@ -33,7 +33,7 @@ Label {
     -fx-font-size: 30px;
 }
 
-.edit-button {
+.edit-button, .remove-button {
     -fx-font-size: 15;
     -fx-padding: 5 10;
 }

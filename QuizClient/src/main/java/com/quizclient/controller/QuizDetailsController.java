@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.util.UUID;
+
 public class QuizDetailsController {
     private QuizQuery quiz;
 
@@ -14,11 +16,18 @@ public class QuizDetailsController {
     private Button editQuizButton;
 
     @FXML
+    private Button removeQuizButton;
+
+    @FXML
     private void initialize() {
         editQuizButton.setOnAction(_ -> SceneLoader.loadEditQuizScene(quiz.getId()));
+        removeQuizButton.setOnAction(_ -> {
+            QuizHttpClient.deleteQuiz(quiz.getId());
+            SceneLoader.loadSelectQuizScene();
+        });
     }
 
-    private void loadQuiz(String quizId) {
+    private void loadQuiz(UUID quizId) {
         quiz = QuizHttpClient.getQuiz(quizId);
 
         titleLabel.setText(quiz.getName());
@@ -30,7 +39,7 @@ public class QuizDetailsController {
             timeLabel.setText(timeForQuiz + "Brak ograniczenia czasowego");
     }
 
-    public void setParameter(String quizId) {
+    public void setParameter(UUID quizId) {
         loadQuiz(quizId);
     }
 

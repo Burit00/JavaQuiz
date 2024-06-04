@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.UUID;
 
 public class SceneLoader {
     private static Stage stage;
@@ -44,7 +45,7 @@ public class SceneLoader {
         showScene(loader.root);
     }
 
-    public static void loadQuizDetailsScene(String quizId) {
+    public static void loadQuizDetailsScene(UUID quizId) {
         Loader loader = loadScene("quiz-details-view.fxml");
 
         QuizDetailsController controller = loader.fxmlLoader.getController();
@@ -76,7 +77,7 @@ public class SceneLoader {
         showScene(loader.root);
     }
 
-    public static void loadEditQuizScene(String quizId) {
+    public static void loadEditQuizScene(UUID quizId) {
         Loader loader = loadScene("create-edit-quiz-view.fxml");
 
         CreatEditQuizController controller = loader.fxmlLoader.getController();

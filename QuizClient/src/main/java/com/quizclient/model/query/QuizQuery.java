@@ -1,7 +1,9 @@
 package com.quizclient.model.query;
 
+import java.util.UUID;
+
 public class QuizQuery {
-    public QuizQuery(String id, String name, int time, String description) {
+    public QuizQuery(UUID id, String name, int time, String description) {
         this.id = id;
         this.name = name;
         this.time = time;
@@ -11,9 +13,9 @@ public class QuizQuery {
     public QuizQuery() {
     }
 
-    private String id;
+    private UUID id;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 

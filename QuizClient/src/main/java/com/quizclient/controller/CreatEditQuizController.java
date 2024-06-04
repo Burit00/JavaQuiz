@@ -20,6 +20,7 @@ import javafx.scene.layout.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class CreatEditQuizController {
     public CreateQuizCommand quiz = new CreateQuizCommand();
@@ -34,7 +35,7 @@ public class CreatEditQuizController {
     @FXML
     private TextField quizNameTextField;
 
-    public void setParameter(String quizId){
+    public void setParameter(UUID quizId){
         quiz = QuizHttpClient.getQuizDetailsForUpdate(quizId);
         quizNameTextField.setText(quiz.getName());
         questions = quiz.getQuestions();

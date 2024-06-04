@@ -11,6 +11,7 @@ import com.quizclient.utils.HttpClient;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class QuizHttpClient {
     private static final Gson gson = new Gson();
@@ -29,7 +30,7 @@ public class QuizHttpClient {
         return gson.fromJson(response, new TypeToken<List<QuizQuery>>() {}.getType());
     }
 
-    public static QuizQuery getQuiz(String quizId) {
+    public static QuizQuery getQuiz(UUID quizId) {
         String response;
 
         try {
@@ -40,7 +41,7 @@ public class QuizHttpClient {
         return gson.fromJson(response, QuizQuery.class);
     }
 
-    public static UpdateQuizCommand getQuizDetailsForUpdate(String quizId) {
+    public static UpdateQuizCommand getQuizDetailsForUpdate(UUID quizId) {
         String response;
 
         try {
@@ -52,7 +53,7 @@ public class QuizHttpClient {
         return gson.fromJson(response, UpdateQuizCommand.class);
     }
 
-    public static List<QuestionQuery> getQuestionsWithAnswers(String quizId) {
+    public static List<QuestionQuery> getQuestionsWithAnswers(UUID quizId) {
         String response;
 
         try {
@@ -78,6 +79,14 @@ public class QuizHttpClient {
     public static void putQuiz(UpdateQuizCommand quiz) {
         try {
             httpClient.put("quiz/" + quiz.getId(), quiz);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void deleteQuiz(UUID quizId) {
+        try {
+            httpClient.delete("quiz/" + quizId);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
