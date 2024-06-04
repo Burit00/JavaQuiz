@@ -2,8 +2,10 @@ package com.quizserver.controllers;
 
 import com.quizserver.models.DTOs.commands.CreateQuizCommand;
 import com.quizserver.models.DTOs.commands.UpdateQuizCommand;
+import com.quizserver.models.DTOs.commands.UserQuizAnswersCommand;
 import com.quizserver.models.DTOs.queries.QuizQuery;
 import com.quizserver.models.DTOs.queries.UpdateQuizQuery;
+import com.quizserver.models.DTOs.queries.UserQuizScoreQuery;
 import com.quizserver.services.QuizService;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +45,10 @@ public class QuizController {
     @PutMapping("{quizId}")
     public void postQuiz(@PathVariable UUID quizId, @RequestBody UpdateQuizCommand quizCommand) {
         quizService.updateQuiz(quizId, quizCommand);
+    }
+    @PostMapping("{quizId}/calculateScore")
+    public UserQuizScoreQuery calculateQuizScore(@PathVariable("quizId") UUID quizId, @RequestBody List<UserQuizAnswersCommand> userAnswers) {
+        return quizService.calculateQuizScore(quizId, userAnswers);
     }
 
     @DeleteMapping("{quizId}")

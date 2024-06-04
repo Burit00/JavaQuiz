@@ -5,6 +5,7 @@ import com.quizserver.enums.QuestionTypeEnum;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,10 +49,9 @@ public class Question {
     public void setCorrectAnswers(List<String> correctAnswers) {
         if(questionType == QuestionTypeEnum.INPUT)
             this.correctAnswers = correctAnswers.get(0);
-        else {
+        else
             this.correctAnswers = String.join(" ", correctAnswers);
-            System.out.println("/" + correctAnswers + "/");
-        }
+
     }
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -62,6 +62,13 @@ public class Question {
     }
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public boolean checkUserAnswer(List<String> userAnswer) {
+        userAnswer = new ArrayList<>(new HashSet<>(userAnswer));
+        if(getCorrectAnswers().size() != userAnswer.size()) return false;
+
+        return new HashSet<>(userAnswer).containsAll(getCorrectAnswers());
     }
 
     @Override
