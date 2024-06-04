@@ -45,4 +45,9 @@ public class QuizController {
         quizService.updateQuiz(quizId, quizCommand);
     }
 
+    @DeleteMapping("{quizId}")
+    public void deleteQuiz(@PathVariable UUID quizId) {
+        quizService.deleteQuiz(quizId);
+    }
+
 }

@@ -77,4 +77,8 @@ public class QuizService {
 
         quizRepository.save(quiz);
     }
+
+    public void deleteQuiz(UUID quizId) {
+        quizRepository.deleteById(quizId);
+    }
 }
