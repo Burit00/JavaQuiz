@@ -1,15 +1,12 @@
 package com.quizserver.models.DTOs.queries;
 
-import com.quizserver.models.entities.Question;
-
-import java.util.List;
 import java.util.UUID;
 
 public class QuizQuery {
-    private UUID id;
-    private String name;
-    private int time;
-    private String description;
+    protected UUID id;
+    protected String name;
+    protected int time;
+    protected String description;
 
     public QuizQuery() {}
 
@@ -48,14 +45,6 @@ public class QuizQuery {
     }
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    private List<QuestionQuery> questions;
-    public List<QuestionQuery> getQuestions() {
-        return questions;
-    }
-    public void setQuestions(List<QuestionQuery> questions) {
-        this.questions = questions;
     }
 
     @Override

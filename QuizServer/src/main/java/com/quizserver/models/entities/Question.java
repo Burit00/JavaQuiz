@@ -49,7 +49,8 @@ public class Question {
         if(questionType == QuestionTypeEnum.INPUT)
             this.correctAnswers = correctAnswers.get(0);
         else {
-            this.correctAnswers = correctAnswers.stream().reduce("", (a, b) -> a + " " + b);
+            this.correctAnswers = String.join(" ", correctAnswers);
+            System.out.println("/" + correctAnswers + "/");
         }
     }
 

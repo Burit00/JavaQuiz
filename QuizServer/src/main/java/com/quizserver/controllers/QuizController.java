@@ -1,7 +1,9 @@
 package com.quizserver.controllers;
 
 import com.quizserver.models.DTOs.commands.CreateQuizCommand;
+import com.quizserver.models.DTOs.commands.UpdateQuizCommand;
 import com.quizserver.models.DTOs.queries.QuizQuery;
+import com.quizserver.models.DTOs.queries.UpdateQuizQuery;
 import com.quizserver.services.QuizService;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +30,19 @@ public class QuizController {
         return quizService.getQuizById(quizId);
     }
 
+    @GetMapping("{quizId}/updateForm")
+    public UpdateQuizQuery getQuizByQuizIdForUpdate(@PathVariable("quizId") UUID quizId) {
+        return quizService.getQuizByQuizIdForUpdate(quizId);
+    }
+
     @PostMapping
     public void postQuiz(@RequestBody CreateQuizCommand quizCommand) {
         quizService.createQuiz(quizCommand);
+    }
+
+    @PutMapping("{quizId}")
+    public void postQuiz(@PathVariable UUID quizId, @RequestBody UpdateQuizCommand quizCommand) {
+        quizService.updateQuiz(quizId, quizCommand);
     }
 
 }

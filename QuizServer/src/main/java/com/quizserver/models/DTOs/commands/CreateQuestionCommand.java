@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateQuestionCommand {
-
+    public CreateQuestionCommand(){}
     private String name;
     public String getName() {
         return name;
@@ -15,7 +15,7 @@ public class CreateQuestionCommand {
         this.name = name;
     }
 
-    private QuestionTypeEnum questionType;
+    private QuestionTypeEnum questionType = QuestionTypeEnum.RADIO;
     public QuestionTypeEnum getQuestionType() {
         return questionType;
     }
@@ -23,7 +23,7 @@ public class CreateQuestionCommand {
         this.questionType = questionType;
     }
 
-    private List<String> correctAnswers;
+    private List<String> correctAnswers = new ArrayList<>();
 
     public List<String> getCorrectAnswers() {
         return correctAnswers;
@@ -42,5 +42,4 @@ public class CreateQuestionCommand {
     public void setAnswers(List<CreateAnswerCommand> answers) {
         this.answers = answers;
     }
-
 }

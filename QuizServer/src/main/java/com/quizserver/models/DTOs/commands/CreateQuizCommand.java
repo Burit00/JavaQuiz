@@ -1,11 +1,13 @@
 package com.quizserver.models.DTOs.commands;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class CreateQuizCommand {
 
-    private String name;
+    public CreateQuizCommand() {}
+
+    protected String name;
 
     public String getName() {
         return name;
@@ -15,7 +17,7 @@ public class CreateQuizCommand {
         this.name = name;
     }
 
-    private int time = 0;
+    protected int time = 0;
 
     public int getTime() {
         return time;
@@ -25,7 +27,7 @@ public class CreateQuizCommand {
         this.time = time;
     }
 
-    private String description;
+    protected String description;
 
     public String getDescription() {
         return description;
@@ -35,7 +37,7 @@ public class CreateQuizCommand {
         this.description = description;
     }
 
-    private List<CreateQuestionCommand> questions;
+    protected List<CreateQuestionCommand> questions = new ArrayList<>();
 
     public List<CreateQuestionCommand> getQuestions() {
         return questions;

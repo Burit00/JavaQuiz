@@ -9,22 +9,29 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String text;
-
     private UUID questionId;
+    private String publicId;
+    private String text;
 
     public UUID getId() {
         return id;
     }
 
-    public String getText() {return text;}
-    public void setText(String text) {this.text = text;}
+    public UUID getQuestionId() {
+        return questionId;
+    }
 
-    private String publicId;
+    public void setQuestionId(UUID questionId) {
+        this.questionId = questionId;
+    }
+
     public String getPublicId() {return publicId;}
     public void setPublicId(String publicId) {
         this.publicId = publicId;
     }
+
+    public String getText() {return text;}
+    public void setText(String text) {this.text = text;}
 
     public Answer() {}
 

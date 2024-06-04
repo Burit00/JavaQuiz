@@ -59,6 +59,6 @@ public class Quiz {
 
     @Override
     public String toString() {
-        return "{id = " + id + ", name = " + name + ", time = " + time + ", description = " + description + "}";
+        return "{id = " + id + ", name = " + name + ", time = " + time + ", description = " + description + ", questions = " + questions + "}";
     }
 }

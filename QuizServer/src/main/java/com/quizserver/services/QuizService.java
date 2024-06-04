@@ -1,9 +1,8 @@
 package com.quizserver.services;
 
-import com.quizserver.models.DTOs.commands.CreateAnswerCommand;
-import com.quizserver.models.DTOs.commands.CreateQuestionCommand;
-import com.quizserver.models.DTOs.commands.CreateQuizCommand;
+import com.quizserver.models.DTOs.commands.*;
 import com.quizserver.models.DTOs.queries.QuizQuery;
+import com.quizserver.models.DTOs.queries.UpdateQuizQuery;
 import com.quizserver.models.entities.Answer;
 import com.quizserver.models.entities.Question;
 import com.quizserver.models.entities.Quiz;
@@ -37,9 +36,7 @@ public class QuizService {
 
     public List<QuizQuery> getQuizzes() {
         List<Quiz> quizzes = quizRepository.findAll();
-        List<QuizQuery> quizzesQuery = modelMapper.map(quizzes, new TypeToken<List<QuizQuery>>(){}.getType());
-        System.out.println(quizzes);
-        return quizzesQuery;
+        return modelMapper.map(quizzes, new TypeToken<List<QuizQuery>>(){}.getType());
     }
 
     public QuizQuery getQuizById(UUID quizId) {
@@ -53,6 +50,31 @@ public class QuizService {
 
     public void createQuiz(CreateQuizCommand newQuiz) {
         Quiz quiz = modelMapper.map(newQuiz, Quiz.class);
+        quizRepository.save(quiz);
+    }
+
+    public UpdateQuizQuery getQuizByQuizIdForUpdate(UUID quizId) {
+        Quiz quiz = quizRepository.findById(quizId).orElse(null);
+        System.out.println(quiz);
+        return modelMapper.map(quiz, UpdateQuizQuery.class);
+    }
+
+    public void updateQuiz(UUID quizId, UpdateQuizCommand quizCommand) {
+        Quiz quiz = quizRepository.findById(quizId).orElse(null);
+
+        if(quiz == null)
+            throw new IllegalArgumentException("Quiz with id " + quizCommand.getId() + " does not exist");
+
+        quiz.setName(quizCommand.getName());
+        quiz.setDescription(quizCommand.getDescription());
+        quiz.setTime(quizCommand.getTime());
+        quiz.getQuestions().clear();
+
+        for(CreateQuestionCommand questionCommand: quizCommand.getQuestions()) {
+            Question question = modelMapper.map(questionCommand, Question.class);
+            quiz.getQuestions().add(question);
+        }
+
         quizRepository.save(quiz);
     }
 }

@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class QuestionQuery {
-    private UUID id;
-    private String name;
-    private UUID quizId;
-    private QuestionTypeEnum questionType;
-    private List<AnswerQuery> answers;
+    protected UUID id;
+    protected String name;
+    protected UUID quizId;
+    protected QuestionTypeEnum questionType;
+    protected List<AnswerQuery> answers;
 
     public UUID getId() {return id;}
     public void setId(UUID id) {
