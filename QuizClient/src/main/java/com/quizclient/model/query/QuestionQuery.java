@@ -13,8 +13,6 @@ public class QuestionQuery {
     public String getQuizId() {return quizId;}
     private QuestionTypeEnum questionType;
     public QuestionTypeEnum getQuestionType() {return questionType;}
-    private List<String> correctAnswers;
-    public List<String> getCorrectAnswers() {return correctAnswers;}
     private List<AnswerQuery> answers;
     public List<AnswerQuery> getAnswers() {return answers;}
 

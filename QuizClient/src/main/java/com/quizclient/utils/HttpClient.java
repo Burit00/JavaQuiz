@@ -27,26 +27,24 @@ public class HttpClient {
     }
 
     public String post(String url, Object body) throws IOException, InterruptedException {
-        String bodyRequest = gson.toJson(body);
-
-        HttpRequest httpRequest = HttpRequest
-                .newBuilder(URI.create(BASE_URL + url))
-                .method("POST", HttpRequest.BodyPublishers.ofString(bodyRequest))
-                .build();
-
-        HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        return sendPostPut("POST", url, body);
     }
 
     public String put(String url, Object body) throws IOException, InterruptedException {
+        return sendPostPut("PUT", url, body);
+    }
+
+    private String sendPostPut(String method, String url, Object body) throws IOException, InterruptedException {
         String bodyRequest = gson.toJson(body);
 
         HttpRequest httpRequest = HttpRequest
                 .newBuilder(URI.create(BASE_URL + url))
-                .method("PUT", HttpRequest.BodyPublishers.ofString(bodyRequest))
+                .header("Content-Type", "application/json")
+                .method(method, HttpRequest.BodyPublishers.ofString(bodyRequest))
                 .build();
 
         HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
         return response.body();
     }
 }

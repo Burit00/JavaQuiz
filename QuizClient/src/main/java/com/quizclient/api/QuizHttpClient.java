@@ -1,7 +1,8 @@
 package com.quizclient.api;
 
 import com.google.gson.reflect.TypeToken;
-import com.quizclient.model.command.QuizCommand;
+import com.quizclient.model.command.CreateQuizCommand;
+import com.quizclient.model.command.UpdateQuizCommand;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
 import com.google.gson.Gson;
@@ -39,6 +40,18 @@ public class QuizHttpClient {
         return gson.fromJson(response, QuizQuery.class);
     }
 
+    public static UpdateQuizCommand getQuizDetailsForUpdate(String quizId) {
+        String response;
+
+        try {
+            response = httpClient.get("quiz/" + quizId + "/updateForm");
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return gson.fromJson(response, UpdateQuizCommand.class);
+    }
+
     public static List<QuestionQuery> getQuestionsWithAnswers(String quizId) {
         String response;
 
@@ -54,22 +67,19 @@ public class QuizHttpClient {
 
     }
 
-    public static void postQuiz(QuizCommand quiz) {
+    public static void postQuiz(CreateQuizCommand quiz) {
         try {
-            String x = httpClient.post("quiz", quiz);
-            System.out.println(x);
+            httpClient.post("quiz", quiz);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void putQuiz(QuizCommand quiz) {
-//        TODO:
-//        String  response;
-//        try {
-//            response = httpClient.put("/quizzes/" + quiz.getId(), quiz);
-//        } catch (IOException | InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
+    public static void putQuiz(UpdateQuizCommand quiz) {
+        try {
+            httpClient.put("quiz/" + quiz.getId(), quiz);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

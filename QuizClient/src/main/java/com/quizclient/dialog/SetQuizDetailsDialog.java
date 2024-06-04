@@ -3,19 +3,19 @@ package com.quizclient.dialog;
 import com.google.gson.Gson;
 import com.quizclient.QuizClientApplication;
 import com.quizclient.enums.AwesomeIconEnum;
-import com.quizclient.model.command.QuizCommand;
+import com.quizclient.model.command.CreateQuizCommand;
 import com.quizclient.ui.Icon;
 import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class SetQuizDetailsDialog extends Dialog<QuizCommand> {
+public class SetQuizDetailsDialog extends Dialog<CreateQuizCommand> {
     private final Label timeLabel = new Label();
-    private final QuizCommand quiz;
+    private final CreateQuizCommand quiz;
 
-    public SetQuizDetailsDialog(QuizCommand quiz) {
+    public SetQuizDetailsDialog(CreateQuizCommand quiz) {
         Gson gson = new Gson();
-        this.quiz = gson.fromJson(gson.toJson(quiz), QuizCommand.class);
+        this.quiz = gson.fromJson(gson.toJson(quiz), CreateQuizCommand.class);
         buildUI();
     }
 

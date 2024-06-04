@@ -4,8 +4,9 @@ import com.quizclient.api.QuizHttpClient;
 import com.quizclient.dialog.AddEditQuestionDialog;
 import com.quizclient.dialog.SetQuizDetailsDialog;
 import com.quizclient.enums.AwesomeIconEnum;
-import com.quizclient.model.command.QuestionCommand;
-import com.quizclient.model.command.QuizCommand;
+import com.quizclient.model.command.CreateQuestionCommand;
+import com.quizclient.model.command.CreateQuizCommand;
+import com.quizclient.model.command.UpdateQuizCommand;
 import com.quizclient.ui.Icon;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
@@ -21,8 +22,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class CreatEditQuizController {
-    public QuizCommand quiz = new QuizCommand();
-    public List<QuestionCommand> questions = new ArrayList<>();
+    public CreateQuizCommand quiz = new CreateQuizCommand();
+    public List<CreateQuestionCommand> questions = new ArrayList<>();
 
     @FXML
     private Button saveQuizButton;
@@ -34,13 +35,9 @@ public class CreatEditQuizController {
     private TextField quizNameTextField;
 
     public void setParameter(String quizId){
-        quiz = QuizCommand.mapFromQuizQuery(QuizHttpClient.getQuiz(quizId));
-        List<QuestionCommand> questionsFromApi = QuizHttpClient.getQuestionsWithAnswers(quizId)
-                .stream().map(QuestionCommand::mapFromQuestionQuery).toList();
-
-        questions.addAll(questionsFromApi);
+        quiz = QuizHttpClient.getQuizDetailsForUpdate(quizId);
         quizNameTextField.setText(quiz.getName());
-
+        questions = quiz.getQuestions();
         buildUI();
     }
 
@@ -57,13 +54,13 @@ public class CreatEditQuizController {
     private void buildQuestionList() {
         questionListBox.getChildren().clear();
 
-        for (QuestionCommand question: questions) {
+        for (CreateQuestionCommand question: questions) {
             HBox questionRow = buildQuestionRow(question);
             questionListBox.getChildren().add(questionRow);
         }
     }
 
-    private HBox buildQuestionRow(QuestionCommand question) {
+    private HBox buildQuestionRow(CreateQuestionCommand question) {
         HBox questionRow = new HBox();
 
         Label questionLabel = new Label((questions.indexOf(question) + 1) + ". " + question.getName());
@@ -100,18 +97,18 @@ public class CreatEditQuizController {
     }
 
     @FXML
-    private void onEditQuestion(QuestionCommand question) {
+    private void onEditQuestion(CreateQuestionCommand question) {
         AddEditQuestionDialog dialog = new AddEditQuestionDialog(question);
-        Optional<QuestionCommand> questionResult = dialog.showAndWait();
-        questionResult.ifPresent(questionCommand ->
-                questions.set(questions.indexOf(question), questionCommand));
+        Optional<CreateQuestionCommand> questionResult = dialog.showAndWait();
+        questionResult.ifPresent(createQuestionCommand ->
+                questions.set(questions.indexOf(question), createQuestionCommand));
 
         setDisableSaveButton();
         buildQuestionList();
     }
 
     @FXML
-    private void onRemoveQuestion(QuestionCommand question) {
+    private void onRemoveQuestion(CreateQuestionCommand question) {
         questions.remove(question);
         if(questions.isEmpty())
             setDisableSaveButton();
@@ -127,8 +124,8 @@ public class CreatEditQuizController {
     private void onSaveQuiz() {
         quiz.setQuestions(questions);
 
-        if (quiz.getId() == null) QuizHttpClient.postQuiz(quiz);
-        else QuizHttpClient.putQuiz(quiz);
+        if (quiz instanceof UpdateQuizCommand) QuizHttpClient.putQuiz(((UpdateQuizCommand)quiz));
+        else QuizHttpClient.postQuiz(quiz);
 
         SceneLoader.loadSelectQuizScene();
     }
@@ -136,7 +133,7 @@ public class CreatEditQuizController {
     @FXML
     private void onAddQuestion() {
         AddEditQuestionDialog dialog = new AddEditQuestionDialog();
-        Optional<QuestionCommand> questionResult = dialog.showAndWait();
+        Optional<CreateQuestionCommand> questionResult = dialog.showAndWait();
         if(questionResult.isPresent()) {
             questions.add(questionResult.get());
             buildQuestionList();
@@ -147,9 +144,12 @@ public class CreatEditQuizController {
     @FXML
     private void onSetQuizDetails() {
         SetQuizDetailsDialog dialog = new SetQuizDetailsDialog(quiz);
-        Optional<QuizCommand> quizResult = dialog.showAndWait();
+        Optional<CreateQuizCommand> quizResult = dialog.showAndWait();
 
-        quizResult.ifPresent(quizCommand -> quiz = quizCommand);
+        quizResult.ifPresent(quizCommand -> {
+            quiz.setDescription(quizCommand.getDescription());
+            quiz.setTime(quizCommand.getTime());
+        });
     }
 
     @FXML

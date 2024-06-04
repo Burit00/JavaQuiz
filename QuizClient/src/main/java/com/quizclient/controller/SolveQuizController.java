@@ -219,9 +219,10 @@ public class SolveQuizController {
     }
 
     private void showScore() {
-        saveAnswer();
-        List<List<String>> correctQuizAnswers = questions.stream().map(QuestionQuery::getCorrectAnswers).toList();
-        SceneLoader.loadQuizScoreScene(correctQuizAnswers, userQuizAnswers);
+//        TODO
+//        saveAnswer();
+//        List<List<String>> correctQuizAnswers = questions.stream().map(QuestionQuery::getCorrectAnswers).toList();
+//        SceneLoader.loadQuizScoreScene(correctQuizAnswers, userQuizAnswers);
     }
 
     private void saveAnswer() {

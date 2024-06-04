@@ -3,8 +3,8 @@ package com.quizclient.dialog;
 import com.quizclient.QuizClientApplication;
 import com.quizclient.enums.AwesomeIconEnum;
 import com.quizclient.enums.QuestionTypeEnum;
-import com.quizclient.model.command.AnswerCommand;
-import com.quizclient.model.command.QuestionCommand;
+import com.quizclient.model.command.CreateAnswerCommand;
+import com.quizclient.model.command.CreateQuestionCommand;
 import com.quizclient.ui.Icon;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
-    private final QuestionCommand question;
+public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
+    private final CreateQuestionCommand question;
 
     private TextField questionNameTextField;
     private String answerNameFromInput;
@@ -32,13 +32,13 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
 
     public AddEditQuestionDialog() {
         this.setTitle("Dodaj pytanie");
-        this.question = new QuestionCommand();
+        this.question = new CreateQuestionCommand();
         buildUI();
     }
 
-    public AddEditQuestionDialog(QuestionCommand questionCommand) {
+    public AddEditQuestionDialog(CreateQuestionCommand createQuestionCommand) {
         this.setTitle("Edytuj pytanie");
-        this.question = (QuestionCommand) questionCommand.clone();
+        this.question = (CreateQuestionCommand) createQuestionCommand.clone();
         if(question.getQuestionType() == QuestionTypeEnum.INPUT)
             answerNameFromInput = question.getCorrectAnswers().getFirst();
 
@@ -149,16 +149,16 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
 
         if (question.getQuestionType() == QuestionTypeEnum.INPUT) {
             if (answerNameFromInput != null && !answerNameFromInput.isBlank())
-                buildAnswerRow(new AnswerCommand(UUID.randomUUID().toString(), question.getId(), answerNameFromInput));
+                buildAnswerRow(new CreateAnswerCommand(UUID.randomUUID().toString(), answerNameFromInput));
             return;
         }
 
-        for (AnswerCommand answer : question.getAnswers())
+        for (CreateAnswerCommand answer : question.getAnswers())
             buildAnswerRow(answer);
 
     }
 
-    private void buildAnswerRow(AnswerCommand answer) {
+    private void buildAnswerRow(CreateAnswerCommand answer) {
         setDisableConfirmButton();
         Node answerName = getAnswerNode(answer);
         answerName.getStyleClass().add("answer-name");
@@ -187,7 +187,7 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
         answerListBox.getChildren().add(answerRow);
     }
 
-    private Node getAnswerNode(AnswerCommand answer) {
+    private Node getAnswerNode(CreateAnswerCommand answer) {
         Node answerName = null;
 
         switch (question.getQuestionType()) {
@@ -245,7 +245,7 @@ public class AddEditQuestionDialog extends Dialog<QuestionCommand> {
             if (question.getQuestionType() == QuestionTypeEnum.INPUT)
                 answerNameFromInput = answerNameTextField.getText();
             else
-                question.getAnswers().add(new AnswerCommand(UUID.randomUUID().toString(), question.getId(), answerNameTextField.getText()));
+                question.getAnswers().add(new CreateAnswerCommand(UUID.randomUUID().toString(), answerNameTextField.getText()));
 
             answerNameTextField.setText(null);
             addAnswerButton.setDisable(true);
