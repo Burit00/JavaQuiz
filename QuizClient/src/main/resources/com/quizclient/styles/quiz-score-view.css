@@ -15,3 +15,9 @@
 .action-buttons {
     -fx-alignment: center;
 }
+
+.quiz-name {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #02b7b3;
+}

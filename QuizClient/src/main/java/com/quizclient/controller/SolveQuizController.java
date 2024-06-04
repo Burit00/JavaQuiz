@@ -3,12 +3,13 @@ package com.quizclient.controller;
 import com.quizclient.api.QuizHttpClient;
 import com.quizclient.enums.AwesomeIconEnum;
 import com.quizclient.enums.QuestionTypeEnum;
+import com.quizclient.model.command.UserQuizAnswersCommand;
 import com.quizclient.model.query.AnswerQuery;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
 import com.quizclient.ui.Icon;
-import com.quizclient.utils.SceneLoader;
 import com.quizclient.dialog.ConfirmQuizDialog;
+import com.quizclient.utils.SceneLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -25,10 +26,11 @@ public class SolveQuizController {
     private QuizQuery quiz;
     private List<QuestionQuery> questions;
     private QuestionQuery currentQuestion;
+    private UserQuizAnswersCommand currentQuestionAnswer;
     private int timeLeft;
     private Timeline timer = new Timeline();
 
-    private final List<List<String>> userQuizAnswers = new ArrayList<>();
+    private final List<UserQuizAnswersCommand> userQuizAnswers = new ArrayList<>();
     private final ConfirmQuizDialog confirmQuizDialog = new ConfirmQuizDialog();
 
     private ToggleGroup radioGroup;
@@ -53,24 +55,27 @@ public class SolveQuizController {
 
     @FXML
     private void onPreviousQuestion() {
-        if (!previousQuestionButton.isDisabled()) {
-            saveAnswer();
-            int currentQuestionIndex = questions.indexOf(currentQuestion);
-            int previousQuestionIndex = currentQuestionIndex - 1;
-            currentQuestion = questions.get(previousQuestionIndex);
-            buildQuestion();
-        }
+        if (previousQuestionButton.isDisabled()) return;
+
+        saveAnswer();
+        int currentQuestionIndex = questions.indexOf(currentQuestion);
+        int previousQuestionIndex = currentQuestionIndex - 1;
+        currentQuestion = questions.get(previousQuestionIndex);
+        currentQuestionAnswer = findUserQuestionAnswerCommand(currentQuestion.getId());
+        buildQuestion();
     }
 
     @FXML
     private void onNextQuestion() {
-        if (!nextQuestionButton.isDisabled()) {
-            saveAnswer();
-            int currentQuestionIndex = questions.indexOf(currentQuestion);
-            int nextQuestionIndex = currentQuestionIndex + 1;
-            currentQuestion = questions.get(nextQuestionIndex);
-            buildQuestion();
-        }
+        if (nextQuestionButton.isDisabled()) return;
+
+        saveAnswer();
+        int currentQuestionIndex = questions.indexOf(currentQuestion);
+        int nextQuestionIndex = currentQuestionIndex + 1;
+        currentQuestion = questions.get(nextQuestionIndex);
+        currentQuestionAnswer = findUserQuestionAnswerCommand(currentQuestion.getId());
+        buildQuestion();
+
     }
 
     @FXML
@@ -86,16 +91,18 @@ public class SolveQuizController {
     private void loadAnswers() {
         questions = QuizHttpClient.getQuestionsWithAnswers(quiz.getId());
 
-        if (!questions.isEmpty()) {
-            currentQuestion = questions.getFirst();
-        } else {
+        if (questions.isEmpty()) {
             currentQuestion = null;
             questionLabel.setText("Nie znaleziono pytań");
+            return;
         }
 
-        for (QuestionQuery _ : questions) {
-            userQuizAnswers.add(new ArrayList<>());
+        for (QuestionQuery question : questions) {
+            userQuizAnswers.add(new UserQuizAnswersCommand(question.getId(), new ArrayList<>()));
         }
+
+        currentQuestion = questions.getFirst();
+        currentQuestionAnswer = findUserQuestionAnswerCommand(currentQuestion.getId());
     }
 
     private void buildUI() {
@@ -155,14 +162,14 @@ public class SolveQuizController {
     private void buildCheckboxAnswers() {
         for (AnswerQuery answer : currentQuestion.getAnswers()) {
             CheckBox checkBox = new CheckBox(answer.getText());
-            checkBox.setUserData(answer.getId());
+            checkBox.setUserData(answer.getPublicId());
 
             answersBox.getChildren().add(checkBox);
 
             int currentQuestionIndex = questions.indexOf(currentQuestion);
-            List<String> savedAnswers = userQuizAnswers.get(currentQuestionIndex);
+            List<String> savedAnswers = userQuizAnswers.get(currentQuestionIndex).getAnswers();
 
-            if (savedAnswers.contains(answer.getId())) {
+            if (savedAnswers.contains(answer.getPublicId())) {
                 checkBox.setSelected(true);
             }
         }
@@ -174,15 +181,15 @@ public class SolveQuizController {
         for (AnswerQuery answer : currentQuestion.getAnswers()) {
             RadioButton radioButton = new RadioButton(answer.getText());
             radioButton.getStyleClass().add("answer");
-            radioButton.setUserData(answer.getId());
+            radioButton.setUserData(answer.getPublicId());
 
             radioButton.setToggleGroup(radioGroup);
             answersBox.getChildren().add(radioButton);
 
             int currentQuestionIndex = questions.indexOf(currentQuestion);
-            List<String> savedAnswers = userQuizAnswers.get(currentQuestionIndex);
+            List<String> savedAnswers = userQuizAnswers.get(currentQuestionIndex).getAnswers();
 
-            if (savedAnswers.contains(answer.getId())) {
+            if (savedAnswers.contains(answer.getPublicId())) {
                 radioButton.setSelected(true);
             }
         }
@@ -195,7 +202,7 @@ public class SolveQuizController {
         answersBox.getChildren().add(textField);
 
         int currentQuestionIndex = questions.indexOf(currentQuestion);
-        List<String> savedAnswers = userQuizAnswers.get(currentQuestionIndex);
+        List<String> savedAnswers = userQuizAnswers.get(currentQuestionIndex).getAnswers();
 
         if (!savedAnswers.isEmpty()) textField.setText(savedAnswers.getFirst());
     }
@@ -220,14 +227,14 @@ public class SolveQuizController {
 
     private void showScore() {
 //        TODO
-//        saveAnswer();
-//        List<List<String>> correctQuizAnswers = questions.stream().map(QuestionQuery::getCorrectAnswers).toList();
-//        SceneLoader.loadQuizScoreScene(correctQuizAnswers, userQuizAnswers);
+        saveAnswer();
+        SceneLoader.loadQuizScoreScene(quiz.getId(), userQuizAnswers);
     }
 
     private void saveAnswer() {
         if (currentQuestion == null) return;
 
+        currentQuestionAnswer.getAnswers().clear();
         QuestionTypeEnum questionType = currentQuestion.getQuestionType();
         switch (questionType) {
             case CHECKBOX -> saveCheckboxAnswers();
@@ -237,33 +244,31 @@ public class SolveQuizController {
     }
 
     private void saveCheckboxAnswers() {
-        int currentQuestionIndex = questions.indexOf(currentQuestion);
-        userQuizAnswers.get(currentQuestionIndex).clear();
-
         for (Node checkboxNode : answersBox.getChildren()) {
             CheckBox checkbox = (CheckBox) checkboxNode;
             String answer = (String) checkbox.getUserData();
 
-            if (checkbox.isSelected()) userQuizAnswers.get(currentQuestionIndex).add(answer);
+            if (checkbox.isSelected())
+                currentQuestionAnswer.getAnswers().add(answer);
         }
     }
 
     private void saveRadioAnswers() {
         RadioButton selectedRadioButton = (RadioButton) radioGroup.getSelectedToggle();
-        if (selectedRadioButton != null) {
-            String answer = (String) selectedRadioButton.getUserData();
 
-            int currentQuestionIndex = questions.indexOf(currentQuestion);
-            userQuizAnswers.get(currentQuestionIndex).clear();
-            userQuizAnswers.get(currentQuestionIndex).add(answer);
-        }
+        if (selectedRadioButton == null) return;
+
+        String answer = (String) selectedRadioButton.getUserData();
+        currentQuestionAnswer.getAnswers().add(answer);
     }
 
     private void saveInputAnswers() {
-        int currentQuestionIndex = questions.indexOf(currentQuestion);
-        userQuizAnswers.get(currentQuestionIndex).clear();
         TextField input = (TextField) answersBox.getChildren().getFirst();
+        currentQuestionAnswer.getAnswers().add(input.getText());
+    }
 
-        userQuizAnswers.get(currentQuestionIndex).add(input.getText());
+    private UserQuizAnswersCommand findUserQuestionAnswerCommand(UUID questionId) {
+        return userQuizAnswers.stream().filter(userQuestionAnswer ->
+                userQuestionAnswer.getQuestionId().equals(questionId)).findFirst().orElse(null);
     }
 }

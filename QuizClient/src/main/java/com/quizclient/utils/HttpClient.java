@@ -64,6 +64,7 @@ public class HttpClient {
         HttpRequest httpRequest = HttpRequest
                 .newBuilder(URI.create(BASE_URL + url))
                 .header("Content-Type", "application/json")
+                .header("Accept", "*/*")
                 .method(method.getValue(), bodyPublisher)
                 .build();
 

@@ -3,9 +3,11 @@ package com.quizclient.api;
 import com.google.gson.reflect.TypeToken;
 import com.quizclient.model.command.CreateQuizCommand;
 import com.quizclient.model.command.UpdateQuizCommand;
+import com.quizclient.model.command.UserQuizAnswersCommand;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
 import com.google.gson.Gson;
+import com.quizclient.model.query.UserQuizScoreQuery;
 import com.quizclient.utils.HttpClient;
 
 import java.io.IOException;
@@ -90,5 +92,17 @@ public class QuizHttpClient {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static UserQuizScoreQuery calculateQuizScore(UUID quizId, List<UserQuizAnswersCommand> userQuizAnswers) {
+        String response;
+
+        try {
+            response = httpClient.post("quiz/" + quizId + "/calculateScore", userQuizAnswers);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return gson.fromJson(response, new TypeToken<UserQuizScoreQuery>() {}.getType());
     }
 }

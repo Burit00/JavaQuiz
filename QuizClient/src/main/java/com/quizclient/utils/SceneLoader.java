@@ -5,6 +5,7 @@ import com.quizclient.controller.CreatEditQuizController;
 import com.quizclient.controller.QuizDetailsController;
 import com.quizclient.controller.QuizScoreController;
 import com.quizclient.controller.SolveQuizController;
+import com.quizclient.model.command.UserQuizAnswersCommand;
 import com.quizclient.model.query.QuizQuery;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -63,11 +64,11 @@ public class SceneLoader {
         showScene(loader.root);
     }
 
-    public static void loadQuizScoreScene(List<List<String>> correctQuizAnswers, List<List<String>> userQuizAnswers) {
+    public static void loadQuizScoreScene(UUID quizId, List<UserQuizAnswersCommand> userQuizAnswers) {
         Loader loader = loadScene("quiz-score-view.fxml");
 
         QuizScoreController controller = loader.fxmlLoader.getController();
-        controller.setParameter(correctQuizAnswers, userQuizAnswers);
+        controller.setParameter(quizId, userQuizAnswers);
 
         showScene(loader.root);
     }

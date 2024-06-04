@@ -13,6 +13,7 @@
     <BorderPane>
       <center>
         <VBox styleClass="results">
+          <Label styleClass="quiz-name" fx:id="quizNameLabel"/>
           <Label styleClass="points" fx:id="userScorePointsLabel" text="punkty"/>
           <Label styleClass="percentage" fx:id="userScorePercentageLabel" text="procenty"/>
         </VBox>
