@@ -13,7 +13,7 @@ public class AuthContext {
 
     public static void setToken(String  token) {
         AuthContext.token = token;
-        isLogged.setValue(true);
+        isLogged.setValue(AuthContext.token != null);
     }
 
     public static void removeToken() {
