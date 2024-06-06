@@ -1,23 +1,42 @@
 package com.quizclient.api;
 
 import com.google.gson.reflect.TypeToken;
+import com.quizclient.contexts.AuthContext;
 import com.quizclient.model.command.CreateQuizCommand;
+import com.quizclient.model.command.LoginUserCommand;
 import com.quizclient.model.command.UpdateQuizCommand;
 import com.quizclient.model.command.UserQuizAnswersCommand;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
-import com.google.gson.Gson;
 import com.quizclient.model.query.UserQuizScoreQuery;
 import com.quizclient.utils.HttpClient;
 
 import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class QuizHttpClient {
-    private static final Gson gson = new Gson();
     private static final HttpClient httpClient = new HttpClient("http://localhost:8080/api/v1/");
+
+    public static boolean login(LoginUserCommand loginUser) {
+        HttpResponse<String> response;
+
+        try {
+            response = httpClient.send("auth/login", HttpClient.HTTPMethod.POST, loginUser);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(response.statusCode() != 200){
+            AuthContext.removeToken();
+            return false;
+        }
+
+        AuthContext.setToken(response.body());
+        return true;
+    }
 
     public static List<QuizQuery> getQuizzes() {
         String response;
@@ -29,7 +48,7 @@ public class QuizHttpClient {
         }
 
         if (response.equals("[]")) return new ArrayList<>();
-        return gson.fromJson(response, new TypeToken<List<QuizQuery>>() {}.getType());
+        return HttpClient.gson.fromJson(response, new TypeToken<List<QuizQuery>>() {}.getType());
     }
 
     public static QuizQuery getQuiz(UUID quizId) {
@@ -40,7 +59,7 @@ public class QuizHttpClient {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return gson.fromJson(response, QuizQuery.class);
+        return HttpClient.gson.fromJson(response, QuizQuery.class);
     }
 
     public static UpdateQuizCommand getQuizDetailsForUpdate(UUID quizId) {
@@ -52,7 +71,7 @@ public class QuizHttpClient {
             throw new RuntimeException(e);
         }
 
-        return gson.fromJson(response, UpdateQuizCommand.class);
+        return HttpClient.gson.fromJson(response, UpdateQuizCommand.class);
     }
 
     public static List<QuestionQuery> getQuestionsWithAnswers(UUID quizId) {
@@ -65,7 +84,7 @@ public class QuizHttpClient {
         }
 
         if(response.equals("[]")) return new ArrayList<>();
-        return gson.fromJson(response, new TypeToken<List<QuestionQuery>>() {
+        return HttpClient.gson.fromJson(response, new TypeToken<List<QuestionQuery>>() {
         }.getType());
 
     }
@@ -103,6 +122,6 @@ public class QuizHttpClient {
             throw new RuntimeException(e);
         }
 
-        return gson.fromJson(response, new TypeToken<UserQuizScoreQuery>() {}.getType());
+        return HttpClient.gson.fromJson(response, new TypeToken<UserQuizScoreQuery>() {}.getType());
     }
 }

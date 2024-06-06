@@ -4,6 +4,7 @@ module com.quizclient {
     requires java.net.http;
     requires com.google.gson;
     requires jdk.jshell;
+    requires java.desktop;
 
 
     opens com.quizclient to javafx.fxml;

@@ -1,3 +1,19 @@
 .warning-label {
     -fx-font-size: 15px;
 }
+
+.input-label {
+    -fx-font-size: 13px;
+    -fx-padding: 5px;
+}
+
+.warning {
+    -fx-text-fill: #ff5454;
+}
+
+.wrong-username-or-password {
+    -fx-font-size: 15px;
+    -fx-wrap-text: true;
+    -fx-padding: 5px;
+    -fx-text-fill: #ff5454;
+}

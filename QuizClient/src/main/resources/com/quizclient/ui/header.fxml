@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
-
-<fx:root type="HBox" styleClass="header" xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/global.css">
+<?import javafx.scene.layout.AnchorPane?>
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/global.css">
+  <HBox styleClass="header" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
     <Label>JAVA QUIZ</Label>
+  </HBox>
+  <Button
+      fx:id="loginButton"
+      AnchorPane.rightAnchor="10"
+      AnchorPane.topAnchor="10"
+      styleClass="login-button"
+  />
 </fx:root>
+

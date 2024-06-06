@@ -1,6 +1,7 @@
 package com.quizclient.utils;
 
 import com.google.gson.Gson;
+import com.quizclient.contexts.AuthContext;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,10 +10,10 @@ import java.net.http.HttpResponse;
 
 public class HttpClient {
     public static Gson gson = new Gson();
-    private static String BASE_URL;
+    private final String BASE_URL;
     private static final java.net.http.HttpClient httpClient = java.net.http.HttpClient.newHttpClient();
 
-    private enum HTTPMethodEnum {
+    public enum HTTPMethod {
         GET("GET"),
         POST("POST"),
         PUT("PUT"),
@@ -22,7 +23,7 @@ public class HttpClient {
         public String getValue() {
             return this.value;
         }
-        private HTTPMethodEnum(String httpMethod) {
+        private HTTPMethod(String httpMethod) {
             this.value = httpMethod;
         }
     }
@@ -32,43 +33,49 @@ public class HttpClient {
     }
 
     public String get(String url) throws IOException, InterruptedException {
-        return send(url, HTTPMethodEnum.GET);
+        HttpResponse<String> response = send(url, HTTPMethod.GET);
+        return response.body();
     }
 
     public String post(String url, Object body) throws IOException, InterruptedException {
-        return send(url, HTTPMethodEnum.POST, body);
+        HttpResponse<String> response = send(url, HTTPMethod.POST, body);
+        return response.body();
     }
 
     public String put(String url, Object body) throws IOException, InterruptedException {
-        return send(url, HTTPMethodEnum.PUT, body);
+        HttpResponse<String> response = send(url, HTTPMethod.PUT, body);
+        return response.body();
     }
 
     public String delete(String url) throws IOException, InterruptedException {
-        return send(url, HTTPMethodEnum.DELETE);
+        HttpResponse<String> response = send(url, HTTPMethod.DELETE);
+        return response.body();
     }
 
-    private String send(String url, HTTPMethodEnum method) throws IOException, InterruptedException {
+    public HttpResponse<String> send(String url, HTTPMethod method) throws IOException, InterruptedException {
         return send(url, method, null);
     }
 
-    private String send(String url, HTTPMethodEnum method, Object body) throws IOException, InterruptedException {
+    public HttpResponse<String> send(String url, HTTPMethod method, Object body) throws IOException, InterruptedException {
         HttpRequest.BodyPublisher bodyPublisher = null;
 
-        if (method == HTTPMethodEnum.GET || method == HTTPMethodEnum.DELETE) {
+        if (method == HTTPMethod.GET || method == HTTPMethod.DELETE) {
             bodyPublisher = HttpRequest.BodyPublishers.noBody();
-        } else if (method == HTTPMethodEnum.POST || method == HTTPMethodEnum.PUT) {
+        } else if (method == HTTPMethod.POST || method == HTTPMethod.PUT) {
             String bodyRequest = gson.toJson(body);
             bodyPublisher = HttpRequest.BodyPublishers.ofString(bodyRequest);
         }
 
+        String token = AuthContext.getToken();
+
         HttpRequest httpRequest = HttpRequest
                 .newBuilder(URI.create(BASE_URL + url))
+                .method(method.getValue(), bodyPublisher)
                 .header("Content-Type", "application/json")
                 .header("Accept", "*/*")
-                .method(method.getValue(), bodyPublisher)
+                .header("Authorization", token != null ? token : "")
                 .build();
 
-        HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        return httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
     }
 }

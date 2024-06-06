@@ -1,6 +1,7 @@
 package com.quizclient.controller;
 
 import com.quizclient.api.QuizHttpClient;
+import com.quizclient.contexts.AuthContext;
 import com.quizclient.model.query.QuizQuery;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
@@ -11,6 +12,9 @@ import java.util.List;
 
 public class SelectQuizController {
     private List<QuizQuery> quizzes;
+
+    @FXML
+    private Button createQuizButton;
 
     private void loadQuizzes() {
         quizzesContainer.getChildren().clear();
@@ -25,6 +29,9 @@ public class SelectQuizController {
 
             quizzesContainer.getChildren().add(quizButton);
         }
+
+        AuthContext.getIsLogged().subscribe(isLogged ->
+                createQuizButton.setDisable(!isLogged));
     }
 
     private void openQuiz(QuizQuery quiz) {

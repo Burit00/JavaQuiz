@@ -20,7 +20,7 @@
       </center>
       <bottom>
         <AnchorPane>
-          <Button AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
+          <Button fx:id="createQuizButton" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
                   text="Stwórz Quiz" onAction="#onCreateQuiz">
             <graphic>
               <Icon value="PLUS"/>

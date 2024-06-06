@@ -1,6 +1,7 @@
 package com.quizclient.controller;
 
 import com.quizclient.api.QuizHttpClient;
+import com.quizclient.contexts.AuthContext;
 import com.quizclient.dialog.DeleteQuizDialog;
 import com.quizclient.model.query.QuizQuery;
 import com.quizclient.utils.SceneLoader;
@@ -33,6 +34,11 @@ public class QuizDetailsController {
                 }
             });
 
+        });
+
+        AuthContext.getIsLogged().subscribe(isLogged -> {
+            editQuizButton.setDisable(!isLogged);
+            removeQuizButton.setDisable(!isLogged);
         });
     }
 
