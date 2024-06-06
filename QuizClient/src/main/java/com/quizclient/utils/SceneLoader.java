@@ -1,6 +1,7 @@
 package com.quizclient.utils;
 
 import com.quizclient.QuizClientApplication;
+import com.quizclient.contexts.AuthContext;
 import com.quizclient.controller.CreatEditQuizController;
 import com.quizclient.controller.QuizDetailsController;
 import com.quizclient.controller.QuizScoreController;
@@ -19,9 +20,21 @@ import java.util.UUID;
 
 public class SceneLoader {
     private static Stage stage;
+    private static SceneEnum activeScene = SceneEnum.SELECT_QUIZ;
 
-    public static void setStage(Stage stage) {
-        if(SceneLoader.stage == null) SceneLoader.stage = stage;
+    private enum SceneEnum {
+        CREATE_EDIT_QUIZ,
+        QUIZ_DETAILS,
+        QUIZ_SCORE,
+        SELECT_QUIZ,
+        SOLVE_QUIZ,
+    }
+
+    static {
+        AuthContext.getIsLogged().subscribe(isLogged -> {
+           if (!isLogged && activeScene.equals(SceneEnum.CREATE_EDIT_QUIZ))
+               loadSelectQuizScene();
+        });
     }
 
     private static class Loader {
@@ -34,6 +47,10 @@ public class SceneLoader {
         }
     }
 
+    public static void setStage(Stage stage) {
+        if(SceneLoader.stage == null) SceneLoader.stage = stage;
+    }
+
     private static Loader loadScene(String fileName) {
         FXMLLoader fxmlLoader = new FXMLLoader(getResource(fileName));
         Parent root = getRoot(fxmlLoader);
@@ -42,11 +59,13 @@ public class SceneLoader {
     }
 
     public static void loadSelectQuizScene() {
+        activeScene = SceneEnum.SELECT_QUIZ;
         Loader loader = loadScene("select-quiz-view.fxml");
         showScene(loader.root);
     }
 
     public static void loadQuizDetailsScene(UUID quizId) {
+        activeScene = SceneEnum.QUIZ_DETAILS;
         Loader loader = loadScene("quiz-details-view.fxml");
 
         QuizDetailsController controller = loader.fxmlLoader.getController();
@@ -56,6 +75,7 @@ public class SceneLoader {
     }
 
     public static void loadSolveQuizScene(QuizQuery quiz) {
+        activeScene = SceneEnum.SOLVE_QUIZ;
         Loader loader = loadScene("solve-quiz-view.fxml");
 
         SolveQuizController controller = loader.fxmlLoader.getController();
@@ -65,6 +85,7 @@ public class SceneLoader {
     }
 
     public static void loadQuizScoreScene(UUID quizId, List<UserQuizAnswersCommand> userQuizAnswers) {
+        activeScene = SceneEnum.QUIZ_SCORE;
         Loader loader = loadScene("quiz-score-view.fxml");
 
         QuizScoreController controller = loader.fxmlLoader.getController();
@@ -74,11 +95,13 @@ public class SceneLoader {
     }
 
     public static void loadCreateQuizScene() {
+        activeScene = SceneEnum.CREATE_EDIT_QUIZ;
         Loader loader = loadScene("create-edit-quiz-view.fxml");
         showScene(loader.root);
     }
 
     public static void loadEditQuizScene(UUID quizId) {
+        activeScene = SceneEnum.CREATE_EDIT_QUIZ;
         Loader loader = loadScene("create-edit-quiz-view.fxml");
 
         CreatEditQuizController controller = loader.fxmlLoader.getController();
