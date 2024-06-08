@@ -16,11 +16,21 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    private String name;
+    @Column(columnDefinition = "TEXT")
+    private String code;
+    private UUID quizId;
+    private QuestionTypeEnum questionType;
+    private String correctAnswers;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "questionId")
+    private List<Answer> answers = new ArrayList<>();
+
     public UUID getId() {
         return id;
     }
 
-    private String name;
     public String getName() {
         return name;
     }
@@ -28,10 +38,15 @@ public class Question {
         this.name = name;
     }
 
-    private UUID quizId;
+    public String getCode() {
+        return code;
+    }
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public UUID getQuizId() {return quizId;}
 
-    private QuestionTypeEnum questionType;
     public QuestionTypeEnum getQuestionType() {
         return questionType;
     }
@@ -39,7 +54,7 @@ public class Question {
         this.questionType = questionType;
     }
 
-    private String correctAnswers;
+
     public List<String> getCorrectAnswers() {
         if(questionType == QuestionTypeEnum.INPUT)
             return List.of(correctAnswers);
@@ -54,9 +69,6 @@ public class Question {
 
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "questionId")
-    private List<Answer> answers = new ArrayList<>();
     public List<Answer> getAnswers() {
         return answers;
     }

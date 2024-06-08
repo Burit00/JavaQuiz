@@ -52,10 +52,10 @@ public class QuizController {
     }
 
     @PutMapping("{quizId}")
-    public ResponseEntity<?> postQuiz(@PathVariable UUID quizId, @RequestBody UpdateQuizCommand quizCommand, @RequestHeader(value = "Authorization", defaultValue = "token") String token) {
+    public ResponseEntity<?> putQuiz(@PathVariable UUID quizId, @RequestBody UpdateQuizCommand quizCommand, @RequestHeader(value = "Authorization", defaultValue = "token") String token) {
         if(!authService.isAdmin(token)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         quizService.updateQuiz(quizId, quizCommand);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("{quizId}/calculateScore")

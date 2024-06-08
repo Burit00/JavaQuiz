@@ -8,6 +8,7 @@ import java.util.UUID;
 public class QuestionQuery {
     protected UUID id;
     protected String name;
+    protected String code;
     protected UUID quizId;
     protected QuestionTypeEnum questionType;
     protected List<AnswerQuery> answers;
@@ -19,6 +20,13 @@ public class QuestionQuery {
 
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
+
+    public String getCode() {
+        return code;
+    }
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public UUID getQuizId() {return quizId;}
     public void setQuizId(UUID quizId) {

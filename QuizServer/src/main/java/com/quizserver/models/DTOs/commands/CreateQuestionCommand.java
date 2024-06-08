@@ -6,8 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateQuestionCommand {
-    public CreateQuestionCommand(){}
+
     private String name;
+    protected String code;
+    private List<String> correctAnswers = new ArrayList<>();
+    private QuestionTypeEnum questionType = QuestionTypeEnum.RADIO;
+    private List<CreateAnswerCommand> answers = new ArrayList<>();
+
+    public CreateQuestionCommand(){}
+
     public String getName() {
         return name;
     }
@@ -15,7 +22,13 @@ public class CreateQuestionCommand {
         this.name = name;
     }
 
-    private QuestionTypeEnum questionType = QuestionTypeEnum.RADIO;
+    public String getCode() {
+        return code;
+    }
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public QuestionTypeEnum getQuestionType() {
         return questionType;
     }
@@ -23,22 +36,16 @@ public class CreateQuestionCommand {
         this.questionType = questionType;
     }
 
-    private List<String> correctAnswers = new ArrayList<>();
-
     public List<String> getCorrectAnswers() {
         return correctAnswers;
     }
-
     public void setCorrectAnswers(List<String> correctAnswers) {
         this.correctAnswers = correctAnswers;
     }
 
-    private List<CreateAnswerCommand> answers = new ArrayList<>();
-
     public List<CreateAnswerCommand> getAnswers() {
         return answers;
     }
-
     public void setAnswers(List<CreateAnswerCommand> answers) {
         this.answers = answers;
     }

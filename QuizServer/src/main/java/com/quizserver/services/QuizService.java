@@ -7,12 +7,14 @@ import com.quizserver.models.DTOs.queries.UserQuizScoreQuery;
 import com.quizserver.models.entities.Answer;
 import com.quizserver.models.entities.Question;
 import com.quizserver.models.entities.Quiz;
+import com.quizserver.repositories.IQuestionRepository;
 import com.quizserver.repositories.IQuizRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,10 +23,12 @@ public class QuizService {
 
     private final IQuizRepository quizRepository;
     private final ModelMapper modelMapper;
+    private final IQuestionRepository questionRepository;
 
     @Autowired
-    public QuizService(IQuizRepository quizRepository, ModelMapper modelMapper) {
+    public QuizService(IQuizRepository quizRepository, IQuestionRepository questionRepository, ModelMapper modelMapper) {
         this.quizRepository = quizRepository;
+        this.questionRepository = questionRepository;
         this.modelMapper = modelMapper;
 
 
@@ -72,13 +76,15 @@ public class QuizService {
         quiz.setName(quizCommand.getName());
         quiz.setDescription(quizCommand.getDescription());
         quiz.setTime(quizCommand.getTime());
-        quiz.getQuestions().clear();
+        List<Question> oldQuestions = quiz.getQuestions();
+        quiz.setQuestions(new ArrayList<>());
 
         for(CreateQuestionCommand questionCommand: quizCommand.getQuestions()) {
             Question question = modelMapper.map(questionCommand, Question.class);
             quiz.getQuestions().add(question);
         }
 
+        questionRepository.deleteAll(oldQuestions);
         quizRepository.save(quiz);
     }
 
