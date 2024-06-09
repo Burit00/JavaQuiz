@@ -12,18 +12,9 @@
     -fx-text-fill: white;
 }
 
-.answer-name-input {
-    -fx-min-height: 40;
-}
-
-.add-answer-button {
-    -fx-min-height: 40;
-    -fx-font-size: 14;
-}
-
 .scroll-wrapper {
     -fx-spacing: 10;
-    -fx-padding: 10 0;
+    -fx-padding: 10 0 0 0;
 }
 
 .scroll {
@@ -70,4 +61,13 @@
     -fx-padding: 5 15;
     -fx-background-radius: 50;
     -fx-border-radius: 50;
+}
+
+.answer-name-input {
+    -fx-min-height: 47;
+    -fx-font-size: 14;
+}
+
+.add-answer-button {
+    -fx-font-size: 14;
 }

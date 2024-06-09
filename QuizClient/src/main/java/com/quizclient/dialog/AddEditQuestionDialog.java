@@ -13,64 +13,68 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
 
 public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
     private final CreateQuestionCommand question;
+    private AttachmentTypeEnum attachmentType;
 
     private TextField questionNameTextField;
+    private TextArea codeTextArea;
     private String answerNameFromInput;
+    private String codeFromTextArea;
+
     private Button confirmButton;
 
-    private final ToggleGroup questionTypeGroup = new ToggleGroup();
-    private final ToggleGroup answersGroup = new ToggleGroup();
-    private final VBox answerListBox = new VBox();
+    private ToggleGroup questionTypeGroup;
+    private ToggleGroup attachmentTypeGroup;
+    private ToggleGroup answersGroup;
+    private BorderPane contentPane;
+    private VBox answerListBox;
+    private VBox attachmentBox;
+
+
+    private enum AttachmentTypeEnum {
+        NONE,
+        CODE,
+    }
 
 
     public AddEditQuestionDialog() {
         this.setTitle("Dodaj pytanie");
         this.question = new CreateQuestionCommand();
-        buildUI();
+
+        setupBuildUI();
     }
 
     public AddEditQuestionDialog(CreateQuestionCommand createQuestionCommand) {
         this.setTitle("Edytuj pytanie");
         this.question = (CreateQuestionCommand) createQuestionCommand.clone();
-        if(question.getQuestionType() == QuestionTypeEnum.INPUT)
+        if (question.getQuestionType() == QuestionTypeEnum.INPUT)
             answerNameFromInput = question.getCorrectAnswers().getFirst();
 
-        buildUI();
+        setupBuildUI();
     }
 
-    private void buildUI() {
-        getDialogPane().setPrefSize(500, 500);
-        getDialogPane().getStylesheets().addAll(
-                QuizClientApplication.class.getResource("styles/global.css").toExternalForm(),
-                QuizClientApplication.class.getResource("dialog/add-edit-question-dialog.css").toExternalForm()
-        );
+    private void setupBuildUI() {
+        if (question.getCode() != null) {
+            attachmentType = AttachmentTypeEnum.CODE;
+            codeFromTextArea = question.getCode();
+        } else {
+            attachmentType = AttachmentTypeEnum.NONE;
+        }
 
         buildConfirmButton();
-
-        VBox topBox = new VBox(
-                buildQuestionNameBox(),
-                buildQuestionTypeBox()
-        );
-
-        VBox centerBox = new VBox(
-                new Label("Odpowiedzi:"),
-                buildAnswerListScrollBox()
-        );
-        centerBox.getStyleClass().add("scroll-wrapper");
-
-        BorderPane contentPane = new BorderPane();
-        contentPane.setTop(topBox);
-        contentPane.setCenter(centerBox);
-        contentPane.setBottom(buildAnswerNameInputBox());
-
-        getDialogPane().setContent(contentPane);
+        buildUI();
     }
 
     private void buildConfirmButton() {
@@ -80,6 +84,48 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
         confirmButton.setGraphic(new Icon(AwesomeIconEnum.CHECK));
         confirmButton.setMinWidth(Double.MAX_VALUE);
         confirmButton.setOnAction(_ -> confirmDialog());
+    }
+
+    private void buildUI() {
+        questionTypeGroup = new ToggleGroup();
+        attachmentTypeGroup = new ToggleGroup();
+        answersGroup = new ToggleGroup();
+        contentPane = new BorderPane();
+        answerListBox = new VBox();
+        VBox centerBox = new VBox();
+
+        getDialogPane().setMinSize(400, 500);
+        getDialogPane().getStylesheets().addAll(
+                QuizClientApplication.class.getResource("styles/global.css").toExternalForm(),
+                QuizClientApplication.class.getResource("dialog/add-edit-question-dialog.css").toExternalForm()
+        );
+
+        centerBox.getChildren().addAll(
+                buildQuestionNameBox(),
+                buildQuestionTypeBox(),
+                buildAttachmentTypeBox(),
+                new Label("Odpowiedzi:"),
+                buildAnswerListScrollBox(),
+                buildAnswerNameInputBox()
+        );
+
+        centerBox.getStyleClass().add("scroll-wrapper");
+
+        contentPane.setCenter(centerBox);
+        buildAttachmentBox();
+
+        getDialogPane().setContent(contentPane);
+    }
+
+    private VBox buildQuestionNameBox() {
+        Label questionNameLabel = new Label("Wpisz pytanie: ");
+        questionNameTextField = new TextField(question.getName());
+        questionNameTextField.setPromptText("Nazwa pytania...");
+        questionNameTextField.setOnKeyTyped(_ -> setDisableConfirmButton());
+        VBox questionNameBox = new VBox(questionNameLabel, questionNameTextField);
+        questionNameBox.getStyleClass().add("question-name");
+
+        return questionNameBox;
     }
 
     private ScrollPane buildAnswerListScrollBox() {
@@ -94,36 +140,20 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
         return answersScrollPane;
     }
 
-    private VBox buildQuestionNameBox() {
-        Label questionNameLabel = new Label("Wpisz pytanie: ");
-        questionNameTextField = new TextField(question.getName());
-        questionNameTextField.setPromptText("Nazwa pytania...");
-        questionNameTextField.setOnKeyTyped(_ -> setDisableConfirmButton());
-        VBox questionNameBox = new VBox(questionNameLabel, questionNameTextField);
-        questionNameBox.getStyleClass().add("question-name");
-
-        return questionNameBox;
-    }
-
     private VBox buildQuestionTypeBox() {
-        Label questionTypeLabel = new Label("Wybierz wariant odpowiedzi");
+
+        Label questionTypeLabel = new Label("Wybierz wariant odpowiedzi:");
         RadioButton radioQuestionTypeRadioButton = new RadioButton("Pojednczy wybór");
         RadioButton checkboxQuestionTypeRadioButton = new RadioButton("Wielokrotny wybór");
         RadioButton inputQuestionTypeRadioButton = new RadioButton("Pole tekstowe");
-
-        radioQuestionTypeRadioButton.setUserData(QuestionTypeEnum.RADIO);
-        checkboxQuestionTypeRadioButton.setUserData(QuestionTypeEnum.CHECKBOX);
-        inputQuestionTypeRadioButton.setUserData(QuestionTypeEnum.INPUT);
 
         radioQuestionTypeRadioButton.setOnAction(_ -> handleQuestionTypeChanged(QuestionTypeEnum.RADIO));
         checkboxQuestionTypeRadioButton.setOnAction(_ -> handleQuestionTypeChanged(QuestionTypeEnum.CHECKBOX));
         inputQuestionTypeRadioButton.setOnAction(_ -> handleQuestionTypeChanged(QuestionTypeEnum.INPUT));
 
-        questionTypeGroup.getToggles().addAll(
-                radioQuestionTypeRadioButton,
-                checkboxQuestionTypeRadioButton,
-                inputQuestionTypeRadioButton
-        );
+        radioQuestionTypeRadioButton.setToggleGroup(questionTypeGroup);
+        checkboxQuestionTypeRadioButton.setToggleGroup(questionTypeGroup);
+        inputQuestionTypeRadioButton.setToggleGroup(questionTypeGroup);
 
         switch (question.getQuestionType()) {
             case RADIO -> radioQuestionTypeRadioButton.setSelected(true);
@@ -131,16 +161,126 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
             case INPUT -> inputQuestionTypeRadioButton.setSelected(true);
         }
 
-        VBox questionTypeBox = new VBox(
-                questionTypeLabel,
+        HBox questionTypeRadioBox = new HBox(
+                10,
                 radioQuestionTypeRadioButton,
                 checkboxQuestionTypeRadioButton,
                 inputQuestionTypeRadioButton
         );
 
+        VBox questionTypeBox = new VBox(
+                questionTypeLabel,
+                questionTypeRadioBox
+        );
+
         questionTypeBox.getStyleClass().add("question-type");
 
         return questionTypeBox;
+    }
+
+    private VBox buildAttachmentTypeBox() {
+        Label attachmentTypeLabel = new Label("Wybierz rodzaj dodatkowej treści:");
+        RadioButton noneAttachmentRadioButton = new RadioButton("Brak dodatkowej treści");
+        RadioButton codeAttachmentRadioButton = new RadioButton("Kod");
+
+        noneAttachmentRadioButton.setOnAction(_ -> handleAttachmentTypeChanged(AttachmentTypeEnum.NONE));
+        codeAttachmentRadioButton.setOnAction(_ -> handleAttachmentTypeChanged(AttachmentTypeEnum.CODE));
+
+        noneAttachmentRadioButton.setToggleGroup(attachmentTypeGroup);
+        codeAttachmentRadioButton.setToggleGroup(attachmentTypeGroup);
+
+        switch (attachmentType) {
+            case AttachmentTypeEnum.NONE -> noneAttachmentRadioButton.setSelected(true);
+            case AttachmentTypeEnum.CODE -> codeAttachmentRadioButton.setSelected(true);
+        }
+
+        HBox attachmentTypeRadioBox = new HBox(
+                10,
+                noneAttachmentRadioButton,
+                codeAttachmentRadioButton
+        );
+
+        VBox attachmentTypeBox = new VBox(
+                attachmentTypeLabel,
+                attachmentTypeRadioBox
+        );
+
+        attachmentTypeBox.getStyleClass().add("question-type");
+
+        return attachmentTypeBox;
+    }
+
+    private void handleAttachmentTypeChanged(AttachmentTypeEnum attachmentType) {
+        this.attachmentType = attachmentType;
+
+        buildAttachmentBox();
+        setDisableConfirmButton();
+    }
+
+    private void buildAttachmentBox() {
+        if (attachmentType.equals(AttachmentTypeEnum.NONE)) {
+            double attachmentWidth = attachmentBox != null ? attachmentBox.getWidth() : 0;
+            setWidth(getWidth() - attachmentWidth);
+            contentPane.setRight(null);
+
+            return;
+        }
+
+        attachmentBox = new VBox(10);
+        switch (attachmentType) {
+            case CODE -> {
+                Button importFileButton = new Button("Zaimportuj z pliku");
+                codeTextArea = new TextArea(codeFromTextArea);
+
+                VBox.setVgrow(codeTextArea, Priority.ALWAYS);
+                codeTextArea.setFont(Font.font("Courier New"));
+                codeTextArea.setOnKeyTyped(e -> {
+                    codeFromTextArea = codeTextArea.getText();
+                    setDisableConfirmButton();
+                });
+
+                importFileButton.setMaxWidth(Double.MAX_VALUE);
+                importFileButton.setOnAction(_ -> {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setTitle("Wybierz plik");
+                    fileChooser.getExtensionFilters().addAll(
+                            new FileChooser.ExtensionFilter("Najlepszy język świata", "*.java")
+                    );
+                    File selectedFile = fileChooser.showOpenDialog(getOwner());
+                    StringBuilder sb = readFile(selectedFile);
+
+                    codeTextArea.setText(sb.toString());
+                    codeFromTextArea = sb.toString();
+                    setDisableConfirmButton();
+                });
+
+                attachmentBox.getChildren().addAll(
+                        codeTextArea,
+                        importFileButton
+                );
+            }
+        }
+
+        attachmentBox.setPrefWidth(400);
+        attachmentBox.setPadding(new Insets(0, 0, 0, 10));
+        contentPane.setRight(attachmentBox);
+        setWidth(getWidth() + attachmentBox.getPrefWidth());
+    }
+
+    public StringBuilder readFile(File selectedFile) {
+        StringBuilder fileContent = new StringBuilder(1024);
+        try {
+            FileReader fileReader = new FileReader(selectedFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String curLine;
+
+            while ((curLine = bufferedReader.readLine()) != null)
+                fileContent.append(curLine).append("\n");
+
+        } catch (IOException e) {
+            e.getMessage();
+        }
+        return fileContent;
     }
 
     private void buildAnswerListBox() {
@@ -155,21 +295,18 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
 
         for (CreateAnswerCommand answer : question.getAnswers())
             buildAnswerRow(answer);
-
     }
 
     private void buildAnswerRow(CreateAnswerCommand answer) {
-        setDisableConfirmButton();
-        Node answerName = getAnswerNode(answer);
-        answerName.getStyleClass().add("answer-name");
 
+        Node answerName = getAnswerNode(answer);
         HBox answerNameBox = new HBox(answerName);
+        Button removeAnswerButton = new Button("Usuń");
+        HBox answerRow = new HBox(answerNameBox);
+
         HBox.setHgrow(answerNameBox, Priority.ALWAYS);
         HBox.setMargin(answerNameBox, new Insets(0, 10, 0, 0));
 
-        HBox answerRow = new HBox(answerNameBox);
-
-        Button removeAnswerButton = new Button("Usuń");
         removeAnswerButton.setGraphic(new Icon(AwesomeIconEnum.MINUS));
         removeAnswerButton.getStyleClass().add("remove-answer-button");
         removeAnswerButton.setOnAction(_ -> {
@@ -181,6 +318,7 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
             question.getAnswers().remove(answer);
             buildAnswerListBox();
         });
+
         answerRow.getChildren().add(removeAnswerButton);
         answerRow.getStyleClass().add("answer-row");
 
@@ -226,6 +364,7 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
                 setDisableConfirmButton();
             }
         }
+        answerName.getStyleClass().add("answer-name");
 
         return answerName;
     }
@@ -269,7 +408,7 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
         question.setQuestionType(questionType);
         question.getCorrectAnswers().clear();
 
-        if(question.getQuestionType() == QuestionTypeEnum.INPUT && answerNameFromInput != null)
+        if (question.getQuestionType() == QuestionTypeEnum.INPUT && answerNameFromInput != null)
             question.getCorrectAnswers().add(answerNameFromInput);
 
         if (question.getQuestionType() == QuestionTypeEnum.INPUT && answerNameFromInput == null && !question.getAnswers().isEmpty())
@@ -282,21 +421,30 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
     private void confirmDialog() {
         question.setName(questionNameTextField.getText());
 
-        if(question.getQuestionType() == QuestionTypeEnum.INPUT) {
+        switch (attachmentType) {
+            case NONE -> question.setCode(null);
+            case CODE -> question.setCode(codeFromTextArea);
+        }
+
+        if (question.getQuestionType() == QuestionTypeEnum.INPUT) {
             question.getAnswers().clear();
             question.getCorrectAnswers().clear();
             question.getCorrectAnswers().add(answerNameFromInput);
         }
 
-
         setResult(question);
     }
 
     private void setDisableConfirmButton() {
+        boolean hasNoName = questionNameTextField.getText() == null || questionNameTextField.getText().isBlank();
+        boolean hasNoCorrectAnswers = question.getCorrectAnswers().isEmpty();
+        boolean shouldHasCode = attachmentType.equals(AttachmentTypeEnum.CODE);
+        boolean hasNoCode = codeFromTextArea == null || codeFromTextArea.isBlank();
+
         confirmButton.setDisable(
-                question.getCorrectAnswers().isEmpty() ||
-                questionNameTextField.getText() == null ||
-                questionNameTextField.getText().isBlank()
+                hasNoName ||
+                hasNoCorrectAnswers ||
+                (shouldHasCode && hasNoCode)
         );
     }
 }

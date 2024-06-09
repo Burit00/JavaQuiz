@@ -7,14 +7,17 @@ import java.util.UUID;
 
 public class QuestionQuery {
     private UUID id;
-    public UUID getId() {return id;}
     private String name;
-    public String getName() {return name;}
+    private String code;
     private String quizId;
-    public String getQuizId() {return quizId;}
     private QuestionTypeEnum questionType;
-    public QuestionTypeEnum getQuestionType() {return questionType;}
     private List<AnswerQuery> answers;
+
+    public UUID getId() {return id;}
+    public String getName() {return name;}
+    public String getCode() {return code;}
+    public String getQuizId() {return quizId;}
+    public QuestionTypeEnum getQuestionType() {return questionType;}
     public List<AnswerQuery> getAnswers() {return answers;}
 
 }

@@ -63,6 +63,7 @@ public class HttpClient {
             bodyPublisher = HttpRequest.BodyPublishers.noBody();
         } else if (method == HTTPMethod.POST || method == HTTPMethod.PUT) {
             String bodyRequest = gson.toJson(body);
+            System.out.println(bodyRequest);
             bodyPublisher = HttpRequest.BodyPublishers.ofString(bodyRequest);
         }
 

@@ -50,6 +50,9 @@ public class SceneLoader {
     public static void setStage(Stage stage) {
         if(SceneLoader.stage == null) SceneLoader.stage = stage;
     }
+    public static Stage getStage() {
+        return stage;
+    }
 
     private static Loader loadScene(String fileName) {
         FXMLLoader fxmlLoader = new FXMLLoader(getResource(fileName));

@@ -15,7 +15,7 @@
         <AnchorPane>
           <HBox alignment="CENTER" styleClass="top" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
-            <Label fx:id="titleLabel" layoutX="370.0" styleClass="title" text="tytul"/>
+            <Label fx:id="titleLabel" layoutX="370.0" styleClass="title" text="tytuł"/>
           </HBox>
           <HBox alignment="CENTER" styleClass="time" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
             <Label fx:id="timeLabel" graphicTextGap="10"/>
@@ -27,9 +27,13 @@
           <top>
             <Label fx:id="questionLabel" styleClass="question" text="pytanie"/>
           </top>
-          <left>
+          <center>
             <VBox fx:id="answersBox" styleClass="answer-box"/>
-          </left>
+          </center>
+          <right>
+            <VBox fx:id="attachmentBox" styleClass="attachment-box">
+            </VBox>
+          </right>
           <bottom>
             <AnchorPane>
               <FlowPane styleClass="action-buttons" AnchorPane.leftAnchor="10">
