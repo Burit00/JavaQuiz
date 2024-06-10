@@ -234,7 +234,7 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
 
                 VBox.setVgrow(codeTextArea, Priority.ALWAYS);
                 codeTextArea.setFont(Font.font("Courier New"));
-                codeTextArea.setOnKeyTyped(e -> {
+                codeTextArea.setOnKeyTyped(_ -> {
                     codeFromTextArea = codeTextArea.getText();
                     setDisableConfirmButton();
                 });
