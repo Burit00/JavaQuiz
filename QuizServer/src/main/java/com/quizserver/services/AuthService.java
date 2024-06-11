@@ -1,33 +1,36 @@
 package com.quizserver.services;
 
-import com.quizserver.models.DTOs.auth.LoginUser;
+import com.quizserver.exceptions.InvalidJwtException;
+import com.quizserver.models.DTOs.auth.SignUpDto;
+import com.quizserver.models.entities.User;
+import com.quizserver.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthService {
-
-    private final LoginUser adminAccount = new LoginUser("admin", "admin");
-    private final JWTService JWTService;
-
+public class AuthService implements UserDetailsService {
     @Autowired
-    public AuthService(JWTService JWTService) {
-        this.JWTService = JWTService;
+    IUserRepository repository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        return repository.findByLogin(username);
     }
 
-    public String login(LoginUser loginUser) {
-        if(!loginUser.getUsername().equals(adminAccount.getUsername()) ||
-                !loginUser.getPassword().equals(adminAccount.getPassword())) return null;
+    public UserDetails signUp(SignUpDto data) throws InvalidJwtException {
 
-        return JWTService.generateToken(loginUser);
-    }
-
-    public boolean isAdmin(String token) {
-        try{
-            return JWTService.isTokenValid(token, adminAccount);
-        } catch (Exception e) {
-            return false;
+        if (repository.findByLogin(data.login()) != null) {
+            throw new InvalidJwtException("Username already exists");
         }
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+
+        User newUser = new User(data.login(), encryptedPassword, data.role());
+
+        return repository.save(newUser);
 
     }
 }

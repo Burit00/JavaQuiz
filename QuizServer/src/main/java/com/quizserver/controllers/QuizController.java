@@ -20,11 +20,9 @@ import java.util.UUID;
 public class QuizController {
 
     private final QuizService quizService;
-    private final AuthService authService;
 
-    public QuizController(final QuizService quizService, final AuthService authService) {
+    public QuizController(final QuizService quizService) {
         this.quizService = quizService;
-        this.authService = authService;
     }
 
     @GetMapping
@@ -38,22 +36,18 @@ public class QuizController {
     }
 
     @GetMapping("{quizId}/updateForm")
-    public ResponseEntity<UpdateQuizQuery> getQuizByQuizIdForUpdate(@PathVariable("quizId") UUID quizId, @RequestHeader(value = "Authorization", defaultValue = "token") String token) {
-        System.out.println(token);
-        if(!authService.isAdmin(token)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<UpdateQuizQuery> getQuizByQuizIdForUpdate(@PathVariable("quizId") UUID quizId) {
         return new ResponseEntity<>(quizService.getQuizByQuizIdForUpdate(quizId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?> postQuiz(@RequestBody CreateQuizCommand quizCommand, @RequestHeader(value = "Authorization", defaultValue = "token") String token) {
-        if(!authService.isAdmin(token)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<?> postQuiz(@RequestBody CreateQuizCommand quizCommand) {
         quizService.createQuiz(quizCommand);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("{quizId}")
-    public ResponseEntity<?> putQuiz(@PathVariable UUID quizId, @RequestBody UpdateQuizCommand quizCommand, @RequestHeader(value = "Authorization", defaultValue = "token") String token) {
-        if(!authService.isAdmin(token)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<?> putQuiz(@PathVariable UUID quizId, @RequestBody UpdateQuizCommand quizCommand) {
         quizService.updateQuiz(quizId, quizCommand);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -64,8 +58,7 @@ public class QuizController {
     }
 
     @DeleteMapping("{quizId}")
-    public ResponseEntity<?> deleteQuiz(@PathVariable UUID quizId, @RequestHeader(value = "Authorization", defaultValue = "token") String token) {
-        if(!authService.isAdmin(token)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<?> deleteQuiz(@PathVariable UUID quizId) {
         quizService.deleteQuiz(quizId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
