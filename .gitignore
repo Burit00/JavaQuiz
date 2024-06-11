@@ -43,3 +43,6 @@ replay_pid*
 .vs
 
 node_modules
+
+### Environment ###
+*/.env
