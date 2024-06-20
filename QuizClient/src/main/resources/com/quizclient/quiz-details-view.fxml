@@ -55,7 +55,7 @@
             <Icon value="HOME"/>
           </graphic>
         </Button>
-        <Button onAction="#onStartQuiz" text="Rozpocznij test">
+        <Button fx:id="startQuizButton" onAction="#onStartQuiz" text="Rozpocznij test">
           <graphic>
             <Icon value="PLAY"/>
           </graphic>

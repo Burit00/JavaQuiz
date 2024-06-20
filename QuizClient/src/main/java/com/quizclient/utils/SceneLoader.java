@@ -6,6 +6,7 @@ import com.quizclient.controller.CreatEditQuizController;
 import com.quizclient.controller.QuizDetailsController;
 import com.quizclient.controller.QuizScoreController;
 import com.quizclient.controller.SolveQuizController;
+import com.quizclient.helpers.AuthHelper;
 import com.quizclient.model.command.UserQuizAnswersCommand;
 import com.quizclient.model.query.QuizQuery;
 import javafx.fxml.FXMLLoader;
@@ -31,8 +32,8 @@ public class SceneLoader {
     }
 
     static {
-        AuthContext.getIsLogged().subscribe(isLogged -> {
-           if (!isLogged && activeScene.equals(SceneEnum.CREATE_EDIT_QUIZ))
+        AuthContext.getUserData().subscribe(user -> {
+           if (AuthHelper.isLogged(user) && activeScene.equals(SceneEnum.CREATE_EDIT_QUIZ))
                loadSelectQuizScene();
         });
     }
@@ -50,6 +51,7 @@ public class SceneLoader {
     public static void setStage(Stage stage) {
         if(SceneLoader.stage == null) SceneLoader.stage = stage;
     }
+
     public static Stage getStage() {
         return stage;
     }

@@ -1,11 +1,13 @@
 package com.quizclient.contexts;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import com.quizclient.model.auth.UserData;
+import com.quizclient.helpers.JwtDecoder;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 
 public class AuthContext {
     private static String token = null;
-    private static final BooleanProperty isLogged = new SimpleBooleanProperty(false);
+    private static final Property<UserData> userDataProperty = new SimpleObjectProperty<>(null);
 
     public static String getToken() {
         return token;
@@ -13,15 +15,17 @@ public class AuthContext {
 
     public static void setToken(String  token) {
         AuthContext.token = token;
-        isLogged.setValue(AuthContext.token != null);
+        UserData userData = token != null ? JwtDecoder.decode(token) : null;
+
+        userDataProperty.setValue(userData);
     }
 
     public static void removeToken() {
         AuthContext.token = null;
-        isLogged.setValue(false);
+        userDataProperty.setValue(null);
     }
 
-    public static BooleanProperty getIsLogged() {
-        return isLogged;
+    public static Property<UserData> getUserData() {
+        return userDataProperty;
     }
 }

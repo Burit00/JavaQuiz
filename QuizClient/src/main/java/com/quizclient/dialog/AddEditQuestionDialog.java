@@ -277,9 +277,7 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
             while ((curLine = bufferedReader.readLine()) != null)
                 fileContent.append(curLine).append("\n");
 
-        } catch (IOException e) {
-            e.getMessage();
-        }
+        } catch (IOException _) {}
         return fileContent;
     }
 
@@ -289,7 +287,7 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
 
         if (question.getQuestionType() == QuestionTypeEnum.INPUT) {
             if (answerNameFromInput != null && !answerNameFromInput.isBlank())
-                buildAnswerRow(new CreateAnswerCommand(UUID.randomUUID().toString(), answerNameFromInput));
+                buildAnswerRow(new CreateAnswerCommand(answerNameFromInput, answerNameFromInput));
             return;
         }
 
@@ -396,12 +394,10 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
             addAnswerButton.setDisable(newAnswerName == null || newAnswerName.isBlank());
         });
 
-        HBox answerInputBox = new HBox(
+        return new HBox(
                 answerNameTextField,
                 addAnswerButton
         );
-
-        return answerInputBox;
     }
 
     private void handleQuestionTypeChanged(QuestionTypeEnum questionType) {

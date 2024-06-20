@@ -66,16 +66,18 @@ public class HttpClient {
             bodyPublisher = HttpRequest.BodyPublishers.ofString(bodyRequest);
         }
 
-        String token = AuthContext.getToken();
 
-        HttpRequest httpRequest = HttpRequest
+        HttpRequest.Builder httpRequest = HttpRequest
                 .newBuilder(URI.create(BASE_URL + url))
                 .method(method.getValue(), bodyPublisher)
                 .header("Content-Type", "application/json")
-                .header("Accept", "*/*")
-                .header("Authorization", token != null ? token : "")
-                .build();
+                .header("Accept", "*/*");
 
-        return httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+        String token = AuthContext.getToken();
+        if(token != null)
+            httpRequest.header("Authorization", token);
+
+        return httpClient.send(httpRequest.build(), HttpResponse.BodyHandlers.ofString());
     }
 }

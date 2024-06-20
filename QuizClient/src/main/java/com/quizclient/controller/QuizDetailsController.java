@@ -3,6 +3,7 @@ package com.quizclient.controller;
 import com.quizclient.api.QuizHttpClient;
 import com.quizclient.contexts.AuthContext;
 import com.quizclient.dialog.DeleteQuizDialog;
+import com.quizclient.helpers.AuthHelper;
 import com.quizclient.model.query.QuizQuery;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
@@ -22,6 +23,9 @@ public class QuizDetailsController {
     private Button removeQuizButton;
 
     @FXML
+    private Button startQuizButton;
+
+    @FXML
     private void initialize() {
         editQuizButton.setOnAction(_ -> SceneLoader.loadEditQuizScene(quiz.getId()));
         removeQuizButton.setOnAction(_ -> {
@@ -36,14 +40,20 @@ public class QuizDetailsController {
 
         });
 
-        AuthContext.getIsLogged().subscribe(isLogged -> {
-            editQuizButton.setDisable(!isLogged);
-            removeQuizButton.setDisable(!isLogged);
-        });
+        this.setPermissions();
+    }
+
+    public void setParameter(UUID quizId) {
+        loadQuiz(quizId);
     }
 
     private void loadQuiz(UUID quizId) {
         quiz = QuizHttpClient.getQuiz(quizId);
+
+        if (quiz == null) {
+            titleLabel.setText("Nie znaleziono quizu");
+            return;
+        }
 
         titleLabel.setText(quiz.getName());
         descriptionLabel.setText(quiz.getDescription());
@@ -54,8 +64,16 @@ public class QuizDetailsController {
             timeLabel.setText(timeForQuiz + "Brak ograniczenia czasowego");
     }
 
-    public void setParameter(UUID quizId) {
-        loadQuiz(quizId);
+    private void setPermissions() {
+        AuthContext.getUserData().subscribe(user -> {
+            boolean isAdmin = AuthHelper.isAdmin(user);
+            boolean isUser = AuthHelper.isUser(user);
+
+            editQuizButton.setDisable(!isAdmin);
+            removeQuizButton.setDisable(!isAdmin);
+
+            startQuizButton.setDisable(!isUser);
+        });
     }
 
     @FXML

@@ -2,12 +2,12 @@ package com.quizclient.dialog;
 
 import com.quizclient.QuizClientApplication;
 import com.quizclient.api.QuizHttpClient;
-import com.quizclient.model.command.LoginUserCommand;
+import com.quizclient.model.command.SignInCommand;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
-public class LoginDialog extends Dialog<Boolean> {
+public class SignInDialog extends Dialog<Boolean> {
     private final TextField usernameInput = new TextField();
     private final PasswordField passwordInput = new PasswordField();
 
@@ -18,7 +18,7 @@ public class LoginDialog extends Dialog<Boolean> {
     private final VBox form = new VBox(5);
 
 
-    public LoginDialog() {
+    public SignInDialog() {
         buildUI();
     }
 
@@ -114,12 +114,12 @@ public class LoginDialog extends Dialog<Boolean> {
 
         if(!isFormValid) return;
 
-        LoginUserCommand user = new LoginUserCommand(
+        SignInCommand user = new SignInCommand(
             username,
             password
         );
 
-        boolean isLoginSuccessful = QuizHttpClient.login(user);
+        boolean isLoginSuccessful = QuizHttpClient.signIn(user);
         if(isLoginSuccessful) {
             setResult(true);
             return;

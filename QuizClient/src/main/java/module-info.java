@@ -13,6 +13,8 @@ module com.quizclient {
     exports com.quizclient.model.query;
     opens com.quizclient.model.command;
     exports com.quizclient.model.command;
+    opens com.quizclient.model.auth;
+    exports com.quizclient.model.auth;
     opens com.quizclient.controller;
     exports com.quizclient.controller;
     opens com.quizclient.api;
@@ -23,4 +25,6 @@ module com.quizclient {
     opens com.quizclient.utils;
     exports com.quizclient.ui;
     opens com.quizclient.ui;
+    exports com.quizclient.helpers;
+    opens com.quizclient.helpers;
 }

@@ -7,11 +7,15 @@
   <HBox styleClass="header" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
     <Label>JAVA QUIZ</Label>
   </HBox>
-  <Button
-      fx:id="loginButton"
-      AnchorPane.rightAnchor="10"
-      AnchorPane.topAnchor="10"
-      styleClass="login-button"
-  />
+
+  <HBox fx:id="actionButtonsBox"
+        spacing="10"
+        AnchorPane.rightAnchor="10"
+        AnchorPane.topAnchor="10">
+    <Button
+        fx:id="signInButton"
+        styleClass="sign-up-in-button"
+    />
+  </HBox>
 </fx:root>
 

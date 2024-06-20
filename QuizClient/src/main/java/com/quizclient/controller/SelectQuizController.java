@@ -2,6 +2,7 @@ package com.quizclient.controller;
 
 import com.quizclient.api.QuizHttpClient;
 import com.quizclient.contexts.AuthContext;
+import com.quizclient.helpers.AuthHelper;
 import com.quizclient.model.query.QuizQuery;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
@@ -22,6 +23,13 @@ public class SelectQuizController {
     }
 
     private void buildUI() {
+        AuthContext.getUserData().subscribe(user ->
+                createQuizButton.setDisable(!AuthHelper.isAdmin(user)));
+
+        if(quizzes == null || quizzes.isEmpty())
+            return;
+
+
         for (QuizQuery quiz : quizzes) {
             Button quizButton = new Button(quiz.getName());
             quizButton.getStyleClass().add("quiz");
@@ -29,9 +37,6 @@ public class SelectQuizController {
 
             quizzesContainer.getChildren().add(quizButton);
         }
-
-        AuthContext.getIsLogged().subscribe(isLogged ->
-                createQuizButton.setDisable(!isLogged));
     }
 
     private void openQuiz(QuizQuery quiz) {

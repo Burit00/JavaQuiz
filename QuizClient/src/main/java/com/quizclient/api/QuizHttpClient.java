@@ -2,10 +2,8 @@ package com.quizclient.api;
 
 import com.google.gson.reflect.TypeToken;
 import com.quizclient.contexts.AuthContext;
-import com.quizclient.model.command.CreateQuizCommand;
-import com.quizclient.model.command.LoginUserCommand;
-import com.quizclient.model.command.UpdateQuizCommand;
-import com.quizclient.model.command.UserQuizAnswersCommand;
+import com.quizclient.model.command.*;
+import com.quizclient.model.query.JwtQuery;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizQuery;
 import com.quizclient.model.query.UserQuizScoreQuery;
@@ -20,22 +18,36 @@ import java.util.UUID;
 public class QuizHttpClient {
     private static final HttpClient httpClient = new HttpClient("http://localhost:8080/api/v1/");
 
-    public static boolean login(LoginUserCommand loginUser) {
+    public static boolean signIn(SignInCommand loginUser) {
         HttpResponse<String> response;
 
         try {
-            response = httpClient.send("auth/login", HttpClient.HTTPMethod.POST, loginUser);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            response = httpClient.send("auth/sign-in", HttpClient.HTTPMethod.POST, loginUser);
+        } catch (IOException | InterruptedException _) {
+            return false;
         }
-
+        System.out.println(response.statusCode());
+        System.out.println(response.body());
         if(response.statusCode() != 200){
             AuthContext.removeToken();
             return false;
         }
 
-        AuthContext.setToken(response.body());
+        JwtQuery jwt = HttpClient.gson.fromJson(response.body(), JwtQuery.class);
+        AuthContext.setToken(jwt.getAccessToken());
         return true;
+    }
+
+    public static boolean signUp(SignUpCommand newUser) {
+        HttpResponse<String> response;
+
+        try {
+            response = httpClient.send("auth/sign-up", HttpClient.HTTPMethod.POST, newUser);
+        } catch (IOException | InterruptedException _) {
+            return false;
+        }
+
+        return response.statusCode() == 201;
     }
 
     public static List<QuizQuery> getQuizzes() {
@@ -43,8 +55,8 @@ public class QuizHttpClient {
 
         try {
             response = httpClient.get("quiz");
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | InterruptedException _) {
+            return null;
         }
 
         if (response.equals("[]")) return new ArrayList<>();
@@ -56,8 +68,8 @@ public class QuizHttpClient {
 
         try {
             response = httpClient.get("quiz/" + quizId);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | InterruptedException _) {
+            return null;
         }
         return HttpClient.gson.fromJson(response, QuizQuery.class);
     }
@@ -67,8 +79,8 @@ public class QuizHttpClient {
 
         try {
             response = httpClient.get("quiz/" + quizId + "/updateForm");
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | InterruptedException _) {
+            return null;
         }
 
         return HttpClient.gson.fromJson(response, UpdateQuizCommand.class);
@@ -79,8 +91,8 @@ public class QuizHttpClient {
 
         try {
             response = httpClient.get("question?quizId=" + quizId);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | InterruptedException _) {
+            return null;
         }
 
         if(response.equals("[]")) return new ArrayList<>();
@@ -92,25 +104,19 @@ public class QuizHttpClient {
     public static void postQuiz(CreateQuizCommand quiz) {
         try {
             httpClient.post("quiz", quiz);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException | InterruptedException _) {}
     }
 
     public static void putQuiz(UpdateQuizCommand quiz) {
         try {
             httpClient.put("quiz/" + quiz.getId(), quiz);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException | InterruptedException _) {}
     }
 
     public static void deleteQuiz(UUID quizId) {
         try {
             httpClient.delete("quiz/" + quizId);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException | InterruptedException _) {}
     }
 
     public static UserQuizScoreQuery calculateQuizScore(UUID quizId, List<UserQuizAnswersCommand> userQuizAnswers) {
@@ -118,8 +124,8 @@ public class QuizHttpClient {
 
         try {
             response = httpClient.post("quiz/" + quizId + "/calculateScore", userQuizAnswers);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | InterruptedException _) {
+            return null;
         }
 
         return HttpClient.gson.fromJson(response, new TypeToken<UserQuizScoreQuery>() {}.getType());
