@@ -6,7 +6,6 @@ import com.quizserver.models.DTOs.commands.UserQuizAnswersCommand;
 import com.quizserver.models.DTOs.queries.QuizQuery;
 import com.quizserver.models.DTOs.queries.UpdateQuizQuery;
 import com.quizserver.models.DTOs.queries.UserQuizScoreQuery;
-import com.quizserver.services.AuthService;
 import com.quizserver.services.QuizService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

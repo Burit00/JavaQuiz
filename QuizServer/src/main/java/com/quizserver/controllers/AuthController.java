@@ -8,6 +8,7 @@ import com.quizserver.models.DTOs.auth.SignUpDto;
 import com.quizserver.models.entities.User;
 import com.quizserver.services.AuthService;
 import jakarta.validation.Valid;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class AuthController {
     private TokenProvider tokenService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDto data) throws InvalidJwtException {
+    public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDto data) throws InvalidJwtException, BadRequestException {
         service.signUp(data);
         return ResponseEntity.status(HttpStatus.CREATED).build();
 

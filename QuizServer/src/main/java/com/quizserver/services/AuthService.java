@@ -4,6 +4,7 @@ import com.quizserver.exceptions.InvalidJwtException;
 import com.quizserver.models.DTOs.auth.SignUpDto;
 import com.quizserver.models.entities.User;
 import com.quizserver.repositories.IUserRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,11 +21,14 @@ public class AuthService implements UserDetailsService {
         return repository.findByLogin(username);
     }
 
-    public UserDetails signUp(SignUpDto data) throws InvalidJwtException {
+    public UserDetails signUp(SignUpDto data) throws InvalidJwtException, BadRequestException {
 
-        if (repository.findByLogin(data.login()) != null) {
+        if (repository.findByLogin(data.login()) != null)
             throw new InvalidJwtException("Username already exists");
-        }
+
+        if (data.role() == null)
+            throw new BadRequestException("User must have role");
+
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
 

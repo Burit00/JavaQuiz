@@ -30,9 +30,6 @@ public class AuthConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/quiz").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/quiz/*").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/quiz").hasRole(UserRole.ADMIN.getValue())
                         .requestMatchers(HttpMethod.PUT, "/api/v1/quiz/*").hasRole(UserRole.ADMIN.getValue())
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/quiz/*").hasRole(UserRole.ADMIN.getValue())
