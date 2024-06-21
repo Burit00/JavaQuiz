@@ -1,9 +1,7 @@
 package com.quizserver;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 
 @PropertySource("file:${user.dir}/.env")
@@ -12,10 +10,5 @@ public class QuizServerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(QuizServerApplication.class, args);
-    }
-
-    @Bean
-    public ModelMapper getModelMapper() {
-        return new ModelMapper();
     }
 }

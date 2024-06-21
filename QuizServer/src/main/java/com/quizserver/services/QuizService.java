@@ -1,6 +1,7 @@
 package com.quizserver.services;
 
 import com.quizserver.models.DTOs.commands.*;
+import com.quizserver.models.DTOs.queries.QuizDetailsQuery;
 import com.quizserver.models.DTOs.queries.QuizQuery;
 import com.quizserver.models.DTOs.queries.UpdateQuizQuery;
 import com.quizserver.models.DTOs.queries.UserQuizScoreQuery;
@@ -44,13 +45,14 @@ public class QuizService {
         return modelMapper.map(quizzes, new TypeToken<List<QuizQuery>>(){}.getType());
     }
 
-    public QuizQuery getQuizById(UUID quizId) {
-        boolean quizExists = quizRepository.existsById(quizId);
-        if (!quizExists) { throw new IllegalArgumentException("Quiz with id "+ quizId +" not found"); }
-
+    public QuizDetailsQuery getQuizById(UUID quizId) {
         Quiz quiz = quizRepository.findById(quizId).orElse(null);
+        if (quiz == null) { throw new IllegalArgumentException("Quiz with id "+ quizId +" not found"); }
 
-        return modelMapper.map(quiz, QuizQuery.class);
+        QuizDetailsQuery quizDetailsDto = modelMapper.map(quiz, QuizDetailsQuery.class);
+        quizDetailsDto.setQuestionCount(quiz.getQuestions().size());
+
+        return quizDetailsDto;
     }
 
     public void createQuiz(CreateQuizCommand newQuiz) {
