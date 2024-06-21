@@ -57,7 +57,6 @@ public class Header extends AnchorPane {
 
             String userGreeting = isUserLogged ? getUserGreeting(user) : null;
             userGreetingLabel.setText(userGreeting);
-            System.out.println(userGreeting);
         });
 
         buildSignUpButtonContent();
