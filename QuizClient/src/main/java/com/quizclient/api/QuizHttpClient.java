@@ -26,8 +26,7 @@ public class QuizHttpClient {
         } catch (IOException | InterruptedException _) {
             return false;
         }
-        System.out.println(response.statusCode());
-        System.out.println(response.body());
+
         if(response.statusCode() != 200){
             AuthContext.removeToken();
             return false;

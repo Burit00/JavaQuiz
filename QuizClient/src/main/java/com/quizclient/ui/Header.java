@@ -5,9 +5,11 @@ import com.quizclient.dialog.SignInDialog;
 import com.quizclient.dialog.SignUpDialog;
 import com.quizclient.enums.AwesomeIconEnum;
 import com.quizclient.helpers.AuthHelper;
+import com.quizclient.model.auth.UserData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -15,6 +17,9 @@ import java.io.IOException;
 
 
 public class Header extends AnchorPane {
+    @FXML
+    private Label userGreetingLabel;
+
     @FXML
     private Button signInButton;
 
@@ -39,16 +44,32 @@ public class Header extends AnchorPane {
 
     private void buildUI() {
         AuthContext.getUserData().subscribe(user -> {
-            buildLoginButton(AuthHelper.isLogged(user));
+            boolean isUserLogged = AuthHelper.isLogged(user);
+
+            buildLoginButton(isUserLogged);
+
             try {
-                if (AuthHelper.isLogged(user))
+                if (isUserLogged)
                     actionButtonsBox.getChildren().remove(signUpButton);
                 else
                     actionButtonsBox.getChildren().addFirst(signUpButton);
             } catch (Exception _){}
 
+            String userGreeting = isUserLogged ? getUserGreeting(user) : null;
+            userGreetingLabel.setText(userGreeting);
+            System.out.println(userGreeting);
         });
+
         buildSignUpButtonContent();
+    }
+
+    private String getUserGreeting(UserData user) {
+        if (user == null) return null;
+
+        String userGreeting = "Witaj " + user.getUsername() + "!\n";
+        userGreeting +=       "Twoje uprawnienia: " + user.getRole();
+
+        return userGreeting;
     }
 
     private void buildLoginButton(boolean isLogged) {

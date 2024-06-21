@@ -1,12 +1,19 @@
 .header {
     -fx-background-color: #02b7b3;
     -fx-alignment: center;
-    -fx-padding: 20;
+    -fx-pref-height: 60px;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.greetings {
+    -fx-background-color: #02b7b3;
+    -fx-alignment: center;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 
-.header > Label {
+.header > Label, .greetings > Label {
     -fx-text-fill: #464646;
 }
 
