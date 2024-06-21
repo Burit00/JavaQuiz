@@ -26,6 +26,9 @@ Label {
 
 .head {
     -fx-alignment: center;
+    -fx-border-color: #02b7b3;
+    -fx-border-width: 2px;
+    -fx-border-style: hidden none solid none;
 }
 
 .title {
@@ -38,12 +41,13 @@ Label {
     -fx-padding: 5 10;
 }
 
-.time {
+.info {
     -fx-font-size: 18px;
-    -fx-padding: 0 5em 10;
-    -fx-border-color: #02b7b3;
-    -fx-border-width: 2px;
-    -fx-border-style: hidden none solid none;
+    -fx-padding: 0;
+}
+
+.points {
+    -fx-font-size: 15px;
 }
 
 .action-buttons {

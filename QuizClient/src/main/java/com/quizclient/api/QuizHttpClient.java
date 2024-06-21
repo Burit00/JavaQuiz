@@ -3,10 +3,7 @@ package com.quizclient.api;
 import com.google.gson.reflect.TypeToken;
 import com.quizclient.contexts.AuthContext;
 import com.quizclient.model.command.*;
-import com.quizclient.model.query.JwtQuery;
-import com.quizclient.model.query.QuestionQuery;
-import com.quizclient.model.query.QuizQuery;
-import com.quizclient.model.query.UserQuizScoreQuery;
+import com.quizclient.model.query.*;
 import com.quizclient.utils.HttpClient;
 
 import java.io.IOException;
@@ -62,7 +59,7 @@ public class QuizHttpClient {
         return HttpClient.gson.fromJson(response, new TypeToken<List<QuizQuery>>() {}.getType());
     }
 
-    public static QuizQuery getQuiz(UUID quizId) {
+    public static QuizDetailsQuery getQuiz(UUID quizId) {
         String response;
 
         try {
@@ -70,7 +67,8 @@ public class QuizHttpClient {
         } catch (IOException | InterruptedException _) {
             return null;
         }
-        return HttpClient.gson.fromJson(response, QuizQuery.class);
+
+        return HttpClient.gson.fromJson(response, QuizDetailsQuery.class);
     }
 
     public static UpdateQuizCommand getQuizDetailsForUpdate(UUID quizId) {

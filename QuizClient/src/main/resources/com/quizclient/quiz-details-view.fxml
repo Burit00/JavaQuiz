@@ -22,7 +22,9 @@
                       <HBox alignment="CENTER" spacing="10">
                         <Label fx:id="titleLabel" styleClass="title" text="title"/>
                       </HBox>
-                      <Label fx:id="timeLabel" styleClass="time" text="czas"/>
+                      <Label fx:id="timeLabel" styleClass="info" text="info"/>
+                      <Label fx:id="questionCountLabel" styleClass="info" text="info"/>
+                      <Label text="Za każde pytanie można otrzymać 1pkt." styleClass="info, points"/>
                     </VBox>
 
                     <VBox AnchorPane.topAnchor="10"  AnchorPane.rightAnchor="10" spacing="10">

@@ -1,15 +1,9 @@
 package com.quizclient.model.command;
 
-import com.quizclient.model.query.QuizQuery;
 
 import java.util.List;
 
 public class CreateQuizCommand {
-    public CreateQuizCommand(String name, int time, String description) {
-        this.name = name;
-        this.time = time;
-        this.description = description;
-    }
 
     public CreateQuizCommand() {
     }
@@ -52,9 +46,5 @@ public class CreateQuizCommand {
 
     public void setQuestions(List<CreateQuestionCommand> questions) {
         this.questions = questions;
-    }
-
-    public static CreateQuizCommand mapFromQuizQuery(QuizQuery quizQuery) {
-        return new CreateQuizCommand(quizQuery.getName(), quizQuery.getTime(), quizQuery.getDescription());
     }
 }

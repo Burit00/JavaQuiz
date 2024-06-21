@@ -8,7 +8,7 @@ import com.quizclient.controller.QuizScoreController;
 import com.quizclient.controller.SolveQuizController;
 import com.quizclient.helpers.AuthHelper;
 import com.quizclient.model.command.UserQuizAnswersCommand;
-import com.quizclient.model.query.QuizQuery;
+import com.quizclient.model.query.QuizDetailsQuery;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -79,7 +79,7 @@ public class SceneLoader {
         showScene(loader.root);
     }
 
-    public static void loadSolveQuizScene(QuizQuery quiz) {
+    public static void loadSolveQuizScene(QuizDetailsQuery quiz) {
         activeScene = SceneEnum.SOLVE_QUIZ;
         Loader loader = loadScene("solve-quiz-view.fxml");
 

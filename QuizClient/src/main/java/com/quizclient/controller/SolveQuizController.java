@@ -6,7 +6,7 @@ import com.quizclient.enums.QuestionTypeEnum;
 import com.quizclient.model.command.UserQuizAnswersCommand;
 import com.quizclient.model.query.AnswerQuery;
 import com.quizclient.model.query.QuestionQuery;
-import com.quizclient.model.query.QuizQuery;
+import com.quizclient.model.query.QuizDetailsQuery;
 import com.quizclient.ui.Icon;
 import com.quizclient.dialog.ConfirmQuizDialog;
 import com.quizclient.utils.SceneLoader;
@@ -24,7 +24,7 @@ import java.util.*;
 public class SolveQuizController {
     private static final int secondsInMinute = 60;
 
-    private QuizQuery quiz;
+    private QuizDetailsQuery quiz;
     private List<QuestionQuery> questions;
     private QuestionQuery currentQuestion;
     private UserQuizAnswersCommand currentQuestionAnswer;
@@ -92,7 +92,7 @@ public class SolveQuizController {
         }
     }
 
-    public void setParameter(QuizQuery quiz) {
+    public void setParameter(QuizDetailsQuery quiz) {
         this.quiz = quiz;
         this.loadAnswers();
         this.buildUI();
@@ -101,7 +101,7 @@ public class SolveQuizController {
     private void loadAnswers() {
         questions = QuizHttpClient.getQuestionsWithAnswers(quiz.getId());
 
-        if (questions.isEmpty()) {
+        if (questions == null || questions.isEmpty()) {
             currentQuestion = null;
             questionLabel.setText("Nie znaleziono pytań");
             return;
