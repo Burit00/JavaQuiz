@@ -22,7 +22,7 @@
         AnchorPane.bottomAnchor="10">
     <Button
         fx:id="signInButton"
-        styleClass="sign-up-in-button"
+        styleClass="reversed, small"
     />
   </HBox>
 </fx:root>

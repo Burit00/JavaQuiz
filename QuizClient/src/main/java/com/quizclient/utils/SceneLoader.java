@@ -2,11 +2,9 @@ package com.quizclient.utils;
 
 import com.quizclient.QuizClientApplication;
 import com.quizclient.contexts.AuthContext;
-import com.quizclient.controller.CreatEditQuizController;
-import com.quizclient.controller.QuizDetailsController;
-import com.quizclient.controller.QuizScoreController;
-import com.quizclient.controller.SolveQuizController;
+import com.quizclient.controller.*;
 import com.quizclient.helpers.AuthHelper;
+import com.quizclient.model.command.CreateQuizCommand;
 import com.quizclient.model.command.UserQuizAnswersCommand;
 import com.quizclient.model.query.QuizDetailsQuery;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,12 +28,19 @@ public class SceneLoader {
         QUIZ_SCORE,
         SELECT_QUIZ,
         SOLVE_QUIZ,
+        QUIZ_PREVIEW,
     }
 
     static {
+        List<SceneEnum> adminScenes = Arrays.asList(SceneEnum.CREATE_EDIT_QUIZ, SceneEnum.QUIZ_PREVIEW);
+        List<SceneEnum> userScenes = Arrays.asList(SceneEnum.SOLVE_QUIZ, SceneEnum.QUIZ_SCORE);
+
         AuthContext.getUserData().subscribe(user -> {
-           if (AuthHelper.isLogged(user) && activeScene.equals(SceneEnum.CREATE_EDIT_QUIZ))
-               loadSelectQuizScene();
+            boolean shouldRedirect = adminScenes.contains(activeScene) && !AuthHelper.isAdmin(user)
+                                  || userScenes.contains(activeScene) && !AuthHelper.isUser(user);
+
+            if (shouldRedirect)
+                loadSelectQuizScene();
         });
     }
 
@@ -49,7 +55,7 @@ public class SceneLoader {
     }
 
     public static void setStage(Stage stage) {
-        if(SceneLoader.stage == null) SceneLoader.stage = stage;
+        if (SceneLoader.stage == null) SceneLoader.stage = stage;
     }
 
     public static Stage getStage() {
@@ -81,12 +87,23 @@ public class SceneLoader {
 
     public static void loadSolveQuizScene(QuizDetailsQuery quiz) {
         activeScene = SceneEnum.SOLVE_QUIZ;
-        Loader loader = loadScene("solve-quiz-view.fxml");
 
-        SolveQuizController controller = loader.fxmlLoader.getController();
+        SolveQuizController controller = new SolveQuizController();
         controller.setParameter(quiz);
+    }
 
-        showScene(loader.root);
+    public static void loadQuizPreviewScene(CreateQuizCommand quiz) {
+        activeScene = SceneEnum.QUIZ_PREVIEW;
+
+        QuizPreviewController controller = new QuizPreviewController();
+        controller.setParameter(quiz);
+    }
+
+    public static void loadQuizPreviewScene(CreateQuizCommand quiz, int questionIndex) {
+        activeScene = SceneEnum.QUIZ_PREVIEW;
+
+        QuizPreviewController controller = new QuizPreviewController();
+        controller.setParameter(quiz, questionIndex);
     }
 
     public static void loadQuizScoreScene(UUID quizId, List<UserQuizAnswersCommand> userQuizAnswers) {
@@ -111,6 +128,16 @@ public class SceneLoader {
 
         CreatEditQuizController controller = loader.fxmlLoader.getController();
         controller.setParameter(quizId);
+
+        showScene(loader.root);
+    }
+
+    public static void loadEditQuizScene(CreateQuizCommand quiz) {
+        activeScene = SceneEnum.CREATE_EDIT_QUIZ;
+        Loader loader = loadScene("create-edit-quiz-view.fxml");
+
+        CreatEditQuizController controller = loader.fxmlLoader.getController();
+        controller.setParameter(quiz);
 
         showScene(loader.root);
     }

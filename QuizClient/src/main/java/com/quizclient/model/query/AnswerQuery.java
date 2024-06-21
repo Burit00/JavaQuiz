@@ -2,11 +2,21 @@ package com.quizclient.model.query;
 
 public class AnswerQuery {
     private String id;
-    public String getId() {return id;}
     private String questionId;
-    public String getQuestionId() {return questionId;}
     private String text;
-    public String getText() {return text;}
     private String publicId;
+
+    public AnswerQuery() {}
+
+    public AnswerQuery(String id, String questionId, String text, String publicId) {
+        this.id = id;
+        this.questionId = questionId;
+        this.text = text;
+        this.publicId = publicId;
+    }
+
+    public String getId() {return id;}
+    public String getQuestionId() {return questionId;}
+    public String getText() {return text;}
     public String getPublicId() {return publicId;}
 }

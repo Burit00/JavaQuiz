@@ -1,5 +1,5 @@
 .main {
-    -fx-padding: 10 20;
+    -fx-padding: 10 20 0;
 }
 
 .quiz-title {
@@ -58,19 +58,17 @@
 }
 
 .action-buttons .button {
-    -fx-alignment: center;
-    -fx-graphic-text-gap: 10px;
     -fx-text-fill: white;
-    -fx-padding: 5 15;
-    -fx-background-radius: 50;
-    -fx-border-radius: 50;
-    -fx-background-color: #464646;
 }
 
-.action-buttons .edit-button:focused {
+.action-buttons .button.edit-button:focused {
     -fx-text-fill: #6cd998;
 }
 
-.action-buttons .remove-button:focused {
+.action-buttons .button.preview-button:focused {
+    -fx-text-fill: #02b7b3;
+}
+
+.action-buttons .button.remove-button:focused {
     -fx-text-fill: #d96c6c;
 }

@@ -13,8 +13,16 @@
   <center>
     <BorderPane styleClass="main">
       <top>
-        <VBox styleClass="quiz-title">
-          <Label styleClass="title" text="Ustaw nazwę Quizu:"/>
+        <VBox styleClass="quiz-title" spacing="10">
+          <HBox alignment="TOP_CENTER">
+            <Label styleClass="title" text="Ustaw nazwę Quizu:"/>
+            <HBox HBox.hgrow="ALWAYS"/>
+            <Button text="Podgląd" onAction="#onShowPreview" styleClass="small" AnchorPane.rightAnchor="0">
+              <graphic>
+                <Icon value="SEARCH"/>
+              </graphic>
+            </Button>
+          </HBox>
           <TextField fx:id="quizNameTextField" onKeyTyped="#onQuizNameTyped" styleClass="title-input" promptText="Nazwa quizu"/>
         </VBox>
       </top>

@@ -4,8 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.SolveQuizController">
+<fx:root type="BorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1">
   <top>
     <Header/>
   </top>
@@ -37,18 +37,17 @@
           <bottom>
             <AnchorPane>
               <FlowPane styleClass="action-buttons" AnchorPane.leftAnchor="10">
-                <Button fx:id="previousQuestionButton" onAction="#onPreviousQuestion"
-                        text="Poprzednie pytanie">
+                <Button fx:id="previousQuestionButton" text="Poprzednie pytanie">
                   <graphic>
                     <Icon value="ARROW_LEFT"/>
                   </graphic></Button>
-                <Button fx:id="nextQuestionButton" onAction="#onNextQuestion" text="Następne pytanie">
+                <Button fx:id="nextQuestionButton" text="Następne pytanie">
                   <graphic>
                     <Icon value="ARROW_RIGHT"/>
                   </graphic>
                 </Button>
               </FlowPane>
-              <Button onAction="#onConfirmQuiz" text="Zakończ test" AnchorPane.rightAnchor="10">
+              <Button fx:id="confirmButton" text="Zakończ test" AnchorPane.rightAnchor="10">
                 <graphic>
                   <Icon value="FAST_FORWARD"/>
                 </graphic>
@@ -66,4 +65,4 @@
     <URL value="@styles/solve-quiz-view.css"/>
     <URL value="@styles/global.css"/>
   </stylesheets>
-</BorderPane>
+</fx:root>

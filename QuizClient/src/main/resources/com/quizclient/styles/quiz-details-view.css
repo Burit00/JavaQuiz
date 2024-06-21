@@ -29,16 +29,12 @@ Label {
     -fx-border-color: #02b7b3;
     -fx-border-width: 2px;
     -fx-border-style: hidden none solid none;
+    -fx-padding: 0 0 10px;
 }
 
 .title {
     -fx-text-fill: #02b7b3;
     -fx-font-size: 30px;
-}
-
-.edit-button, .remove-button {
-    -fx-font-size: 15;
-    -fx-padding: 5 10;
 }
 
 .info {

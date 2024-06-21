@@ -9,6 +9,11 @@ public class QuizQuery {
     public QuizQuery() {
     }
 
+    public QuizQuery(UUID id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public UUID getId() {
         return id;
     }

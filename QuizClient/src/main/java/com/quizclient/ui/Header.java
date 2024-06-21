@@ -90,7 +90,7 @@ public class Header extends AnchorPane {
     private void buildSignUpButtonContent() {
         Icon buttonIcon = new Icon(AwesomeIconEnum.PLUS);
         signUpButton.setGraphic(buttonIcon);
-        signUpButton.getStyleClass().add("sign-up-in-button");
+        signUpButton.getStyleClass().addAll("reversed", "small");
         signUpButton.setOnAction(_ -> onSignUp());
     }
 

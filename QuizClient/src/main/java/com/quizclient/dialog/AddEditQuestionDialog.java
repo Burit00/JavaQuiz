@@ -48,7 +48,6 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
         CODE,
     }
 
-
     public AddEditQuestionDialog() {
         this.setTitle("Dodaj pytanie");
         this.question = new CreateQuestionCommand();
@@ -94,7 +93,9 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
         answerListBox = new VBox();
         VBox centerBox = new VBox();
 
-        getDialogPane().setMinSize(400, 500);
+        setWidth(400);
+        setHeight(600);
+
         getDialogPane().getStylesheets().addAll(
                 QuizClientApplication.class.getResource("styles/global.css").toExternalForm(),
                 QuizClientApplication.class.getResource("dialog/add-edit-question-dialog.css").toExternalForm()
@@ -261,7 +262,7 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
             }
         }
 
-        attachmentBox.setPrefWidth(400);
+        attachmentBox.setPrefWidth(390);
         attachmentBox.setPadding(new Insets(0, 0, 0, 10));
         contentPane.setRight(attachmentBox);
         setWidth(getWidth() + attachmentBox.getPrefWidth());

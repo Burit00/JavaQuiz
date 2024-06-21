@@ -17,10 +17,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class CreatEditQuizController {
     public CreateQuizCommand quiz = new CreateQuizCommand();
@@ -37,17 +35,21 @@ public class CreatEditQuizController {
 
     public void setParameter(UUID quizId){
         quiz = QuizHttpClient.getQuizDetailsForUpdate(quizId);
-        quizNameTextField.setText(quiz.getName());
+        setup();
+    }
+
+    public void setParameter(CreateQuizCommand quiz){
+        this.quiz = quiz;
+        setup();
+    }
+
+    private void setup() {
         questions = quiz.getQuestions();
         buildUI();
     }
 
-    @FXML
-    private void initialize() {
-        buildUI();
-    }
-
     private void buildUI() {
+        quizNameTextField.setText(quiz.getName());
         setDisableSaveButton();
         buildQuestionList();
     }
@@ -61,28 +63,35 @@ public class CreatEditQuizController {
         }
     }
 
+    private record AnswerActionButtonProps(String text, AwesomeIconEnum icon, String buttonClass, Consumer<CreateQuestionCommand> function){}
+    private final List<AnswerActionButtonProps> answerActionButtonProps = Arrays.asList(
+            new AnswerActionButtonProps("Edytuj", AwesomeIconEnum.PENCIL, "edit-button", this::onEditQuestion),
+            new AnswerActionButtonProps("Podgląd", AwesomeIconEnum.SEARCH, "preview-button", this::onPreviewQuestion),
+            new AnswerActionButtonProps("Usuń", AwesomeIconEnum.MINUS, "remove-button", this::onRemoveQuestion)
+    );
+
     private HBox buildQuestionRow(CreateQuestionCommand question) {
         HBox questionRow = new HBox();
 
         Label questionLabel = new Label((questions.indexOf(question) + 1) + ". " + question.getName());
 
-        Button editButton = new Button("Edytuj");
-        Button removeButton = new Button("Usuń");
-
-        editButton.setGraphic(new Icon(AwesomeIconEnum.PENCIL));
-        removeButton.setGraphic(new Icon(AwesomeIconEnum.MINUS));
-
-        editButton.getStyleClass().addAll("button", "edit-button");
-        removeButton.getStyleClass().addAll("button", "remove-button");
-
-        editButton.setOnAction(_ -> onEditQuestion(question));
-        removeButton.setOnAction(_ -> onRemoveQuestion(question));
 
         HBox buttonsBox = new HBox(5);
         HBox.setHgrow(buttonsBox, Priority.ALWAYS);
         buttonsBox.setAlignment(Pos.TOP_RIGHT);
         buttonsBox.getStyleClass().add("action-buttons");
-        buttonsBox.getChildren().addAll(editButton, removeButton);
+
+        for (AnswerActionButtonProps buttonProps: answerActionButtonProps) {
+            Button button = new Button(buttonProps.text);
+
+            button.setGraphic(new Icon(buttonProps.icon));
+
+            Consumer<CreateQuestionCommand> action = buttonProps.function();
+            button.setOnAction(_ -> action.accept(question));
+
+            button.getStyleClass().addAll("mini", "rounded", "reversed", "text-white", buttonProps.buttonClass);
+            buttonsBox.getChildren().add(button);
+        }
 
         questionRow.getStyleClass().add("question-row");
         questionRow.getChildren().addAll(
@@ -97,7 +106,6 @@ public class CreatEditQuizController {
         saveQuizButton.setDisable(quiz.getName() == null || quiz.getName().isBlank() || questions.isEmpty());
     }
 
-    @FXML
     private void onEditQuestion(CreateQuestionCommand question) {
         AddEditQuestionDialog dialog = new AddEditQuestionDialog(question);
         Optional<CreateQuestionCommand> questionResult = dialog.showAndWait();
@@ -108,12 +116,15 @@ public class CreatEditQuizController {
         buildQuestionList();
     }
 
-    @FXML
     private void onRemoveQuestion(CreateQuestionCommand question) {
         questions.remove(question);
         if(questions.isEmpty())
             setDisableSaveButton();
         buildQuestionList();
+    }
+
+    private void onPreviewQuestion(CreateQuestionCommand question) {
+        SceneLoader.loadQuizPreviewScene(quiz, quiz.getQuestions().indexOf(question));
     }
 
     @FXML
@@ -157,5 +168,10 @@ public class CreatEditQuizController {
     private  void onQuizNameTyped(KeyEvent event) {
         quiz.setName(((TextField)event.getSource()).getText());
         setDisableSaveButton();
+    }
+
+    @FXML
+    private void onShowPreview() {
+        SceneLoader.loadQuizPreviewScene(quiz);
     }
 }

@@ -17,18 +17,13 @@
     -fx-text-fill: #464646;
 }
 
-.sign-up-in-button {
-    -fx-text-fill: #02b7b3;
-    -fx-background-color: #464646;
-    -fx-padding: 5 10;
-}
-
 BorderPane, DialogPane {
     -fx-background-color: #464646;
 }
 
 .footer {
     -fx-alignment: center;
+    -fx-background-color: #464646;
     -fx-padding: 10 0;
 }
 
@@ -43,7 +38,7 @@ BorderPane, DialogPane {
     -fx-text-fill: #02b7b3;
 }
 
-Button {
+.button {
     -fx-graphic-text-gap: 10px;
     -fx-text-fill: #464646;
     -fx-end-margin: 20px;
@@ -63,9 +58,35 @@ Button {
     -fx-cursor: hand;
 }
 
-Button:focused {
+.button:focused {
     -fx-border-color: #93efec;
     -fx-border-width: 2px;
+}
+
+.button.rounded {
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+}
+
+.button.small {
+    -fx-graphic-text-gap: 10;
+    -fx-font-size: 15;
+    -fx-padding: 5 10;
+}
+
+.button.mini {
+    -fx-graphic-text-gap: 10;
+    -fx-font-size: 12;
+    -fx-padding: 5 10;
+}
+
+.button.reversed {
+    -fx-text-fill: #02b7b3;
+    -fx-background-color: #464646;
+}
+
+.button.text-white {
+    -fx-text-fill: white;
 }
 
 DialogPane Label {

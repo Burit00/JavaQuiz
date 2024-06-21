@@ -6,6 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
+
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.QuizDetailsController">
   <top>
@@ -28,12 +29,12 @@
                     </VBox>
 
                     <VBox AnchorPane.topAnchor="10"  AnchorPane.rightAnchor="10" spacing="10">
-                      <Button fx:id="editQuizButton" styleClass="edit-button">
+                      <Button fx:id="editQuizButton" styleClass="small, edit-button">
                         <graphic>
                           <Icon value="PENCIL"/>
                         </graphic>
                       </Button>
-                      <Button fx:id="removeQuizButton" styleClass="remove-button">
+                      <Button fx:id="removeQuizButton" styleClass="small, remove-button">
                         <graphic>
                           <Icon value="TRASH_ALT"/>
                         </graphic>
