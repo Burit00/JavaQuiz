@@ -7,9 +7,11 @@ import com.quizserver.models.DTOs.queries.UpdateQuizQuery;
 import com.quizserver.models.entities.*;
 import com.quizserver.repositories.IQuestionRepository;
 import com.quizserver.repositories.IQuizRepository;
+import com.quizserver.repositories.IUserRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,14 +21,16 @@ import java.util.UUID;
 @Service
 public class QuizService {
 
+    private final IUserRepository userRepository;
     private final IQuizRepository quizRepository;
     private final ModelMapper modelMapper;
     private final IQuestionRepository questionRepository;
 
     @Autowired
-    public QuizService(IQuizRepository quizRepository,
+    public QuizService(IUserRepository userRepository, IQuizRepository quizRepository,
                        IQuestionRepository questionRepository,
                        ModelMapper modelMapper) {
+        this.userRepository = userRepository;
         this.quizRepository = quizRepository;
         this.questionRepository = questionRepository;
         this.modelMapper = modelMapper;
@@ -54,8 +58,10 @@ public class QuizService {
         return quizDetailsDto;
     }
 
-    public void createQuiz(CreateQuizCommand newQuiz) {
+    public void createQuiz(CreateQuizCommand newQuiz, Authentication authentication) {
+        User quizOwner = userRepository.findByLogin(authentication.getName());
         Quiz quiz = modelMapper.map(newQuiz, Quiz.class);
+        quiz.setOwner(quizOwner);
         quizRepository.save(quiz);
     }
 
@@ -68,7 +74,8 @@ public class QuizService {
         return modelMapper.map(quiz, UpdateQuizQuery.class);
     }
 
-    public void updateQuiz(UUID quizId, UpdateQuizCommand quizCommand) {
+
+    public UUID updateQuiz(UUID quizId, UpdateQuizCommand quizCommand) {
         Quiz quiz = quizRepository.findById(quizId).orElse(null);
 
         if(quiz == null)
@@ -86,7 +93,8 @@ public class QuizService {
         }
 
         questionRepository.deleteAll(oldQuestions);
-        quizRepository.save(quiz);
+        quiz = quizRepository.save(quiz);
+        return quiz.getId();
     }
 
     public void deleteQuiz(UUID quizId) {

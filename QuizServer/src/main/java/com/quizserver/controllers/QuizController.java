@@ -8,6 +8,7 @@ import com.quizserver.models.DTOs.queries.UpdateQuizQuery;
 import com.quizserver.services.QuizService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,15 +40,14 @@ public class QuizController {
     }
 
     @PostMapping
-    public ResponseEntity<?> postQuiz(@RequestBody CreateQuizCommand quizCommand) {
-        quizService.createQuiz(quizCommand);
+    public ResponseEntity<?> postQuiz(@RequestBody CreateQuizCommand quizCommand, Authentication authentication) {
+        quizService.createQuiz(quizCommand, authentication);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("{quizId}")
-    public ResponseEntity<?> putQuiz(@PathVariable UUID quizId, @RequestBody UpdateQuizCommand quizCommand) {
-        quizService.updateQuiz(quizId, quizCommand);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<UUID> putQuiz(@PathVariable UUID quizId, @RequestBody UpdateQuizCommand quizCommand) {
+        return ResponseEntity.ok(quizService.updateQuiz(quizId, quizCommand));
     }
 
 

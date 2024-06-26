@@ -32,6 +32,7 @@ public class Quiz {
     @JoinColumn(name = "quiz_id")
     private List<Score> scores;
 
+    @Setter
     @ManyToOne(cascade = CascadeType.ALL)
     private User owner;
 

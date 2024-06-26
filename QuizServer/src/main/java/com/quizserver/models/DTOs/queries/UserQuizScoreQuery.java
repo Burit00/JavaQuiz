@@ -3,7 +3,7 @@ package com.quizserver.models.DTOs.queries;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Setter
@@ -14,5 +14,5 @@ public class UserQuizScoreQuery {
     private String userName;
     private int userPoints;
     private int maxPoints;
-    private OffsetDateTime date;
+    private LocalDateTime date;
 }

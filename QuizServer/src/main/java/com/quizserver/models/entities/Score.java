@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +20,7 @@ public class Score {
 
     private int maxPoints;
 
-    private OffsetDateTime date = OffsetDateTime.now();
+    private LocalDateTime date = LocalDateTime.now();
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
