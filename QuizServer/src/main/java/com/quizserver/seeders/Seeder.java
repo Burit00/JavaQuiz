@@ -20,6 +20,10 @@ public class Seeder {
                 User user = new User("admin", "admin", UserRole.ADMIN);
                 userRepository.save(user);
             }
+            if (userRepository.findByLogin("user") == null) {
+                User user = new User("user", "user", UserRole.USER);
+                userRepository.save(user);
+            }
         };
     }
 }
