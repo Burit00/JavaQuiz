@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface IQuestionRepository extends JpaRepository<Question, UUID> {
-    List<Question> findAllByQuizId(UUID quizId);
+    List<Question> findAllByQuiz_Id(UUID quizId);
 }

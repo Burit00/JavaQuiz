@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,12 +30,20 @@ public class User implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private UserRole role = UserRole.USER;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id")
+    private List<Quiz> createdQuizzes;
 
     public User(String login, String password, UserRole role) {
         this.login = login;
-        this.password = password;
+        this.password = encodePassword(password);
         this.role = role;
+    }
+
+    public static String encodePassword(String password) {
+        return new BCryptPasswordEncoder().encode(password);
     }
 
     @Override

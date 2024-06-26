@@ -2,11 +2,9 @@ package com.quizserver.controllers;
 
 import com.quizserver.models.DTOs.commands.CreateQuizCommand;
 import com.quizserver.models.DTOs.commands.UpdateQuizCommand;
-import com.quizserver.models.DTOs.commands.UserQuizAnswersCommand;
 import com.quizserver.models.DTOs.queries.QuizQuery;
 import com.quizserver.models.DTOs.queries.QuizDetailsQuery;
 import com.quizserver.models.DTOs.queries.UpdateQuizQuery;
-import com.quizserver.models.DTOs.queries.UserQuizScoreQuery;
 import com.quizserver.services.QuizService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,10 +50,6 @@ public class QuizController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("{quizId}/calculateScore")
-    public UserQuizScoreQuery calculateQuizScore(@PathVariable("quizId") UUID quizId, @RequestBody List<UserQuizAnswersCommand> userAnswers) {
-        return quizService.calculateQuizScore(quizId, userAnswers);
-    }
 
     @DeleteMapping("{quizId}")
     public ResponseEntity<?> deleteQuiz(@PathVariable UUID quizId) {

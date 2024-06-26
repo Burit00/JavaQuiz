@@ -4,10 +4,7 @@ import com.quizserver.models.DTOs.commands.*;
 import com.quizserver.models.DTOs.queries.QuizDetailsQuery;
 import com.quizserver.models.DTOs.queries.QuizQuery;
 import com.quizserver.models.DTOs.queries.UpdateQuizQuery;
-import com.quizserver.models.DTOs.queries.UserQuizScoreQuery;
-import com.quizserver.models.entities.Answer;
-import com.quizserver.models.entities.Question;
-import com.quizserver.models.entities.Quiz;
+import com.quizserver.models.entities.*;
 import com.quizserver.repositories.IQuestionRepository;
 import com.quizserver.repositories.IQuizRepository;
 import org.modelmapper.ModelMapper;
@@ -27,7 +24,9 @@ public class QuizService {
     private final IQuestionRepository questionRepository;
 
     @Autowired
-    public QuizService(IQuizRepository quizRepository, IQuestionRepository questionRepository, ModelMapper modelMapper) {
+    public QuizService(IQuizRepository quizRepository,
+                       IQuestionRepository questionRepository,
+                       ModelMapper modelMapper) {
         this.quizRepository = quizRepository;
         this.questionRepository = questionRepository;
         this.modelMapper = modelMapper;
@@ -92,29 +91,5 @@ public class QuizService {
 
     public void deleteQuiz(UUID quizId) {
         quizRepository.deleteById(quizId);
-    }
-
-    public UserQuizScoreQuery calculateQuizScore(UUID quizId, List<UserQuizAnswersCommand> userAnswers) {
-        Quiz quizFromDB = quizRepository.findById(quizId).orElse(null);
-
-        if(quizFromDB == null)
-            throw new IllegalArgumentException("Quiz with id " + quizId + " does not exist");
-
-        int correctAnswers = 0;
-        for(Question questionFromDB: quizFromDB.getQuestions()) {
-            UserQuizAnswersCommand userAnswer = userAnswers.stream().filter(answer ->
-                    answer.getQuestionId().equals(questionFromDB.getId())).findFirst().orElse(null);
-
-            if (userAnswer == null) continue;
-
-            if(questionFromDB.checkUserAnswer(userAnswer.getAnswers()))
-                ++correctAnswers;
-        }
-
-        final UserQuizScoreQuery userQuizScore = new UserQuizScoreQuery();
-        userQuizScore.setQuizName(quizFromDB.getName());
-        userQuizScore.setQuestionCount(quizFromDB.getQuestions().size());
-        userQuizScore.setCorrectQuestionsCount(correctAnswers);
-        return userQuizScore;
     }
 }
