@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import com.quizclient.ui.*?>
-<BorderPane prefWidth="800" prefHeight="600" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.QuizScoreController">
+<BorderPane prefHeight="900.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizclient.controller.QuizScoreController">
   <top>
     <Header/>
   </top>

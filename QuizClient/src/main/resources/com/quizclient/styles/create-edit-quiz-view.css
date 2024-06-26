@@ -54,7 +54,7 @@
 }
 
 .question-row .action-buttons {
-    -fx-min-width: 200px;
+    -fx-min-width: 290px;
 }
 
 .action-buttons .button {
@@ -71,4 +71,24 @@
 
 .action-buttons .button.remove-button:focused {
     -fx-text-fill: #d96c6c;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #02b7b3;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.scroll-bar:horizontal .increment-button:hover,
+.scroll-bar:horizontal .decrement-button:hover,
+.scroll-bar:vertical .increment-button:hover,
+.scroll-bar:vertical .decrement-button:hover {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow,
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #fff;
 }

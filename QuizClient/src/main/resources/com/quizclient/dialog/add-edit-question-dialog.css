@@ -3,6 +3,12 @@
     -fx-spacing: 5;
 }
 
+.question-name-input {
+    -fx-padding: 5 10;
+    -fx-min-height: 47;
+    -fx-font-size: 14;
+}
+
 .question-type {
     -fx-padding: 0 0 10 0;
     -fx-spacing: 5;

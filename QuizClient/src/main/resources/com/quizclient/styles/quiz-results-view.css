@@ -9,6 +9,8 @@
 
 .quiz-label.title {
     -fx-text-fill: #02b7b3;
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
 }
 
 .no-scores {

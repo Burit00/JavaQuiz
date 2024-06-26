@@ -93,8 +93,8 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
         answerListBox = new VBox();
         VBox centerBox = new VBox();
 
-        setWidth(400);
-        setHeight(600);
+        setWidth(600);
+        setHeight(800);
 
         getDialogPane().getStylesheets().addAll(
                 QuizClientApplication.class.getResource("styles/global.css").toExternalForm(),
@@ -123,6 +123,7 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
         questionNameTextField = new TextField(question.getName());
         questionNameTextField.setPromptText("Nazwa pytania...");
         questionNameTextField.setOnKeyTyped(_ -> setDisableConfirmButton());
+        questionNameTextField.getStyleClass().add("question-name-input");
         VBox questionNameBox = new VBox(questionNameLabel, questionNameTextField);
         questionNameBox.getStyleClass().add("question-name");
 
@@ -262,7 +263,7 @@ public class AddEditQuestionDialog extends Dialog<CreateQuestionCommand> {
             }
         }
 
-        attachmentBox.setPrefWidth(390);
+        attachmentBox.setPrefWidth(490);
         attachmentBox.setPadding(new Insets(0, 0, 0, 10));
         contentPane.setRight(attachmentBox);
         setWidth(getWidth() + attachmentBox.getPrefWidth());
