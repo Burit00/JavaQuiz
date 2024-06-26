@@ -4,7 +4,6 @@ import com.quizclient.api.QuizHttpClient;
 import com.quizclient.model.query.QuizDetailsQuery;
 import com.quizclient.model.query.UserQuizScoreQuery;
 import com.quizclient.utils.SceneLoader;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,9 +51,7 @@ public class QuizResultsController {
         }
 
         TableView<UserQuizScoreQuery> table = new TableView<>();
-
-        TableColumn<UserQuizScoreQuery, Integer> indexColumn = new TableColumn<>("Index");
-        indexColumn.setCellValueFactory((v) -> new SimpleObjectProperty<>(quizScores.indexOf(v.getValue()) + 1));
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
         TableColumn<UserQuizScoreQuery, String > userColumn = new TableColumn<>("Użytkownik");
         userColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
@@ -72,7 +69,6 @@ public class QuizResultsController {
         dateColumn.setCellValueFactory(value -> getDate(value.getValue()));
 
         table.getColumns().addAll(
-                indexColumn,
                 userColumn,
                 userPointsColumn,
                 maxPointsColumn,
