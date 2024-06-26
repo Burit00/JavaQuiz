@@ -33,7 +33,7 @@ public class HttpClient {
     public HttpClient(String basedUrl) {
         BASE_URL = basedUrl;
 
-        GsonBuilder gsonBuilder = Converters.registerOffsetDateTime(new GsonBuilder());
+        GsonBuilder gsonBuilder = Converters.registerLocalDateTime(new GsonBuilder());
         gson = gsonBuilder.create();
     }
 

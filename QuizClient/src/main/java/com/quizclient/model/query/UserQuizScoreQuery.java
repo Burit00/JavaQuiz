@@ -1,6 +1,6 @@
 package com.quizclient.model.query;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class UserQuizScoreQuery {
@@ -9,13 +9,13 @@ public class UserQuizScoreQuery {
     private String userName;
     private int userPoints;
     private int maxPoints;
-    private OffsetDateTime date;
+    private LocalDateTime date;
 
     public UUID getId() {
         return id;
     }
 
-    public OffsetDateTime getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 

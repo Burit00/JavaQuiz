@@ -3,8 +3,10 @@ package com.quizclient.controller;
 import com.quizclient.api.QuizHttpClient;
 import com.quizclient.contexts.AuthContext;
 import com.quizclient.dialog.DeleteQuizDialog;
+import com.quizclient.enums.AwesomeIconEnum;
 import com.quizclient.helpers.AuthHelper;
 import com.quizclient.model.query.QuizDetailsQuery;
+import com.quizclient.ui.Icon;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,7 +25,7 @@ public class QuizDetailsController {
     private Button removeQuizButton;
 
     @FXML
-    private Button startQuizButton;
+    private Button confirmButton;
 
     @FXML
     private Label titleLabel;
@@ -90,11 +92,22 @@ public class QuizDetailsController {
         AuthContext.getUserData().subscribe(user -> {
             boolean isAdmin = AuthHelper.isAdmin(user);
             boolean isUser = AuthHelper.isUser(user);
+            boolean isLogged = isAdmin || isUser;
 
             editQuizButton.setDisable(!isAdmin);
             removeQuizButton.setDisable(!isAdmin);
 
-            startQuizButton.setDisable(!isUser);
+            confirmButton.setDisable(!isLogged);
+            confirmButton.setText("Rozpocznij Quiz");
+            if(isAdmin) {
+                confirmButton.setText("Pokaż wyniki");
+                confirmButton.setGraphic(new Icon(AwesomeIconEnum.DATABASE));
+                confirmButton.setOnAction(_ -> SceneLoader.loadQuizResultsScene(quiz.getId()));
+            } else {
+                confirmButton.setGraphic(new Icon(AwesomeIconEnum.PLAY));
+                confirmButton.setOnAction(_ -> onStartQuiz());
+            }
+
         });
     }
 }

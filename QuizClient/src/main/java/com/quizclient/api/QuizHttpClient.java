@@ -15,6 +15,16 @@ import java.util.UUID;
 public class QuizHttpClient {
     private static final HttpClient httpClient = new HttpClient("http://localhost:8080/api/v1/");
 
+    static {
+        //TODO: remove this when development would be done
+        signInAsAdmin();
+    }
+
+    private static void signInAsAdmin() {
+        SignInCommand user = new SignInCommand("admin", "admin");
+        QuizHttpClient.signIn(user);
+    }
+
     public static boolean signIn(SignInCommand loginUser) {
         HttpResponse<String> response;
 
@@ -93,9 +103,9 @@ public class QuizHttpClient {
         }
 
         if(response.equals("[]")) return new ArrayList<>();
+
         return HttpClient.gson.fromJson(response, new TypeToken<List<QuestionQuery>>() {
         }.getType());
-
     }
 
     public static void postQuiz(CreateQuizCommand quiz) {
@@ -104,10 +114,14 @@ public class QuizHttpClient {
         } catch (IOException | InterruptedException _) {}
     }
 
-    public static void putQuiz(UpdateQuizCommand quiz) {
+    public static UUID putQuiz(UpdateQuizCommand quiz) {
+        String response = null;
+
         try {
-            httpClient.put("quiz/" + quiz.getId(), quiz);
+            response = httpClient.put("quiz/" + quiz.getId(), quiz);
         } catch (IOException | InterruptedException _) {}
+
+        return UUID.fromString(HttpClient.gson.fromJson(response, String.class));
     }
 
     public static void deleteQuiz(UUID quizId) {
@@ -126,6 +140,18 @@ public class QuizHttpClient {
             return null;
         }
 
-        return HttpClient.gson.fromJson(response, new TypeToken<UserQuizScoreQuery>() {}.getType());
+        return HttpClient.gson.fromJson(response, UserQuizScoreQuery.class);
+    }
+
+    public static List<UserQuizScoreQuery> getQuizScores(UUID quizId) {
+        String response;
+
+        try {
+            response = httpClient.get("score?quizId=" + quizId);
+        } catch (IOException | InterruptedException _) {
+            return null;
+        }
+
+        return HttpClient.gson.fromJson(response, new TypeToken<List<UserQuizScoreQuery>>() {}.getType());
     }
 }

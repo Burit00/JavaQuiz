@@ -41,12 +41,12 @@ public class CreatEditQuizController {
         setup();
     }
 
-    public void setParameter(UUID quizId){
+    public void setParameter(UUID quizId) {
         quiz = QuizHttpClient.getQuizDetailsForUpdate(quizId);
         setup();
     }
 
-    public void setParameter(CreateQuizCommand quiz){
+    public void setParameter(CreateQuizCommand quiz) {
         this.quiz = quiz;
         setup();
     }
@@ -65,13 +65,16 @@ public class CreatEditQuizController {
     private void buildQuestionList() {
         questionListBox.getChildren().clear();
 
-        for (CreateQuestionCommand question: questions) {
+        for (CreateQuestionCommand question : questions) {
             HBox questionRow = buildQuestionRow(question);
             questionListBox.getChildren().add(questionRow);
         }
     }
 
-    private record AnswerActionButtonProps(String text, AwesomeIconEnum icon, String buttonClass, Consumer<CreateQuestionCommand> function){}
+    private record AnswerActionButtonProps(String text, AwesomeIconEnum icon, String buttonClass,
+                                           Consumer<CreateQuestionCommand> function) {
+    }
+
     private final List<AnswerActionButtonProps> answerActionButtonProps = Arrays.asList(
             new AnswerActionButtonProps("Edytuj", AwesomeIconEnum.PENCIL, "edit-button", this::onEditQuestion),
             new AnswerActionButtonProps("Podgląd", AwesomeIconEnum.SEARCH, "preview-button", this::onPreviewQuestion),
@@ -89,7 +92,7 @@ public class CreatEditQuizController {
         buttonsBox.setAlignment(Pos.TOP_RIGHT);
         buttonsBox.getStyleClass().add("action-buttons");
 
-        for (AnswerActionButtonProps buttonProps: answerActionButtonProps) {
+        for (AnswerActionButtonProps buttonProps : answerActionButtonProps) {
             Button button = new Button(buttonProps.text);
 
             button.setGraphic(new Icon(buttonProps.icon));
@@ -128,7 +131,7 @@ public class CreatEditQuizController {
 
     private void onRemoveQuestion(CreateQuestionCommand question) {
         questions.remove(question);
-        if(questions.isEmpty())
+        if (questions.isEmpty())
             setDisableSaveAndPreviewButton();
         buildQuestionList();
     }
@@ -139,6 +142,11 @@ public class CreatEditQuizController {
 
     @FXML
     private void onCancel() {
+        if (quiz instanceof UpdateQuizCommand) {
+            SceneLoader.loadQuizDetailsScene(((UpdateQuizCommand) quiz).getId());
+            return;
+        }
+
         SceneLoader.loadSelectQuizScene();
     }
 
@@ -146,9 +154,13 @@ public class CreatEditQuizController {
     private void onSaveQuiz() {
         quiz.setQuestions(questions);
 
-        if (quiz instanceof UpdateQuizCommand) QuizHttpClient.putQuiz(((UpdateQuizCommand)quiz));
-        else QuizHttpClient.postQuiz(quiz);
+        if (quiz instanceof UpdateQuizCommand) {
+            UUID quizId = QuizHttpClient.putQuiz(((UpdateQuizCommand) quiz));
+            SceneLoader.loadQuizDetailsScene(quizId);
+            return;
+        }
 
+        QuizHttpClient.postQuiz(quiz);
         SceneLoader.loadSelectQuizScene();
     }
 
@@ -156,7 +168,7 @@ public class CreatEditQuizController {
     private void onAddQuestion() {
         AddEditQuestionDialog dialog = new AddEditQuestionDialog();
         Optional<CreateQuestionCommand> questionResult = dialog.showAndWait();
-        if(questionResult.isPresent()) {
+        if (questionResult.isPresent()) {
             questions.add(questionResult.get());
             buildQuestionList();
             setDisableSaveAndPreviewButton();
@@ -175,8 +187,8 @@ public class CreatEditQuizController {
     }
 
     @FXML
-    private  void onQuizNameTyped(KeyEvent event) {
-        quiz.setName(((TextField)event.getSource()).getText());
+    private void onQuizNameTyped(KeyEvent event) {
+        quiz.setName(((TextField) event.getSource()).getText());
         setDisableSaveAndPreviewButton();
     }
 

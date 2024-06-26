@@ -1,0 +1,21 @@
+.main {
+    -fx-padding: 10 10;
+}
+
+.quiz-label {
+    -fx-text-fill: #fff;
+    -fx-font-size: 18;
+}
+
+.quiz-label.title {
+    -fx-text-fill: #02b7b3;
+}
+
+.no-scores {
+    -fx-text-fill: #fff;
+    -fx-font-size: 24;
+    -fx-alignment: center;
+}
+
+.table-container {
+}

@@ -53,12 +53,12 @@
         </center>
       </BorderPane>
       <FlowPane styleClass="action-buttons">
-        <Button onAction="#onExitQuiz" text="Opuść test">
+        <Button onAction="#onExitQuiz" text="Opuść Quiz">
           <graphic>
             <Icon value="HOME"/>
           </graphic>
         </Button>
-        <Button fx:id="startQuizButton" onAction="#onStartQuiz" text="Rozpocznij test">
+        <Button fx:id="confirmButton">
           <graphic>
             <Icon value="PLAY"/>
           </graphic>

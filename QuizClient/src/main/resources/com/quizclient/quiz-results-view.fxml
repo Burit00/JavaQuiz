@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import com.quizclient.ui.Header?>
+<?import com.quizclient.ui.Footer?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import com.quizclient.ui.Icon?>
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.quizclient.controller.QuizResultsController"
+            prefHeight="600.0" prefWidth="800.0">
+  <top>
+    <Header/>
+  </top>
+  <center>
+    <BorderPane styleClass="main">
+      <top>
+        <HBox spacing="10"><Label styleClass="quiz-label">Wyniki quizu: </Label><Label styleClass="quiz-label, title" fx:id="quizNameLabel"/></HBox>
+      </top>
+      <center>
+        <BorderPane styleClass="table-container" fx:id="tableContainer"/>
+      </center>
+      <bottom>
+        <Button onAction="#onBack" text="Powrót">
+          <graphic>
+            <Icon value="ARROW_LEFT"/>
+          </graphic>
+        </Button>
+      </bottom>
+    </BorderPane>
+
+  </center>
+  <bottom>
+    <Footer/>
+  </bottom>
+  <stylesheets>
+    <URL value="@styles/global.css"/>
+    <URL value="@styles/quiz-results-view.css"/>
+  </stylesheets>
+</BorderPane>

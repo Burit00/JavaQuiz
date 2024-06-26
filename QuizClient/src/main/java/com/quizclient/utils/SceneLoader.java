@@ -29,10 +29,11 @@ public class SceneLoader {
         SELECT_QUIZ,
         SOLVE_QUIZ,
         QUIZ_PREVIEW,
+        QUIZ_RESULTS,
     }
 
     static {
-        List<SceneEnum> adminScenes = Arrays.asList(SceneEnum.CREATE_EDIT_QUIZ, SceneEnum.QUIZ_PREVIEW);
+        List<SceneEnum> adminScenes = Arrays.asList(SceneEnum.CREATE_EDIT_QUIZ, SceneEnum.QUIZ_PREVIEW, SceneEnum.QUIZ_RESULTS);
         List<SceneEnum> userScenes = Arrays.asList(SceneEnum.SOLVE_QUIZ, SceneEnum.QUIZ_SCORE);
 
         AuthContext.getUserData().subscribe(user -> {
@@ -112,6 +113,16 @@ public class SceneLoader {
 
         QuizScoreController controller = loader.fxmlLoader.getController();
         controller.setParameter(quizId, userQuizAnswers);
+
+        showScene(loader.root);
+    }
+
+    public static void loadQuizResultsScene(UUID quizId) {
+        activeScene = SceneEnum.QUIZ_RESULTS;
+        Loader loader = loadScene("quiz-results-view.fxml");
+
+        QuizResultsController controller = loader.fxmlLoader.getController();
+        controller.setParameter(quizId);
 
         showScene(loader.root);
     }

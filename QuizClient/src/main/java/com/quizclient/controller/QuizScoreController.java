@@ -36,8 +36,8 @@ public class QuizScoreController {
         quizNameLabel.setText(userQuizScore.getQuizName());
         String userQuizScorePointsText = userQuizScore.getMaxPoints() + "/" + userQuizScore.getUserPoints();
         userScorePointsLabel.setText("Zdobyte punkty: " + userQuizScorePointsText);
-        double maxQuizScoreBiggerThanZero = userQuizScore.getUserPoints() > 0 ? userQuizScore.getUserPoints() : 1.0;
-        double userQuizScorePercentage = (userQuizScore.getMaxPoints() / maxQuizScoreBiggerThanZero) * 100;
+        double maxQuizScoreBiggerThanZero = userQuizScore.getMaxPoints() > 0 ? userQuizScore.getMaxPoints() : 1.0;
+        double userQuizScorePercentage = (userQuizScore.getUserPoints() / maxQuizScoreBiggerThanZero) * 100;
         String userQuizScorePercentageText = String.format("%.2f", userQuizScorePercentage) + "%";
         userScorePercentageLabel.setText("Wynik procentowy: " + userQuizScorePercentageText);
     }
