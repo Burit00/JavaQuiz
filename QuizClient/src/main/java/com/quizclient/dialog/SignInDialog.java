@@ -19,6 +19,7 @@ public class SignInDialog extends Dialog<Boolean> {
 
 
     public SignInDialog() {
+        super();
         buildUI();
     }
 
@@ -130,7 +131,7 @@ public class SignInDialog extends Dialog<Boolean> {
     }
 
     private void onCancel() {
-        setResult(null);
+        setResult(false);
     }
 
 

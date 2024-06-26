@@ -1,19 +1,37 @@
 package com.quizclient.model.query;
 
-public class UserQuizScoreQuery {
-    private int questionCount;
-    private int correctQuestionsCount;
-    private String quizName;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
-    public int getQuestionCount() {
-        return questionCount;
+public class UserQuizScoreQuery {
+    private UUID id;
+    private String quizName;
+    private String userName;
+    private int userPoints;
+    private int maxPoints;
+    private OffsetDateTime date;
+
+    public UUID getId() {
+        return id;
     }
 
-    public int getCorrectQuestionsCount() {
-        return correctQuestionsCount;
+    public OffsetDateTime getDate() {
+        return date;
+    }
+
+    public int getUserPoints() {
+        return userPoints;
+    }
+
+    public int getMaxPoints() {
+        return maxPoints;
     }
 
     public String getQuizName() {
         return quizName;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 }

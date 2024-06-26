@@ -1,5 +1,5 @@
 .main {
-    -fx-padding: 10 20;
+    -fx-padding: 10 20 0;
     -fx-vgap: 10;
     -fx-fit-to-width: true;
 }

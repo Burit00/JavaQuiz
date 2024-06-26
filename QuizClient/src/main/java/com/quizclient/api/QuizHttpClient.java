@@ -116,11 +116,12 @@ public class QuizHttpClient {
         } catch (IOException | InterruptedException _) {}
     }
 
-    public static UserQuizScoreQuery calculateQuizScore(UUID quizId, List<UserQuizAnswersCommand> userQuizAnswers) {
+    public static UserQuizScoreQuery calculateQuizScore(UUID quizId, List<UserAnswerCommand> userAnswers) {
+        UserQuizAnswerCommand userQuizAnswer = new UserQuizAnswerCommand(quizId, userAnswers);
         String response;
 
         try {
-            response = httpClient.post("quiz/" + quizId + "/calculateScore", userQuizAnswers);
+            response = httpClient.post("score", userQuizAnswer);
         } catch (IOException | InterruptedException _) {
             return null;
         }

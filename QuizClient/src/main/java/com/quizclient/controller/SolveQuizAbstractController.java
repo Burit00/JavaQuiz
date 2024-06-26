@@ -4,7 +4,7 @@ import com.quizclient.QuizClientApplication;
 import com.quizclient.dialog.ConfirmQuizDialog;
 import com.quizclient.enums.AwesomeIconEnum;
 import com.quizclient.enums.QuestionTypeEnum;
-import com.quizclient.model.command.UserQuizAnswersCommand;
+import com.quizclient.model.command.UserAnswerCommand;
 import com.quizclient.model.query.AnswerQuery;
 import com.quizclient.model.query.QuestionQuery;
 import com.quizclient.model.query.QuizDetailsQuery;
@@ -34,11 +34,11 @@ public abstract class SolveQuizAbstractController extends BorderPane {
     protected QuizDetailsQuery quiz;
     protected List<QuestionQuery> questions;
     protected QuestionQuery currentQuestion;
-    protected UserQuizAnswersCommand currentQuestionAnswer;
+    protected UserAnswerCommand currentQuestionAnswer;
     protected int timeLeft;
     protected Timeline timer = new Timeline();
 
-    protected final List<UserQuizAnswersCommand> userQuizAnswers = new ArrayList<>();
+    protected final List<UserAnswerCommand> userQuizAnswers = new ArrayList<>();
     protected final ConfirmQuizDialog confirmQuizDialog = new ConfirmQuizDialog();
 
     protected ToggleGroup radioGroup;
@@ -119,7 +119,7 @@ public abstract class SolveQuizAbstractController extends BorderPane {
         }
 
         for (QuestionQuery question : questions) {
-            userQuizAnswers.add(new UserQuizAnswersCommand(question.getId(), new ArrayList<>()));
+            userQuizAnswers.add(new UserAnswerCommand(question.getId(), new ArrayList<>()));
         }
 
         currentQuestion = questions.getFirst();
@@ -128,8 +128,15 @@ public abstract class SolveQuizAbstractController extends BorderPane {
 
     protected void buildUI() {
         titleLabel.setText(quiz.getName());
-        previousQuestionButton.setOnAction(_ -> onPreviousQuestion());
-        nextQuestionButton.setOnAction(_ -> onNextQuestion());
+
+        if(questions == null || questions.isEmpty()) {
+            previousQuestionButton.setDisable(true);
+            nextQuestionButton.setDisable(true);
+        } else {
+            previousQuestionButton.setOnAction(_ -> onPreviousQuestion());
+            nextQuestionButton.setOnAction(_ -> onNextQuestion());
+        }
+
         confirmButton.setOnAction(_ -> onConfirm());
 
         buildQuestion();
@@ -297,7 +304,7 @@ public abstract class SolveQuizAbstractController extends BorderPane {
         currentQuestionAnswer.getAnswers().add(input.getText());
     }
 
-    private UserQuizAnswersCommand findUserQuestionAnswer(UUID questionId) {
+    private UserAnswerCommand findUserQuestionAnswer(UUID questionId) {
         return userQuizAnswers.stream().filter(userQuestionAnswer ->
                 userQuestionAnswer.getQuestionId().equals(questionId)).findFirst().orElse(null);
     }

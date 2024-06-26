@@ -17,7 +17,7 @@
           <HBox alignment="TOP_CENTER">
             <Label styleClass="title" text="Ustaw nazwę Quizu:"/>
             <HBox HBox.hgrow="ALWAYS"/>
-            <Button text="Podgląd" onAction="#onShowPreview" styleClass="small" AnchorPane.rightAnchor="0">
+            <Button fx:id="previewButton" text="Podgląd" onAction="#onShowPreview" styleClass="small" AnchorPane.rightAnchor="0">
               <graphic>
                 <Icon value="SEARCH"/>
               </graphic>

@@ -3,12 +3,12 @@ package com.quizclient.model.command;
 import java.util.List;
 import java.util.UUID;
 
-public class UserQuizAnswersCommand {
+public class UserAnswerCommand {
     private UUID questionId;
 
     private List<String> answers;
 
-    public UserQuizAnswersCommand(UUID questionId, List<String> answers) {
+    public UserAnswerCommand(UUID questionId, List<String> answers) {
         this.questionId = questionId;
         this.answers = answers;
     }

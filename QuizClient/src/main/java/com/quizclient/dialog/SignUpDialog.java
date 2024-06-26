@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 import java.util.Objects;
 
 public class SignUpDialog extends Dialog<Boolean> {
+    private boolean isSignUpSuccessful = false;
+
     private final TextField usernameInput = new TextField();
     private final PasswordField passwordInput = new PasswordField();
     private final PasswordField confirmPasswordInput = new PasswordField();
@@ -24,6 +26,7 @@ public class SignUpDialog extends Dialog<Boolean> {
 
 
     public SignUpDialog() {
+        super();
         buildUI();
     }
 
@@ -117,9 +120,9 @@ public class SignUpDialog extends Dialog<Boolean> {
         String password = passwordInput.getText();
         String confirmPassword = confirmPasswordInput.getText();
 
-        boolean isFormValid = isConfirmPasswordValid(confirmPassword, password)
-                            && isPasswordValid(password)
-                            && isUsernameValid(username);
+        boolean isFormValid = isConfirmPasswordValid(confirmPassword, password);
+        isFormValid &= isPasswordValid(password);
+        isFormValid &= isUsernameValid(username);
 
         if(!isFormValid) return;
 
@@ -130,8 +133,8 @@ public class SignUpDialog extends Dialog<Boolean> {
             UserRoleEnum.USER
         );
 
-        boolean isLoginSuccessful = QuizHttpClient.signUp(user);
-        if(isLoginSuccessful) {
+        isSignUpSuccessful = QuizHttpClient.signUp(user);
+        if(isSignUpSuccessful) {
             setResult(true);
             return;
         }
@@ -172,7 +175,7 @@ public class SignUpDialog extends Dialog<Boolean> {
     }
 
     private void onCancel() {
-        setResult(null);
+        setResult(isSignUpSuccessful);
     }
 
 

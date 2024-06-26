@@ -22,16 +22,24 @@ import java.util.function.Consumer;
 
 public class CreatEditQuizController {
     public CreateQuizCommand quiz = new CreateQuizCommand();
-    public List<CreateQuestionCommand> questions = new ArrayList<>();
+    public List<CreateQuestionCommand> questions;
 
     @FXML
     private Button saveQuizButton;
+
+    @FXML
+    private Button previewButton;
 
     @FXML
     private VBox questionListBox;
 
     @FXML
     private TextField quizNameTextField;
+
+    @FXML
+    private void initialize() {
+        setup();
+    }
 
     public void setParameter(UUID quizId){
         quiz = QuizHttpClient.getQuizDetailsForUpdate(quizId);
@@ -50,8 +58,8 @@ public class CreatEditQuizController {
 
     private void buildUI() {
         quizNameTextField.setText(quiz.getName());
-        setDisableSaveButton();
         buildQuestionList();
+        setDisableSaveAndPreviewButton();
     }
 
     private void buildQuestionList() {
@@ -102,8 +110,11 @@ public class CreatEditQuizController {
         return questionRow;
     }
 
-    private void setDisableSaveButton() {
-        saveQuizButton.setDisable(quiz.getName() == null || quiz.getName().isBlank() || questions.isEmpty());
+    private void setDisableSaveAndPreviewButton() {
+        boolean isQuizReadyToSave = quiz.getName() == null || quiz.getName().isBlank() || questions.isEmpty();
+
+        saveQuizButton.setDisable(isQuizReadyToSave);
+        previewButton.setDisable(isQuizReadyToSave);
     }
 
     private void onEditQuestion(CreateQuestionCommand question) {
@@ -112,19 +123,18 @@ public class CreatEditQuizController {
         questionResult.ifPresent(createQuestionCommand ->
                 questions.set(questions.indexOf(question), createQuestionCommand));
 
-        setDisableSaveButton();
         buildQuestionList();
     }
 
     private void onRemoveQuestion(CreateQuestionCommand question) {
         questions.remove(question);
         if(questions.isEmpty())
-            setDisableSaveButton();
+            setDisableSaveAndPreviewButton();
         buildQuestionList();
     }
 
     private void onPreviewQuestion(CreateQuestionCommand question) {
-        SceneLoader.loadQuizPreviewScene(quiz, quiz.getQuestions().indexOf(question));
+        SceneLoader.loadQuizPreviewScene(quiz, questions.indexOf(question));
     }
 
     @FXML
@@ -149,7 +159,7 @@ public class CreatEditQuizController {
         if(questionResult.isPresent()) {
             questions.add(questionResult.get());
             buildQuestionList();
-            setDisableSaveButton();
+            setDisableSaveAndPreviewButton();
         }
     }
 
@@ -167,7 +177,7 @@ public class CreatEditQuizController {
     @FXML
     private  void onQuizNameTyped(KeyEvent event) {
         quiz.setName(((TextField)event.getSource()).getText());
-        setDisableSaveButton();
+        setDisableSaveAndPreviewButton();
     }
 
     @FXML

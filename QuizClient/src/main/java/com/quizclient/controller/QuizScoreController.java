@@ -2,7 +2,7 @@ package com.quizclient.controller;
 
 
 import com.quizclient.api.QuizHttpClient;
-import com.quizclient.model.command.UserQuizAnswersCommand;
+import com.quizclient.model.command.UserAnswerCommand;
 import com.quizclient.model.query.UserQuizScoreQuery;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
@@ -22,21 +22,22 @@ public class QuizScoreController {
     private UserQuizScoreQuery userQuizScore;
 
 
-    public void setParameter(UUID quizId, List<UserQuizAnswersCommand>  userQuizAnswers) {
+    public void setParameter(UUID quizId, List<UserAnswerCommand>  userQuizAnswers) {
         calculateScore(quizId, userQuizAnswers);
         buildUI();
     }
 
-    private void calculateScore(UUID quizId, List<UserQuizAnswersCommand> userQuizAnswers) {
+    private void calculateScore(UUID quizId, List<UserAnswerCommand> userQuizAnswers) {
         userQuizScore = QuizHttpClient.calculateQuizScore(quizId, userQuizAnswers);
+        System.out.println(userQuizScore);
     }
 
     private void buildUI() {
         quizNameLabel.setText(userQuizScore.getQuizName());
-        String userQuizScorePointsText = userQuizScore.getCorrectQuestionsCount() + "/" + userQuizScore.getQuestionCount();
+        String userQuizScorePointsText = userQuizScore.getMaxPoints() + "/" + userQuizScore.getUserPoints();
         userScorePointsLabel.setText("Zdobyte punkty: " + userQuizScorePointsText);
-        double maxQuizScoreBiggerThanZero = userQuizScore.getQuestionCount() > 0 ? userQuizScore.getQuestionCount() : 1.0;
-        double userQuizScorePercentage = (userQuizScore.getCorrectQuestionsCount() / maxQuizScoreBiggerThanZero) * 100;
+        double maxQuizScoreBiggerThanZero = userQuizScore.getUserPoints() > 0 ? userQuizScore.getUserPoints() : 1.0;
+        double userQuizScorePercentage = (userQuizScore.getMaxPoints() / maxQuizScoreBiggerThanZero) * 100;
         String userQuizScorePercentageText = String.format("%.2f", userQuizScorePercentage) + "%";
         userScorePercentageLabel.setText("Wynik procentowy: " + userQuizScorePercentageText);
     }

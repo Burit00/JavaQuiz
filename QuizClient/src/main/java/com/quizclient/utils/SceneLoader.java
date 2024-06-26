@@ -5,7 +5,7 @@ import com.quizclient.contexts.AuthContext;
 import com.quizclient.controller.*;
 import com.quizclient.helpers.AuthHelper;
 import com.quizclient.model.command.CreateQuizCommand;
-import com.quizclient.model.command.UserQuizAnswersCommand;
+import com.quizclient.model.command.UserAnswerCommand;
 import com.quizclient.model.query.QuizDetailsQuery;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -106,7 +106,7 @@ public class SceneLoader {
         controller.setParameter(quiz, questionIndex);
     }
 
-    public static void loadQuizScoreScene(UUID quizId, List<UserQuizAnswersCommand> userQuizAnswers) {
+    public static void loadQuizScoreScene(UUID quizId, List<UserAnswerCommand> userQuizAnswers) {
         activeScene = SceneEnum.QUIZ_SCORE;
         Loader loader = loadScene("quiz-score-view.fxml");
 

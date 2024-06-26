@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 public class Header extends AnchorPane {
@@ -85,6 +86,7 @@ public class Header extends AnchorPane {
         Icon buttonIcon = new Icon(icon);
         signInButton.setGraphic(buttonIcon);
         signInButton.setText(text);
+        signInButton.setFocusTraversable(!isLogged);
     }
 
     private void buildSignUpButtonContent() {
@@ -105,6 +107,8 @@ public class Header extends AnchorPane {
 
     private void onSignUp() {
         SignUpDialog dialog = new SignUpDialog();
-        dialog.showAndWait();
+        Optional<Boolean> result = dialog.showAndWait();
+        if(result.isPresent() && result.get())
+            userGreetingLabel.setText("Pomyślnie zarejestrowano konto!");
     }
 }

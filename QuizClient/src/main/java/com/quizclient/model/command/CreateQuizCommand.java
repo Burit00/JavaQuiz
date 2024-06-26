@@ -1,6 +1,7 @@
 package com.quizclient.model.command;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreateQuizCommand {
@@ -38,7 +39,7 @@ public class CreateQuizCommand {
         this.description = description;
     }
 
-    protected List<CreateQuestionCommand> questions;
+    protected List<CreateQuestionCommand> questions = new ArrayList<>();
 
     public List<CreateQuestionCommand> getQuestions() {
         return questions;

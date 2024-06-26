@@ -1,6 +1,8 @@
 package com.quizclient.utils;
 
+import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.quizclient.contexts.AuthContext;
 
 import java.io.IOException;
@@ -9,7 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class HttpClient {
-    public static Gson gson = new Gson();
+    public static Gson gson;
     private final String BASE_URL;
     private static final java.net.http.HttpClient httpClient = java.net.http.HttpClient.newHttpClient();
 
@@ -30,6 +32,9 @@ public class HttpClient {
 
     public HttpClient(String basedUrl) {
         BASE_URL = basedUrl;
+
+        GsonBuilder gsonBuilder = Converters.registerOffsetDateTime(new GsonBuilder());
+        gson = gsonBuilder.create();
     }
 
     public String get(String url) throws IOException, InterruptedException {
