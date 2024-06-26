@@ -34,8 +34,11 @@ public class AuthConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/v1/quiz/*").hasRole(UserRole.ADMIN.getValue())
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/quiz/*").hasRole(UserRole.ADMIN.getValue())
                         .requestMatchers(HttpMethod.GET, "/api/v1/quiz/*/updateForm").hasRole(UserRole.ADMIN.getValue())
-                        .requestMatchers(HttpMethod.POST, "/api/v1/quiz/*/calculateScore").hasRole(UserRole.USER.getValue())
+
                         .requestMatchers(HttpMethod.GET, "/api/v1/question").hasRole(UserRole.USER.getValue())
+
+                        .requestMatchers(HttpMethod.POST, "/api/v1/score").hasRole(UserRole.USER.getValue())
+                        .requestMatchers(HttpMethod.GET, "/api/v1/score").hasRole(UserRole.ADMIN.getValue())
                         .anyRequest().permitAll())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -1,29 +1,18 @@
 package com.quizserver.models.DTOs.queries;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
+@Setter
+@Getter
 public class UserQuizScoreQuery {
-
-    private int questionCount;
-    private int correctQuestionsCount;
+    private UUID id;
     private String quizName;
-
-    public int getQuestionCount() {
-        return questionCount;
-    }
-    public void setQuestionCount(int questionCount) {
-        this.questionCount = questionCount;
-    }
-
-    public int getCorrectQuestionsCount() {
-        return correctQuestionsCount;
-    }
-    public void setCorrectQuestionsCount(int correctQuestionsCount) {
-        this.correctQuestionsCount = correctQuestionsCount;
-    }
-
-    public String getQuizName() {
-        return quizName;
-    }
-    public void setQuizName(String quizName) {
-        this.quizName = quizName;
-    }
+    private String userName;
+    private int userPoints;
+    private int maxPoints;
+    private OffsetDateTime date;
 }
