@@ -3,7 +3,7 @@ package com.quizclient.controller;
 import com.quizclient.api.QuizHttpClient;
 import com.quizclient.contexts.AuthContext;
 import com.quizclient.helpers.AuthHelper;
-import com.quizclient.model.query.QuizQuery;
+import com.quizclient.model.query.Quiz.QuizQuery;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

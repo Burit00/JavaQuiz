@@ -8,7 +8,7 @@
          xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/global.css">
 
   <HBox styleClass="header" alignment="CENTER_LEFT" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-    <Label>JAVA QUIZ</Label>
+    <Label fx:id="logo">JAVA QUIZ</Label>
   </HBox>
 
   <VBox styleClass="greetings" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">

@@ -1,4 +1,4 @@
-package com.quizclient.model.command;
+package com.quizclient.model.command.Quiz;
 
 public class SignInCommand {
     private String login;

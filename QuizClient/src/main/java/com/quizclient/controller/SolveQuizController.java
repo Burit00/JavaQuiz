@@ -1,16 +1,14 @@
 package com.quizclient.controller;
 
 import com.quizclient.api.QuizHttpClient;
-import com.quizclient.model.query.QuestionQuery;
-import com.quizclient.model.query.QuizDetailsQuery;
+import com.quizclient.model.query.Quiz.QuestionQuery;
+import com.quizclient.model.query.Quiz.QuizDetailsQuery;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 
 import java.util.*;
 
 public class SolveQuizController extends SolveQuizAbstractController {
-
-    private Timeline timer = new Timeline();
 
 
     @FXML

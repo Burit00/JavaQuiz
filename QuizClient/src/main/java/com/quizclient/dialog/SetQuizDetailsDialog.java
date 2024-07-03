@@ -3,7 +3,7 @@ package com.quizclient.dialog;
 import com.google.gson.Gson;
 import com.quizclient.QuizClientApplication;
 import com.quizclient.enums.AwesomeIconEnum;
-import com.quizclient.model.command.CreateQuizCommand;
+import com.quizclient.model.command.Quiz.CreateQuizCommand;
 import com.quizclient.ui.Icon;
 import javafx.scene.control.*;
 import javafx.scene.layout.Priority;

@@ -6,8 +6,10 @@ import com.quizclient.dialog.SignUpDialog;
 import com.quizclient.enums.AwesomeIconEnum;
 import com.quizclient.helpers.AuthHelper;
 import com.quizclient.model.auth.UserData;
+import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -18,6 +20,9 @@ import java.util.Optional;
 
 
 public class Header extends AnchorPane {
+    @FXML
+    private Label logo;
+
     @FXML
     private Label userGreetingLabel;
 
@@ -44,6 +49,9 @@ public class Header extends AnchorPane {
     }
 
     private void buildUI() {
+        logo.setOnMouseClicked(_ -> SceneLoader.loadMainViewScene());
+        logo.setCursor(Cursor.HAND);
+
         AuthContext.getUserData().subscribe(user -> {
             boolean isUserLogged = AuthHelper.isLogged(user);
 

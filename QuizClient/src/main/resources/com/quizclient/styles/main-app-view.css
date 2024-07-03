@@ -1,0 +1,9 @@
+.apps {
+    -fx-padding: 50;
+    -fx-hgap: 20;
+}
+
+.app-button {
+    -fx-pref-width: 200;
+    -fx-pref-height: 100;
+}

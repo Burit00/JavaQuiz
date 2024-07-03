@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.quizclient.ui.Footer?>
+<?import com.quizclient.ui.Header?>
+<?import com.quizclient.ui.Icon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.quizclient.controller.MainAppController"
+            prefHeight="900.0" prefWidth="1400.0" >
+  <top>
+    <Header/>
+  </top>
+<center>
+  <FlowPane fx:id="main" styleClass="apps">
+    <Button onAction="#onQuizAppOpen" text="Quizy" styleClass="app-button">
+      <graphic>
+        <Icon value="QUESTION"/>
+      </graphic>
+    </Button>
+    <Button onAction="#onResourceViewAppOpen" text="Zasoby" styleClass="app-button" >
+      <graphic>
+        <Icon value="DATABASE"/>
+      </graphic>
+    </Button>
+  </FlowPane>
+</center>
+  <bottom>
+    <Footer/>
+  </bottom>
+  <stylesheets>
+    <URL value="@styles/global.css"/>
+    <URL value="@styles/main-app-view.css"/>
+  </stylesheets>
+</BorderPane>

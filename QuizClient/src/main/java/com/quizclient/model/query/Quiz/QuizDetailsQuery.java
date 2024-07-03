@@ -1,4 +1,4 @@
-package com.quizclient.model.query;
+package com.quizclient.model.query.Quiz;
 
 import java.util.UUID;
 

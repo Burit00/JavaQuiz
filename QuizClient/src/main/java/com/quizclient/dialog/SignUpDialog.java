@@ -3,7 +3,7 @@ package com.quizclient.dialog;
 import com.quizclient.QuizClientApplication;
 import com.quizclient.api.QuizHttpClient;
 import com.quizclient.enums.UserRoleEnum;
-import com.quizclient.model.command.SignUpCommand;
+import com.quizclient.model.command.Quiz.SignUpCommand;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;

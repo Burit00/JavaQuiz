@@ -5,7 +5,7 @@ import com.quizclient.contexts.AuthContext;
 import com.quizclient.dialog.DeleteQuizDialog;
 import com.quizclient.enums.AwesomeIconEnum;
 import com.quizclient.helpers.AuthHelper;
-import com.quizclient.model.query.QuizDetailsQuery;
+import com.quizclient.model.query.Quiz.QuizDetailsQuery;
 import com.quizclient.ui.Icon;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;

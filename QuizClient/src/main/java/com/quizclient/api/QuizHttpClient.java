@@ -2,8 +2,8 @@ package com.quizclient.api;
 
 import com.google.gson.reflect.TypeToken;
 import com.quizclient.contexts.AuthContext;
-import com.quizclient.model.command.*;
-import com.quizclient.model.query.*;
+import com.quizclient.model.command.Quiz.*;
+import com.quizclient.model.query.Quiz.*;
 import com.quizclient.utils.HttpClient;
 
 import java.io.IOException;

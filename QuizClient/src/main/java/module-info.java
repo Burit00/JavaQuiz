@@ -9,12 +9,8 @@ module com.quizclient {
 
     opens com.quizclient to javafx.fxml;
     exports com.quizclient;
-    opens com.quizclient.model.query;
-    exports com.quizclient.model.query;
     opens com.quizclient.dialog;
     exports com.quizclient.dialog;
-    opens com.quizclient.model.command;
-    exports com.quizclient.model.command;
     opens com.quizclient.model.auth;
     exports com.quizclient.model.auth;
     opens com.quizclient.controller;
@@ -29,4 +25,12 @@ module com.quizclient {
     opens com.quizclient.ui;
     exports com.quizclient.helpers;
     opens com.quizclient.helpers;
+    exports com.quizclient.model.query.Quiz;
+    opens com.quizclient.model.query.Quiz;
+    exports com.quizclient.model.command.Quiz;
+    opens com.quizclient.model.command.Quiz;
+    opens com.quizclient.model.query.Resource;
+    exports com.quizclient.model.query.Resource;
+    opens com.quizclient.model.command.Resource;
+    exports com.quizclient.model.command.Resource;
 }

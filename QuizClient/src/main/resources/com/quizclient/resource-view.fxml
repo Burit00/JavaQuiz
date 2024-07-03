@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.quizclient.ui.Footer?>
+<?import com.quizclient.ui.Header?>
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.quizclient.controller.ResourceController"
+            prefHeight="900.0" prefWidth="1400.0">
+  <top>
+    <Header/>
+  </top>
+  <center>
+    <Accordion fx:id="topicsAccordion">
+    </Accordion>
+  </center>
+  <bottom>
+    <Footer/>
+  </bottom>
+  <stylesheets>
+    <URL value="@styles/global.css"/>
+    <URL value="@styles/quiz-results-view.css"/>
+  </stylesheets>
+</BorderPane>

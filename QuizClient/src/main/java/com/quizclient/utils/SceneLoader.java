@@ -4,9 +4,9 @@ import com.quizclient.QuizClientApplication;
 import com.quizclient.contexts.AuthContext;
 import com.quizclient.controller.*;
 import com.quizclient.helpers.AuthHelper;
-import com.quizclient.model.command.CreateQuizCommand;
-import com.quizclient.model.command.UserAnswerCommand;
-import com.quizclient.model.query.QuizDetailsQuery;
+import com.quizclient.model.command.Quiz.CreateQuizCommand;
+import com.quizclient.model.command.Quiz.UserAnswerCommand;
+import com.quizclient.model.query.Quiz.QuizDetailsQuery;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,9 +20,13 @@ import java.util.UUID;
 
 public class SceneLoader {
     private static Stage stage;
-    private static SceneEnum activeScene = SceneEnum.SELECT_QUIZ;
+    private static SceneEnum activeScene = SceneEnum.MAIN;
+
+
+    private record Loader (Parent root, FXMLLoader fxmlLoader){}
 
     private enum SceneEnum {
+        MAIN,
         CREATE_EDIT_QUIZ,
         QUIZ_DETAILS,
         QUIZ_SCORE,
@@ -45,15 +49,6 @@ public class SceneLoader {
         });
     }
 
-    private static class Loader {
-        public Parent root;
-        public FXMLLoader fxmlLoader;
-
-        public Loader(Parent root, FXMLLoader fxmlLoader) {
-            this.root = root;
-            this.fxmlLoader = fxmlLoader;
-        }
-    }
 
     public static void setStage(Stage stage) {
         if (SceneLoader.stage == null) SceneLoader.stage = stage;
@@ -63,17 +58,9 @@ public class SceneLoader {
         return stage;
     }
 
-    private static Loader loadScene(String fileName) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getResource(fileName));
-        Parent root = getRoot(fxmlLoader);
-
-        return new Loader(root, fxmlLoader);
-    }
-
     public static void loadSelectQuizScene() {
         activeScene = SceneEnum.SELECT_QUIZ;
-        Loader loader = loadScene("select-quiz-view.fxml");
-        showScene(loader.root);
+        loadAndShowScene("select-quiz-view.fxml");
     }
 
     public static void loadQuizDetailsScene(UUID quizId) {
@@ -129,8 +116,7 @@ public class SceneLoader {
 
     public static void loadCreateQuizScene() {
         activeScene = SceneEnum.CREATE_EDIT_QUIZ;
-        Loader loader = loadScene("create-edit-quiz-view.fxml");
-        showScene(loader.root);
+        loadAndShowScene("create-edit-quiz-view.fxml");
     }
 
     public static void loadEditQuizScene(UUID quizId) {
@@ -153,6 +139,27 @@ public class SceneLoader {
         showScene(loader.root);
     }
 
+    public static void loadMainViewScene() {
+        loadAndShowScene("main-app-view.fxml");
+    }
+
+    public static void loadResourceViewScene() {
+        loadAndShowScene("resource-view.fxml");
+    }
+
+    public static void loadFilesViewer(UUID exampleId) {
+        Loader loader = loadScene("files-view.fxml");
+
+        FilesController controller = loader.fxmlLoader.getController();
+        controller.setParameter(exampleId);
+
+        showScene(loader.root);
+    }
+
+    public static void loadFileCreator() {
+        loadAndShowScene("add-file.fxml");
+    }
+
     private static URL getResource(String fileName) {
         return QuizClientApplication.class.getResource(fileName);
     }
@@ -169,9 +176,21 @@ public class SceneLoader {
         return root;
     }
 
+    private static Loader loadScene(String fileName) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getResource(fileName));
+        Parent root = getRoot(fxmlLoader);
+
+        return new Loader(root, fxmlLoader);
+    }
+
     private static void showScene(Parent root) {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private static void loadAndShowScene(String fileName) {
+        Loader loader = loadScene(fileName);
+        showScene(loader.root);
     }
 }

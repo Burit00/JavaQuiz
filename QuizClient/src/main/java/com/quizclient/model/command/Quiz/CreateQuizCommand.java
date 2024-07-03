@@ -1,4 +1,4 @@
-package com.quizclient.model.command;
+package com.quizclient.model.command.Quiz;
 
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.quizclient.model.command;
+package com.quizclient.model.command.Quiz;
 
 import com.google.gson.Gson;
 import com.quizclient.enums.QuestionTypeEnum;

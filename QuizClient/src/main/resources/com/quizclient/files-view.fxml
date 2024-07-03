@@ -1,0 +1,49 @@
+<?import javafx.scene.layout.BorderPane?>
+<?import java.net.URL?>
+<?import com.quizclient.ui.Footer?>
+<?import com.quizclient.ui.Header?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import com.quizclient.ui.Icon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.quizclient.controller.FilesController"
+            prefHeight="900.0" prefWidth="1400.0">
+  <top>
+    <Header/>
+  </top>
+  <center>
+    <VBox>
+      <HBox styleClass="example-name-wrapper"><Label styleClass="example-name" fx:id="exampleNameLabel"/></HBox>
+    <AnchorPane fx:id="mainAnchorPane" VBox.vgrow="ALWAYS">
+      <ScrollPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" fx:id="scrollPane" styleClass="scroll-files">
+        <VBox fx:id="filesContainer" styleClass="files" />
+      </ScrollPane>
+    </AnchorPane>
+      <HBox>
+        <Button onAction="#onBack" text="Powrót">
+          <graphic>
+            <Icon value="ARROW_LEFT"/>
+          </graphic>
+        </Button>
+        <padding>
+          <Insets top="10" bottom="10" left="20" right="10" />
+        </padding>
+      </HBox>
+
+  </VBox>
+  </center>
+  <bottom>
+    <Footer/>
+  </bottom>
+  <stylesheets>
+    <URL value="@styles/global.css"/>
+    <URL value="@styles/files-view.css"/>
+  </stylesheets>
+</BorderPane>

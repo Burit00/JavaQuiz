@@ -2,8 +2,8 @@ package com.quizclient.controller;
 
 
 import com.quizclient.api.QuizHttpClient;
-import com.quizclient.model.command.UserAnswerCommand;
-import com.quizclient.model.query.UserQuizScoreQuery;
+import com.quizclient.model.command.Quiz.UserAnswerCommand;
+import com.quizclient.model.query.Quiz.UserQuizScoreQuery;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -1,10 +1,10 @@
 package com.quizclient.controller;
 
 import com.quizclient.enums.AwesomeIconEnum;
-import com.quizclient.model.command.CreateQuizCommand;
-import com.quizclient.model.query.AnswerQuery;
-import com.quizclient.model.query.QuestionQuery;
-import com.quizclient.model.query.QuizDetailsQuery;
+import com.quizclient.model.command.Quiz.CreateQuizCommand;
+import com.quizclient.model.query.Quiz.AnswerQuery;
+import com.quizclient.model.query.Quiz.QuestionQuery;
+import com.quizclient.model.query.Quiz.QuizDetailsQuery;
 import com.quizclient.ui.Icon;
 import com.quizclient.utils.SceneLoader;
 

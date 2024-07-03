@@ -1,0 +1,57 @@
+.scroll-files {
+    -fx-background-color: transparent;
+    -fx-fit-to-width: true;
+}
+
+.scroll-files .viewport {
+    -fx-background-color: transparent;
+}
+
+.file-container {
+
+}
+
+.file-label {
+
+}
+
+.file-label .label {
+    -fx-font-family: "Courier New";
+    -fx-text-fill: #fff;
+    -fx-font-size: 18;
+    -fx-background-color: transparent;
+}
+
+.code {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 18;
+    -fx-min-height: 300;
+    -fx-background-color: transparent;
+}
+
+.files {
+    -fx-spacing: 20;
+    -fx-padding: 10 20 0;
+}
+
+.toast-wrapper {
+    -fx-pref-height: 50;
+    -fx-padding: 0 0 20 0;
+}
+
+.toast {
+    -fx-background-color: #8d8d8d;
+    -fx-border-radius: 10;
+    -fx-padding: 10 20;
+    -fx-background-radius: 10;
+}
+
+.example-name-wrapper {
+    -fx-alignment: center;
+    -fx-max-width: 1400;
+}
+
+.example-name {
+    -fx-font-size: 20;
+    -fx-text-fill: #02b7b3;
+}

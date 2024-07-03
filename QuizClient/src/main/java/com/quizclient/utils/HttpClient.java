@@ -4,6 +4,7 @@ import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.quizclient.contexts.AuthContext;
+import com.quizclient.helpers.AuthHelper;
 
 import java.io.IOException;
 import java.net.URI;
@@ -62,11 +63,9 @@ public class HttpClient {
     }
 
     public HttpResponse<String> send(String url, HTTPMethod method, Object body) throws IOException, InterruptedException {
-        HttpRequest.BodyPublisher bodyPublisher = null;
+        HttpRequest.BodyPublisher bodyPublisher =  HttpRequest.BodyPublishers.noBody();
 
-        if (method == HTTPMethod.GET || method == HTTPMethod.DELETE) {
-            bodyPublisher = HttpRequest.BodyPublishers.noBody();
-        } else if (method == HTTPMethod.POST || method == HTTPMethod.PUT) {
+        if (method == HTTPMethod.POST || method == HTTPMethod.PUT) {
             String bodyRequest = gson.toJson(body);
             bodyPublisher = HttpRequest.BodyPublishers.ofString(bodyRequest);
         }
@@ -78,10 +77,8 @@ public class HttpClient {
                 .header("Content-Type", "application/json")
                 .header("Accept", "*/*");
 
-
-        String token = AuthContext.getToken();
-        if(token != null)
-            httpRequest.header("Authorization", token);
+        if(AuthHelper.isLogged(AuthContext.getUserData().getValue()))
+            httpRequest.header("Authorization", AuthContext.getToken());
 
         return httpClient.send(httpRequest.build(), HttpResponse.BodyHandlers.ofString());
     }

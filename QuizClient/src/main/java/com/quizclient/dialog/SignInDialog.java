@@ -2,7 +2,7 @@ package com.quizclient.dialog;
 
 import com.quizclient.QuizClientApplication;
 import com.quizclient.api.QuizHttpClient;
-import com.quizclient.model.command.SignInCommand;
+import com.quizclient.model.command.Quiz.SignInCommand;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;

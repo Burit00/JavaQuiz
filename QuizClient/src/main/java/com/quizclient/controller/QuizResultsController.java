@@ -1,8 +1,8 @@
 package com.quizclient.controller;
 
 import com.quizclient.api.QuizHttpClient;
-import com.quizclient.model.query.QuizDetailsQuery;
-import com.quizclient.model.query.UserQuizScoreQuery;
+import com.quizclient.model.query.Quiz.QuizDetailsQuery;
+import com.quizclient.model.query.Quiz.UserQuizScoreQuery;
 import com.quizclient.utils.SceneLoader;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

@@ -15,7 +15,8 @@ public class QuizClientApplication extends Application {
     public void start(Stage stage) {
         stage.setTitle("Java Quiz!");
         SceneLoader.setStage(stage);
-        SceneLoader.loadSelectQuizScene();
+        SceneLoader.loadMainViewScene();
+//        SceneLoader.loadFileCreator();
     }
 
     public static void main(String[] args) {
