@@ -1,7 +1,7 @@
 package com.quizserver.seeders;
 
 import com.quizserver.enums.UserRole;
-import com.quizserver.models.entities.User;
+import com.quizserver.models.auth.entities.User;
 import com.quizserver.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

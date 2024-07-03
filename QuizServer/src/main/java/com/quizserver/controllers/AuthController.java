@@ -2,10 +2,10 @@ package com.quizserver.controllers;
 
 import com.quizserver.config.auth.TokenProvider;
 import com.quizserver.exceptions.InvalidJwtException;
-import com.quizserver.models.DTOs.auth.JwtDto;
-import com.quizserver.models.DTOs.auth.SignInDto;
-import com.quizserver.models.DTOs.auth.SignUpDto;
-import com.quizserver.models.entities.User;
+import com.quizserver.models.auth.DTOs.JwtDto;
+import com.quizserver.models.auth.DTOs.SignInDto;
+import com.quizserver.models.auth.DTOs.SignUpDto;
+import com.quizserver.models.auth.entities.User;
 import com.quizserver.services.AuthService;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;

@@ -1,12 +1,12 @@
 package com.quizserver.services;
 
-import com.quizserver.models.DTOs.commands.UserAnswerCommand;
-import com.quizserver.models.DTOs.commands.UserQuizAnswerCommand;
-import com.quizserver.models.DTOs.queries.UserQuizScoreQuery;
-import com.quizserver.models.entities.Question;
-import com.quizserver.models.entities.Quiz;
-import com.quizserver.models.entities.Score;
-import com.quizserver.models.entities.User;
+import com.quizserver.models.quiz.DTOs.commands.UserAnswerCommand;
+import com.quizserver.models.quiz.DTOs.commands.UserQuizAnswerCommand;
+import com.quizserver.models.quiz.DTOs.queries.UserQuizScoreQuery;
+import com.quizserver.models.quiz.entities.Question;
+import com.quizserver.models.quiz.entities.Quiz;
+import com.quizserver.models.quiz.entities.Score;
+import com.quizserver.models.auth.entities.User;
 import com.quizserver.repositories.IQuizRepository;
 import com.quizserver.repositories.IScoreRepository;
 import com.quizserver.repositories.IUserRepository;

@@ -1,10 +1,10 @@
 package com.quizserver.controllers;
 
-import com.quizserver.models.DTOs.commands.CreateQuizCommand;
-import com.quizserver.models.DTOs.commands.UpdateQuizCommand;
-import com.quizserver.models.DTOs.queries.QuizQuery;
-import com.quizserver.models.DTOs.queries.QuizDetailsQuery;
-import com.quizserver.models.DTOs.queries.UpdateQuizQuery;
+import com.quizserver.models.quiz.DTOs.commands.CreateQuizCommand;
+import com.quizserver.models.quiz.DTOs.commands.UpdateQuizCommand;
+import com.quizserver.models.quiz.DTOs.queries.QuizQuery;
+import com.quizserver.models.quiz.DTOs.queries.QuizDetailsQuery;
+import com.quizserver.models.quiz.DTOs.queries.UpdateQuizQuery;
 import com.quizserver.services.QuizService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

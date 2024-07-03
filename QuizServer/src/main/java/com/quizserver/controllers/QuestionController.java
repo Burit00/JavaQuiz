@@ -1,6 +1,6 @@
 package com.quizserver.controllers;
 
-import com.quizserver.models.DTOs.queries.QuestionQuery;
+import com.quizserver.models.quiz.DTOs.queries.QuestionQuery;
 import com.quizserver.services.QuestionService;
 import org.springframework.web.bind.annotation.*;
 

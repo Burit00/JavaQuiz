@@ -1,7 +1,7 @@
 package com.quizserver.controllers;
 
-import com.quizserver.models.DTOs.commands.UserQuizAnswerCommand;
-import com.quizserver.models.DTOs.queries.UserQuizScoreQuery;
+import com.quizserver.models.quiz.DTOs.commands.UserQuizAnswerCommand;
+import com.quizserver.models.quiz.DTOs.queries.UserQuizScoreQuery;
 import com.quizserver.services.ScoreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

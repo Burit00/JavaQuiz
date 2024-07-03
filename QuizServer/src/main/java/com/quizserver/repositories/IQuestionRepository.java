@@ -1,6 +1,6 @@
 package com.quizserver.repositories;
 
-import com.quizserver.models.entities.Question;
+import com.quizserver.models.quiz.entities.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

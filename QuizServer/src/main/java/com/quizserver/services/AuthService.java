@@ -1,8 +1,8 @@
 package com.quizserver.services;
 
 import com.quizserver.exceptions.InvalidJwtException;
-import com.quizserver.models.DTOs.auth.SignUpDto;
-import com.quizserver.models.entities.User;
+import com.quizserver.models.auth.DTOs.SignUpDto;
+import com.quizserver.models.auth.entities.User;
 import com.quizserver.repositories.IUserRepository;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;

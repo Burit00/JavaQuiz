@@ -1,7 +1,7 @@
 package com.quizserver.services;
 
-import com.quizserver.models.DTOs.queries.QuestionQuery;
-import com.quizserver.models.entities.Question;
+import com.quizserver.models.quiz.DTOs.queries.QuestionQuery;
+import com.quizserver.models.quiz.entities.Question;
 import com.quizserver.repositories.IQuestionRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;

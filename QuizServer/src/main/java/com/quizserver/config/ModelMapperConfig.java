@@ -1,13 +1,13 @@
 package com.quizserver.config;
 
-import com.quizserver.models.DTOs.commands.CreateAnswerCommand;
-import com.quizserver.models.DTOs.commands.CreateQuestionCommand;
-import com.quizserver.models.DTOs.queries.AnswerQuery;
-import com.quizserver.models.DTOs.queries.QuestionQuery;
-import com.quizserver.models.DTOs.queries.UserQuizScoreQuery;
-import com.quizserver.models.entities.Answer;
-import com.quizserver.models.entities.Question;
-import com.quizserver.models.entities.Score;
+import com.quizserver.models.quiz.DTOs.commands.CreateAnswerCommand;
+import com.quizserver.models.quiz.DTOs.commands.CreateQuestionCommand;
+import com.quizserver.models.quiz.DTOs.queries.AnswerQuery;
+import com.quizserver.models.quiz.DTOs.queries.QuestionQuery;
+import com.quizserver.models.quiz.DTOs.queries.UserQuizScoreQuery;
+import com.quizserver.models.quiz.entities.Answer;
+import com.quizserver.models.quiz.entities.Question;
+import com.quizserver.models.quiz.entities.Score;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
