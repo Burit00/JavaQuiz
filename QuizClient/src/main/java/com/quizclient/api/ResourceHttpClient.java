@@ -33,7 +33,7 @@ public class ResourceHttpClient {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(response);
+
         return HttpClient.gson.fromJson(response, new TypeToken<TopicQuery>(){}.getType());
     }
 
@@ -49,15 +49,11 @@ public class ResourceHttpClient {
         return HttpClient.gson.fromJson(response, ExampleDetailsQuery.class);
     }
 
-    public static ExampleDetailsQuery createFile(List<CreateFileCommand> files) {
-        String response;
-
+    public static void createFile(List<CreateFileCommand> files) {
         try {
-            response = httpClient.post("files", files);
+            httpClient.post("files", files);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-        return HttpClient.gson.fromJson(response, ExampleDetailsQuery.class);
     }
 }
