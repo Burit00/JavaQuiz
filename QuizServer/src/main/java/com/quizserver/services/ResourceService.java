@@ -3,6 +3,7 @@ package com.quizserver.services;
 import com.quizserver.models.resourcesViewer.DTOs.commands.CreateFileCommand;
 import com.quizserver.models.resourcesViewer.DTOs.commands.CreateTopicCommand;
 import com.quizserver.models.resourcesViewer.DTOs.queries.ExampleDetailsQuery;
+import com.quizserver.models.resourcesViewer.DTOs.queries.ExampleQuery;
 import com.quizserver.models.resourcesViewer.DTOs.queries.TopicQuery;
 import com.quizserver.models.resourcesViewer.entities.Example;
 import com.quizserver.models.resourcesViewer.entities.File;
@@ -69,5 +70,12 @@ public class ResourceService {
         Example example = exampleRepository.findById(exampleId).orElse(null);
 
         return modelMapper.map(example, ExampleDetailsQuery.class);
+    }
+
+    public TopicQuery getExamplesByTopicId(UUID topicId) throws BadRequestException {
+        Topic topic = topicRepository.findById(topicId).orElse(null);
+        if(topic == null)
+            throw new BadRequestException("Not found topic with id" + topicId);
+        return modelMapper.map(topic, new TypeToken<TopicQuery>(){}.getType());
     }
 }

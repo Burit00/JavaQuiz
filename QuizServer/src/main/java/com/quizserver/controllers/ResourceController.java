@@ -3,6 +3,7 @@ package com.quizserver.controllers;
 import com.quizserver.models.resourcesViewer.DTOs.commands.CreateFileCommand;
 import com.quizserver.models.resourcesViewer.DTOs.commands.CreateTopicCommand;
 import com.quizserver.models.resourcesViewer.DTOs.queries.ExampleDetailsQuery;
+import com.quizserver.models.resourcesViewer.DTOs.queries.ExampleQuery;
 import com.quizserver.models.resourcesViewer.DTOs.queries.TopicQuery;
 import com.quizserver.services.ResourceService;
 import org.apache.coyote.BadRequestException;
@@ -33,8 +34,13 @@ public class ResourceController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @GetMapping("topics/{topicId}")
+    public ResponseEntity<TopicQuery> getTopic(@PathVariable UUID topicId) throws BadRequestException {
+        return ResponseEntity.ok(resourceService.getExamplesByTopicId(topicId));
+    }
+
     @GetMapping("examples/{exampleId}")
-    public ResponseEntity<ExampleDetailsQuery> getFiles(@PathVariable UUID exampleId) {
+    public ResponseEntity<ExampleDetailsQuery> getExampleDetails(@PathVariable UUID exampleId) {
         return ResponseEntity.ok(resourceService.getExampleById(exampleId));
     }
 
