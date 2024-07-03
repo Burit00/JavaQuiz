@@ -147,6 +147,15 @@ public class SceneLoader {
         loadAndShowScene("resource-view.fxml");
     }
 
+    public static void loadExamplesViewScene(UUID topicId) {
+        Loader loader = loadScene("examples-view.fxml");
+
+        ExamplesController controller = loader.fxmlLoader.getController();
+        controller.setParameter(topicId);
+
+        showScene(loader.root);
+    }
+
     public static void loadFilesViewer(UUID exampleId) {
         Loader loader = loadScene("files-view.fxml");
 

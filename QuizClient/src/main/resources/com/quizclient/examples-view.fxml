@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.quizclient.ui.Footer?>
+<?import com.quizclient.ui.Header?>
+<?import java.net.URL?>
+<?import com.quizclient.ui.Icon?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.quizclient.controller.ExamplesController"
+            prefHeight="900.0" prefWidth="1400.0">
+  <top>
+    <Header/>
+  </top>
+  <center>
+    <VBox fx:id="container">
+      <HBox styleClass="topic-name-wrapper"><Label styleClass="topic-name" fx:id="topicNameLabel"/></HBox>
+      <ScrollPane fx:id="scroll" VBox.vgrow="ALWAYS" styleClass="scroll">
+        <VBox fx:id="examplesContainer" styleClass="list" />
+      </ScrollPane>
+      <HBox>
+        <Button onAction="#onBack" text="Powrót">
+          <graphic>
+            <Icon value="ARROW_LEFT"/>
+          </graphic>
+        </Button>
+        <padding>
+          <Insets top="10" bottom="10" left="20" right="10"/>
+        </padding>
+      </HBox>
+    </VBox>
+  </center>
+  <bottom>
+    <Footer/>
+  </bottom>
+  <stylesheets>
+    <URL value="@styles/global.css"/>
+    <URL value="@styles/resource-view.css"/>
+  </stylesheets>
+</BorderPane>

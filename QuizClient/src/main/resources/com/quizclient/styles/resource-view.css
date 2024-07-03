@@ -1,0 +1,31 @@
+.topic-name-wrapper {
+    -fx-alignment: center;
+    -fx-max-width: 1400;
+}
+
+.topic-name {
+    -fx-font-size: 20;
+    -fx-text-fill: #02b7b3;
+}
+
+.list {
+    -fx-padding: 20;
+    -fx-spacing: 10;
+}
+
+.item {
+    -fx-pref-width: 1358;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-color: #02b7b3;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.scroll {
+    -fx-background-color: transparent;
+}
+
+.scroll .viewport {
+    -fx-background-color: transparent;
+}

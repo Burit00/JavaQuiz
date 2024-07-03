@@ -1,7 +1,6 @@
 package com.quizclient.controller;
 
 import com.quizclient.api.ResourceHttpClient;
-import com.quizclient.model.query.Resource.ExampleQuery;
 import com.quizclient.model.query.Resource.TopicQuery;
 import com.quizclient.utils.SceneLoader;
 import javafx.fxml.FXML;
@@ -15,7 +14,7 @@ public class ResourceController {
     private List<TopicQuery> topics;
 
     @FXML
-    private Accordion topicsAccordion;
+    private VBox topicsContainer;
 
     @FXML
     public void initialize() {
@@ -28,30 +27,20 @@ public class ResourceController {
     }
 
     private void buildUI() {
+        topicsContainer.setMaxWidth(Double.MAX_VALUE);
         for (TopicQuery topic: topics)
-            topicsAccordion.getPanes().add(buildTitledPane(topic));
+            topicsContainer.getChildren().add(buildTopicItem(topic));
     }
 
-    private TitledPane buildTitledPane(TopicQuery topic) {
-        TitledPane topicsTitledPane = new TitledPane(topic.getName(), null);
-        topicsTitledPane.setContent(buildTitledPaneContent(topic.getExamples()));
+    private HBox buildTopicItem(TopicQuery topic) {
+        HBox topicItem = new HBox();
+        Label topicNameLabel = new Label(topic.getName());
 
+        topicItem.getChildren().add(topicNameLabel);
+        topicItem.setMaxWidth(Double.MAX_VALUE);
+        topicItem.setOnMouseClicked(_ -> SceneLoader.loadExamplesViewScene(topic.getId()));
+        topicNameLabel.getStyleClass().add("item");
 
-        return topicsTitledPane;
-    }
-
-    private VBox buildTitledPaneContent(List<ExampleQuery> examples) {
-        VBox contentBox = new VBox(10);
-
-        for(ExampleQuery example: examples) {
-            Label exampleNameLabel = new Label( String.format("%d. %s", examples.indexOf(example), example.getName()));
-            exampleNameLabel.setUnderline(true);
-            exampleNameLabel.setOnMouseClicked(_ -> SceneLoader.loadFilesViewer(example.getId()));
-            HBox exampleBox = new HBox(exampleNameLabel);
-
-            contentBox.getChildren().add(exampleBox);
-        }
-
-        return contentBox;
+        return topicItem;
     }
 }

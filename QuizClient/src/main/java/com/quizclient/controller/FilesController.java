@@ -127,6 +127,6 @@ public class FilesController {
 
     @FXML
     private void onBack() {
-        SceneLoader.loadResourceViewScene();
+        SceneLoader.loadExamplesViewScene(example.getTopicId());
     }
 }

@@ -14,14 +14,16 @@
     <Header/>
   </top>
   <center>
-    <Accordion fx:id="topicsAccordion">
-    </Accordion>
+    <ScrollPane styleClass="scroll">
+      <VBox fx:id="topicsContainer" styleClass="list">
+      </VBox>
+    </ScrollPane>
   </center>
   <bottom>
     <Footer/>
   </bottom>
   <stylesheets>
     <URL value="@styles/global.css"/>
-    <URL value="@styles/quiz-results-view.css"/>
+    <URL value="@styles/resource-view.css"/>
   </stylesheets>
 </BorderPane>
